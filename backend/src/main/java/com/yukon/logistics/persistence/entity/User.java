@@ -62,4 +62,8 @@ public class User {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     Role role;
+
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    Status status;
 }
