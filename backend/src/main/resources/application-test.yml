@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/logDB
+    driverClassName: org.h2.Driver
+    username: logisticsappuser
+    password: LogisticsPASS
