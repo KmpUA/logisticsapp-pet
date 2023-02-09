@@ -1,32 +1,65 @@
 package com.yukon.logistics.persistence.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.FetchType;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import java.io.Serializable;
+
 import java.time.LocalDateTime;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Order implements Serializable {
+@Table(name = "order")
+public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
     @ManyToOne
+    @JoinColumn(name = "city_id")
     City from;
+
     @ManyToOne
+    @JoinColumn(name = "city_id")
     City to;
+
+    @Column(name = "cargo_description")
     String cargoDescription;
+
+    @Column(name = "cargo_weight")
     double cargoWeight;
-    //private Trucker trucker;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    Trucker trucker;
+
     @CreatedDate
+    @Column(name = "created")
     LocalDateTime created;
+
     @LastModifiedDate
+    @Column(name = "modify")
     LocalDateTime modify;
+
+    @Column(name = "start_deliver")
     LocalDateTime startDeliver;
+
+    @Column(name = "end_deliver")
     LocalDateTime endDeliver;
 }
