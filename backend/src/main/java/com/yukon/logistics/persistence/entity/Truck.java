@@ -20,6 +20,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.util.Objects;
+
 @Entity
 @Getter
 @Setter
@@ -74,6 +76,6 @@ public class Truck {
                 ", condition=" + condition +
                 ", vinCode=" + vinCode +
                 ", licensePlate=" + licensePlate +
-                ", trucker=" + trucker.getId() + ")";
+                ", trucker=" + (Objects.isNull(trucker) ? null :  trucker.getId()) + ")";
     }
 }
