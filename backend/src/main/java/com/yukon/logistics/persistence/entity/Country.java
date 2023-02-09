@@ -29,7 +29,7 @@ public class Country {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     String name;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

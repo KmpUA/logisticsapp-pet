@@ -27,10 +27,11 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
+    @Column(nullable = false)
     Country country;
 }

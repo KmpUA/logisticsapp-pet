@@ -33,22 +33,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     String password;
 
-    @Column(name = "image_url")
+    @Column(name = "image_url", nullable = false)
     String imageUrl;
 
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
     String phone;
 
     @CreatedDate

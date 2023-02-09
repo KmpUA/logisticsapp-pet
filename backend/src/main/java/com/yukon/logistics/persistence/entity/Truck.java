@@ -10,6 +10,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -28,29 +30,30 @@ public class Truck {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name = "model")
+    @Column(name = "model", nullable = false)
     String model;
 
     @ManyToOne
     @JoinColumn(name = "city_id")
     City location;
 
-    @Column(name = "fuel_consuption")
+    @Column(name = "fuel_consuption", nullable = false)
     double fuelConsumption;
 
-    @Column(name = "order_capacity")
+    @Column(name = "order_capacity", nullable = false)
     double orderCapacity;
 
-    @Column(name = "space_capacity")
+    @Column(name = "space_capacity", nullable = false)
     double spaceCapacity;
 
-    @Column(name = "condition")
+    @Column(name = "condition", nullable = false)
+    @Enumerated(EnumType.STRING)
     Condition condition;
 
-    @Column(name = "vin_code")
+    @Column(name = "vin_code", nullable = false)
     String vinCode;
 
-    @Column(name = "license_place")
+    @Column(name = "license_place", nullable = false)
     String licensePlate;
 
     @OneToOne(mappedBy = "truck", cascade = CascadeType.ALL, orphanRemoval = true)

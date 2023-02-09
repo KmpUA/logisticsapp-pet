@@ -33,17 +33,17 @@ public class Order {
     Long id;
 
     @ManyToOne
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id", nullable = false)
     City from;
 
     @ManyToOne
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id", nullable = false)
     City to;
 
     @Column(name = "cargo_description")
     String cargoDescription;
 
-    @Column(name = "cargo_weight")
+    @Column(name = "cargo_weight", nullable = false)
     double cargoWeight;
 
     @ManyToOne(fetch = FetchType.LAZY)
