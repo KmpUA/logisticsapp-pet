@@ -25,6 +25,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "country")
 public class Country {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

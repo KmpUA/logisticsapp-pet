@@ -20,7 +20,8 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "customer")
-public class Customer extends User{
+public class Customer extends User {
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "orders_id")
     List<Order> orders;

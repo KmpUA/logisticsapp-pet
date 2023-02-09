@@ -20,6 +20,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "dispatcher")
 public class Dispatcher extends User {
+
     @OneToMany(mappedBy = "dispatcher", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Trucker> truckers;
 }

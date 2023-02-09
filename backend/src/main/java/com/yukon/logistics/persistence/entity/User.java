@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -45,7 +46,7 @@ public class User {
     @Column(name = "password", nullable = false)
     String password;
 
-    @Column(name = "image_url", nullable = false)
+    @Column(name = "image_url")
     String imageUrl;
 
     @Column(name = "phone", nullable = false)

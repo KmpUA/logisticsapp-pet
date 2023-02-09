@@ -10,19 +10,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.FetchType;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "city")
 public class City {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -34,4 +34,12 @@ public class City {
     @JoinColumn(name = "country_id")
     @Column(nullable = false)
     Country country;
+
+    @Override
+    public String toString() {
+        return "City(id=" + id +
+                ", name=" + name +
+                ", country(id=" + country.getId() +
+                ", name=" + country.getName() + "))";
+    }
 }
