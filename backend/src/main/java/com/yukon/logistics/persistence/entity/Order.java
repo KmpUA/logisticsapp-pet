@@ -34,11 +34,11 @@ public class Order {
     Long id;
 
     @ManyToOne
-    @JoinColumn(name = "city_id", nullable = false)
+    @JoinColumn(name = "city_idfrom", nullable = false)
     City from;
 
     @ManyToOne
-    @JoinColumn(name = "city_id", nullable = false)
+    @JoinColumn(name = "city_idto", nullable = false)
     City to;
 
     @Column(name = "cargo_description")

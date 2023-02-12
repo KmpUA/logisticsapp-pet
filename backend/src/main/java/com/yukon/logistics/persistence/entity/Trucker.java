@@ -25,8 +25,8 @@ import java.util.List;
 public class Trucker extends User {
 
     @OneToOne
-    @JoinColumn(name = "track_id", referencedColumnName = "id")
-    Truck track;
+    @JoinColumn(name = "truck_id", referencedColumnName = "id")
+    Truck truck;
 
     @ManyToOne(fetch = FetchType.LAZY)
     Dispatcher dispatcher;

@@ -37,7 +37,6 @@ public class City {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
-    @Column(nullable = false)
     Country country;
 
     @Override
