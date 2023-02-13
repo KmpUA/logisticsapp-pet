@@ -4,19 +4,26 @@
         <mat-card-content>
             <p>
                 <mat-form-field appearance="outline">
-                    <mat-label>User Name</mat-label>
-                    <input [(ngModel)]="username" name="username" matInput placeholder="Placeholder">
+                    <mat-label>Email</mat-label>
+                    <input pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" type="email"
+                        [(ngModel)]="email" #emailField="ngModel" name="email" placeholder="Placeholder" matInput
+                        required>
+                    <mat-error *ngIf="emailField.invalid">Not a valid email</mat-error>
                 </mat-form-field>
             </p>
+
             <p>
                 <mat-form-field appearance="outline">
                     <mat-label>Password</mat-label>
-                    <input [(ngModel)]="password" name="password" type="password" matInput placeholder="Placeholder">
+                    <input [(ngModel)]="password" #passwordField="ngModel" name="password" type="password"
+                        placeholder="Placeholder" matInput required>
+                    <mat-error *ngIf="passwordField.invalid && passwordField.errors?.['required']">Password
+                        required</mat-error>
                 </mat-form-field>
             </p>
         </mat-card-content>
         <mat-card-footer>
-            <button mat-flat-button color="primary" type="submit">Login</button>
+            <button class="submitBtn" mat-flat-button color="primary" type="submit">Login</button>
         </mat-card-footer>
     </mat-card>
 </form>

@@ -7,11 +7,11 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  username: string = '';
+  email: string = '';
   password: string = '';
   constructor(private authService: AuthService) { }
   onSubmit() {
-    this.authService.login(this.username, this.password).subscribe(
+    this.authService.login(this.email, this.password).subscribe(
       response => {
         this.authService.saveToken(response.access_token);
         console.log(response.access_token);
