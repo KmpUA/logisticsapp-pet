@@ -25,7 +25,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "city")
+@Table(name = "cities")
 public class City {
 
     @Id

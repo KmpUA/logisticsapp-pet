@@ -21,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "trucker")
+@Table(name = "truckers")
 public class Trucker extends User {
 
     @OneToOne

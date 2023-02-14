@@ -1,5 +1,6 @@
 package com.yukon.logistics.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -23,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "country")
+@Table(name = "countries")
 public class Country {
 
     @Id
@@ -35,5 +36,6 @@ public class Country {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "city_id")
+    @JsonManagedReference
     List<City> cities;
 }
