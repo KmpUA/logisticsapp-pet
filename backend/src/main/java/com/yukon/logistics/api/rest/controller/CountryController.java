@@ -1,6 +1,7 @@
 package com.yukon.logistics.api.rest.controller;
 
-import com.yukon.logistics.persistence.entity.Country;
+import com.yukon.logistics.model.dto.CountryResponse;
+import com.yukon.logistics.model.mapper.CountryMapper;
 import com.yukon.logistics.service.impl.CountryServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,20 +20,21 @@ public class CountryController {
     private final CountryServiceImpl countryService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Country>> getAll() {
-        List<Country> countries = countryService.findAllCountries();
-        return new ResponseEntity<>(countries, HttpStatus.OK);
+    public ResponseEntity<List<CountryResponse>> getAll() {
+        List<CountryResponse> countryResponseList = new CountryMapper()
+                .toListResponse(countryService.findAllCountries());
+        return new ResponseEntity<>(countryResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Country> getById(@PathVariable("id") long id) {
-        Country country = countryService.findCountryById(id);
-        return new ResponseEntity<>(country, HttpStatus.OK);
+    public ResponseEntity<CountryResponse> getById(@PathVariable("id") long id) {
+        CountryResponse countryResponse = new CountryMapper().toResponse(countryService.findCountryById(id));
+        return new ResponseEntity<>(countryResponse, HttpStatus.OK);
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<Country> getByName(@PathVariable("name") String name) {
-        Country country = countryService.findCountryByName(name);
-        return new ResponseEntity<>(country, HttpStatus.OK);
+    public ResponseEntity<CountryResponse> getByName(@PathVariable("name") String name) {
+        CountryResponse countryResponse = new CountryMapper().toResponse(countryService.findCountryByName(name));
+        return new ResponseEntity<>(countryResponse, HttpStatus.OK);
     }
 }
