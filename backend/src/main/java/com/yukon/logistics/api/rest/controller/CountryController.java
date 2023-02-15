@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import static java.lang.Long.parseLong;
 
 @RestController
 @RequestMapping("/country")
@@ -27,12 +28,12 @@ public class CountryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CountryResponse> getById(@PathVariable("id") long id) {
-        CountryResponse countryResponse = new CountryMapper().toResponse(countryService.findCountryById(id));
+    public ResponseEntity<CountryResponse> getById(@PathVariable("id") String id) {
+        CountryResponse countryResponse = new CountryMapper().toResponse(countryService.findCountryById(parseLong(id)));
         return new ResponseEntity<>(countryResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<CountryResponse> getByName(@PathVariable("name") String name) {
         CountryResponse countryResponse = new CountryMapper().toResponse(countryService.findCountryByName(name));
         return new ResponseEntity<>(countryResponse, HttpStatus.OK);
