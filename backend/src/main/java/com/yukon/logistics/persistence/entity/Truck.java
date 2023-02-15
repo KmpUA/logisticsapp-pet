@@ -29,7 +29,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "truck")
+@Table(name = "trucks")
 public class Truck {
 
     @Id
@@ -62,7 +62,7 @@ public class Truck {
     @Column(name = "license_place", nullable = false)
     String licensePlate;
 
-    @OneToOne(mappedBy = "truck")
+    @OneToOne
     Trucker trucker;
 
     @Override

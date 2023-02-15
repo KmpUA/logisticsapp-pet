@@ -21,12 +21,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "trucker")
+@Table(name = "truckers")
 public class Trucker extends User {
 
     @OneToOne
-    @JoinColumn(name = "track_id", referencedColumnName = "id")
-    Truck track;
+    @JoinColumn(name = "truck_id", referencedColumnName = "id")
+    Truck truck;
 
     @ManyToOne(fetch = FetchType.LAZY)
     Dispatcher dispatcher;

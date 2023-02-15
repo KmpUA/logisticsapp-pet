@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -34,11 +34,11 @@ public class Order {
     Long id;
 
     @ManyToOne
-    @JoinColumn(name = "city_id", nullable = false)
+    @JoinColumn(name = "city_id_from", nullable = false)
     City from;
 
     @ManyToOne
-    @JoinColumn(name = "city_id", nullable = false)
+    @JoinColumn(name = "city_id_to", nullable = false)
     City to;
 
     @Column(name = "cargo_description")
