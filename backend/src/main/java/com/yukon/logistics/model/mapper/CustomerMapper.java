@@ -10,12 +10,20 @@ import java.util.List;
 
 public class CustomerMapper {
     public CustomerResponse toResponse(Customer customer) {
-        List<String> orders = new ArrayList<>();
+        List<Long> orders = new ArrayList<>();
         for(Order order: customer.getOrders()){
-            orders.add(order.getId().toString());
+            orders.add(order.getId());
         }
-        new CustomerResponse();
-        return CustomerResponse.builder().ordersId(orders).build();
+        return CustomerResponse.builder().ordersId(orders)
+                .id(customer.getId())
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
+                .email(customer.getEmail())
+                .imageUrl(customer.getImageUrl())
+                .phone(customer.getPhone())
+                .role(customer.getRole())
+                .status(customer.getStatus())
+                .build();
     }
 
     public List<CustomerResponse> toListResponse(List<Customer> customers) {
@@ -28,7 +36,14 @@ public class CustomerMapper {
 
     public Customer toEntity(CustomerRequest customerRequest) {
         Customer customer = new Customer();
-        customer.setOrders(customerRequest.getOrders());
+        customer.setFirstName(customerRequest.getFirstName());
+        customer.setLastName(customerRequest.getLastName());
+        customer.setEmail(customerRequest.getEmail());
+        customer.setPassword(customerRequest.getPassword());
+        customer.setImageUrl(customerRequest.getImageUrl());
+        customer.setPhone(customerRequest.getPhone());
+        customer.setRole(customerRequest.getRole());
+        customer.setStatus(customerRequest.getStatus());
         return customer;
     }
 }
