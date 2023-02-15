@@ -26,39 +26,45 @@ public class TruckerController {
 
     @GetMapping("/all")
     public ResponseEntity<List<TruckerResponse>> getAll() {
-        List<TruckerResponse> truckerResponseList = new TruckerMapper().toListResponse(truckerService.findAllTruckers());
+        List<TruckerResponse> truckerResponseList = new TruckerMapper()
+                .toListResponse(truckerService.findAllTruckers());
         return new ResponseEntity<>(truckerResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/truck/{truck_id}")
     public ResponseEntity<TruckerResponse> getByTruck(@PathVariable("truck_id") String id) {
-        TruckerResponse truckerResponse = new TruckerMapper().toResponse(truckerService.findTruckerByTruck(parseLong(id)));
+        TruckerResponse truckerResponse = new TruckerMapper()
+                .toResponse(truckerService.findTruckerByTruck(parseLong(id)));
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
     @GetMapping("/dispatcher/{dispatcher_id}")
     public ResponseEntity<List<TruckerResponse>> getByDispatcher(@PathVariable("dispatcher_id") String id) {
-        List<TruckerResponse> truckerResponse = new TruckerMapper().toListResponse(truckerService.findTruckerByDispatcher(parseLong(id)));
+        List<TruckerResponse> truckerResponse = new TruckerMapper()
+                .toListResponse(truckerService.findTruckerByDispatcher(parseLong(id)));
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
     @GetMapping("/order/{order_id}")
     public ResponseEntity<TruckerResponse> getByOrder(@PathVariable("order_id") String id) {
-        TruckerResponse truckerResponse = new TruckerMapper().toResponse(truckerService.findTruckerByOrder(parseLong(id)));
+        TruckerResponse truckerResponse = new TruckerMapper()
+                .toResponse(truckerService.findTruckerByOrder(parseLong(id)));
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
     @PostMapping("/add")
     public ResponseEntity<TruckerResponse> addTrucker(@RequestBody TruckerRequest truckerRequest){
         Trucker trucker = new TruckerMapper().toEntity(truckerRequest);
-        TruckerResponse truckerResponse = new TruckerMapper().toResponse(truckerService.addTrucker(trucker));
+        TruckerResponse truckerResponse = new TruckerMapper()
+                .toResponse(truckerService.addTrucker(trucker));
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
     @PutMapping("/update")
     public ResponseEntity<TruckerResponse> updateTrucker(@RequestBody TruckerRequest truckerRequest){
         Trucker trucker = new TruckerMapper().toEntity(truckerRequest);
-        TruckerResponse truckerResponse= new TruckerMapper().toResponse(truckerService.updateTrucker(trucker));
+        TruckerResponse truckerResponse= new TruckerMapper()
+                .toResponse(truckerService.updateTrucker(trucker));
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
