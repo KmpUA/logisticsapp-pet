@@ -1,14 +1,15 @@
 package com.yukon.logistics.api.rest.controller;
 
+import com.yukon.logistics.model.dto.CustomerRequest;
 import com.yukon.logistics.model.dto.CustomerResponse;
 import com.yukon.logistics.model.mapper.CustomerMapper;
+import com.yukon.logistics.persistence.entity.Customer;
+import com.yukon.logistics.repository.CustomerRepository;
 import com.yukon.logistics.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,10 +19,13 @@ import static java.lang.Long.parseLong;
 @RequestMapping("/customers")
 public class CustomerController {
     private final CustomerService customerService;
+    private final CustomerRepository customerRepository;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService,
+                              CustomerRepository customerRepository) {
         super();
         this.customerService = customerService;
+        this.customerRepository = customerRepository;
     }
 
     @GetMapping("/all")
@@ -40,5 +44,25 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> getById(@PathVariable("id") String id) {
         CustomerResponse customerResponse = new CustomerMapper().toResponse(customerService.findCustomerById(parseLong(id)));
         return new ResponseEntity<>(customerResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<CustomerResponse> addCustomer(@RequestBody CustomerRequest customerRequest){
+        Customer customer = new CustomerMapper().toEntity(customerRequest);
+        CustomerResponse customerResponse = new CustomerMapper().toResponse(customerService.addCustomer(customer));
+        return new ResponseEntity<>(customerResponse, HttpStatus.OK);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<CustomerResponse> updateCustomer(@RequestBody CustomerRequest customerRequest){
+        Customer customer = new CustomerMapper().toEntity(customerRequest);
+        CustomerResponse customerResponse = new CustomerMapper().toResponse(customerService.updateCustomer(customer));
+        return new ResponseEntity<>(customerResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCustomer(@PathVariable String id){
+        customerService.deleteCustomerById(parseLong(id));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
