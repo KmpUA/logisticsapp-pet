@@ -30,8 +30,13 @@ public class TruckMapper {
 
     public Truck toEntity(TruckRequest truckRequest) {
         Truck truck = new Truck();
-        truck.setId(truckRequest.getId());
         truck.setCondition(truckRequest.getCondition());
+        truck.setModel(truckRequest.getModel());
+        truck.setFuelConsumption(truckRequest.getFuelConsumption());
+        truck.setOrderCapacity(truckRequest.getOrderCapacity());
+        truck.setSpaceCapacity(truckRequest.getSpaceCapacity());
+        truck.setVinCode(truckRequest.getVinCode());
+        truck.setLicensePlate(truckRequest.getLicensePlate());
         return truck;
     }
 }

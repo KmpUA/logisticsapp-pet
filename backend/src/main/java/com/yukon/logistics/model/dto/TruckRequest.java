@@ -13,6 +13,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TruckRequest {
-    private Long id;
+    //private Long id;
     private Condition condition;
+    String model;
+    double fuelConsumption;
+    double orderCapacity;
+    double spaceCapacity;
+    String vinCode;
+    String licensePlate;
 }
