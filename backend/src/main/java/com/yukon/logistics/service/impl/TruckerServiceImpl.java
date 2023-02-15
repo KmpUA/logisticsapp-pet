@@ -24,6 +24,11 @@ public class TruckerServiceImpl implements TruckerService {
     }
 
     @Override
+    public Trucker findTruckerById(Long id) {
+        return truckerRepository.findById(id).orElseThrow();
+    }
+
+    @Override
     public List<Trucker> findAllTruckers() {
         return truckerRepository.findAll();
     }
