@@ -28,7 +28,7 @@ public class CountryMapper {
 
     public Country toEntity(CountryRequest countryResponse) {
         Country country = new Country();
-        country.setId(countryResponse.getId());
+        //country.setId(countryResponse.getId());
         country.setName(countryResponse.getCountryName());
         return country;
     }
