@@ -18,13 +18,10 @@ import static java.lang.Long.parseLong;
 @RequestMapping("/customers")
 public class CustomerController {
     private final CustomerService customerService;
-    private final CustomerRepository customerRepository;
 
-    public CustomerController(CustomerService customerService,
-                              CustomerRepository customerRepository) {
+    public CustomerController(CustomerService customerService) {
         super();
         this.customerService = customerService;
-        this.customerRepository = customerRepository;
     }
 
     @GetMapping("/all")
