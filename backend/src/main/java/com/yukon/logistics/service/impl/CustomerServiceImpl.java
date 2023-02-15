@@ -1,7 +1,7 @@
 package com.yukon.logistics.service.impl;
 
 import com.yukon.logistics.persistence.entity.Customer;
-import com.yukon.logistics.repository.CustomerRepository;
+import com.yukon.logistics.persistence.repository.CustomerRepository;
 import com.yukon.logistics.service.CustomerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;

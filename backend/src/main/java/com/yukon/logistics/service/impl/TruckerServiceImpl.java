@@ -1,7 +1,7 @@
 package com.yukon.logistics.service.impl;
 
 import com.yukon.logistics.persistence.entity.Trucker;
-import com.yukon.logistics.repository.TruckerRepository;
+import com.yukon.logistics.persistence.repository.TruckerRepository;
 import com.yukon.logistics.service.TruckerService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
