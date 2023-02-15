@@ -3,6 +3,7 @@ package com.yukon.logistics.model.mapper;
 import com.yukon.logistics.model.dto.CityRequest;
 import com.yukon.logistics.model.dto.CityResponse;
 import com.yukon.logistics.persistence.entity.City;
+import com.yukon.logistics.persistence.entity.Country;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,10 @@ public class CityMapper {
         return response;
     }
 
-    public City toEntity(CityRequest cityRequest) {
+    public City toEntity(CityRequest cityRequest, Country country) {
         City city = new City();
-        city.setId(cityRequest.getId());
         city.setName(cityRequest.getCityName());
+        city.setCountry(country);
         return city;
     }
 }
