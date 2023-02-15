@@ -4,6 +4,7 @@ import com.yukon.logistics.persistence.entity.Order;
 import com.yukon.logistics.persistence.repository.OrderRepository;
 import com.yukon.logistics.service.OrderService;
 import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -54,7 +55,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteCityById(Long id) {
-        orderRepository.deleteById(id);
+    public void deleteOrderById(Long id) {
+        if(orderRepository.findById(id).isPresent()){
+            orderRepository.deleteById(id);
+        }
+        else{
+            throw new EntityNotFoundException(id + "Order not found");
+        }
     }
 }
