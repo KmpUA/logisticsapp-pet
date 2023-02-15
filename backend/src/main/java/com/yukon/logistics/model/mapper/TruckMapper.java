@@ -9,15 +9,17 @@ import java.util.List;
 
 public class TruckMapper {
     public TruckResponse toResponse(Truck truck) {
+        Long locationCityId = truck.getLocation() != null ? truck.getLocation().getId() : null;
+        Long truckerId = truck.getTrucker() != null ? truck.getTrucker().getId() : null;
         return TruckResponse.builder().id(truck.getId())
                 .model(truck.getModel())
-                .locationCityId(truck.getLocation().getId())
+                .locationCityId(locationCityId)
                 .fuelConsumption(truck.getFuelConsumption())
                 .orderCapacity(truck.getOrderCapacity())
                 .spaceCapacity(truck.getSpaceCapacity())
                 .condition(truck.getCondition())
                 .licensePlate(truck.getLicensePlate())
-                .truckerId(truck.getTrucker().getId()).build();
+                .truckerId(truckerId).build();
     }
 
     public List<TruckResponse> toListResponse(List<Truck> trucks) {

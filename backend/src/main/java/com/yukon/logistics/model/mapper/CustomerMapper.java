@@ -11,8 +11,10 @@ import java.util.List;
 public class CustomerMapper {
     public CustomerResponse toResponse(Customer customer) {
         List<Long> orders = new ArrayList<>();
-        for(Order order: customer.getOrders()){
-            orders.add(order.getId());
+        if(customer.getOrders() != null) {
+            for (Order order : customer.getOrders()) {
+                orders.add(order.getId());
+            }
         }
         return CustomerResponse.builder().ordersId(orders)
                 .id(customer.getId())

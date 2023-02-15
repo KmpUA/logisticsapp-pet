@@ -11,8 +11,10 @@ import java.util.List;
 public class DispatcherMapper {
     public DispatcherResponse toResponse(Dispatcher dispatcher) {
         List<Long> truckers = new ArrayList<>();
-        for(Trucker trucker : dispatcher.getTruckers()) {
-            truckers.add(trucker.getId());
+        if(dispatcher.getTruckers() != null) {
+            for (Trucker trucker : dispatcher.getTruckers()) {
+                truckers.add(trucker.getId());
+            }
         }
         return DispatcherResponse.builder()
                 .truckersId(truckers)
