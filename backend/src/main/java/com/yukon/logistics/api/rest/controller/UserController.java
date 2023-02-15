@@ -37,15 +37,15 @@ public class UserController {
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<UserResponse> getByEmail(@PathVariable("email") String email) {
         UserResponse userResponse = new UserMapper().toResponse(userService.findByEmail(email));
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable("id") Long id) {
-        userService.deleteUserById(id);
+    public ResponseEntity<?> deleteById(@PathVariable("id") String id) {
+        userService.deleteUserById(parseLong(id));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
