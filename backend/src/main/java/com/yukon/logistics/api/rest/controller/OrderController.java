@@ -2,7 +2,6 @@ package com.yukon.logistics.api.rest.controller;
 
 import com.yukon.logistics.model.dto.OrderResponse;
 import com.yukon.logistics.model.mapper.OrderMapper;
-import com.yukon.logistics.repository.OrderRepository;
 import com.yukon.logistics.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

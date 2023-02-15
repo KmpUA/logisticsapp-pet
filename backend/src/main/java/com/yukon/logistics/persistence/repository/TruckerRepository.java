@@ -1,4 +1,4 @@
-package com.yukon.logistics.repository;
+package com.yukon.logistics.persistence.repository;
 
 import com.yukon.logistics.persistence.entity.Trucker;
 import org.springframework.data.jpa.repository.JpaRepository;

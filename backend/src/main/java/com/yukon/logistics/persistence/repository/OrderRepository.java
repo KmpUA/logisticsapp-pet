@@ -1,4 +1,4 @@
-package com.yukon.logistics.repository;
+package com.yukon.logistics.persistence.repository;
 
 import com.yukon.logistics.persistence.entity.Order;
 import io.micrometer.common.lang.NonNullApi;
