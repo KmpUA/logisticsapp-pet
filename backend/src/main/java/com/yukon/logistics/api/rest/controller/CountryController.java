@@ -20,7 +20,7 @@ import java.util.List;
 import static java.lang.Long.parseLong;
 
 @RestController
-@RequestMapping("/country")
+@RequestMapping("/countries")
 @AllArgsConstructor
 public class CountryController {
     private final CountryServiceImpl countryService;
