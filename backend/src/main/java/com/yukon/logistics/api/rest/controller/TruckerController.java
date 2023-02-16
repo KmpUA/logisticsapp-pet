@@ -5,6 +5,7 @@ import com.yukon.logistics.model.dto.TruckerResponse;
 import com.yukon.logistics.model.mapper.TruckerMapper;
 import com.yukon.logistics.persistence.entity.Trucker;
 import com.yukon.logistics.service.TruckerService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,14 +16,10 @@ import java.util.List;
 import static java.lang.Long.parseLong;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/truckers")
 public class TruckerController {
     private final TruckerService truckerService;
-
-    public TruckerController(TruckerService truckerService) {
-        super();
-        this.truckerService = truckerService;
-    }
 
     @GetMapping("/all")
     public ResponseEntity<List<TruckerResponse>> getAll() {
