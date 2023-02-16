@@ -9,7 +9,8 @@ import java.util.List;
 
 public class UserMapper {
     public UserResponse toResponse(User user) {
-        return UserResponse.builder().id(user.getId())
+        return UserResponse.builder()
+                .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
@@ -27,10 +28,16 @@ public class UserMapper {
         return response;
     }
 
-    public User toUser (UserRequest request) {
+    public User toEntity (UserRequest userRequest) {
         User user = new User();
-        user.setId(request.getId());
-        user.setRole(request.getRole());
+        user.setFirstName(userRequest.getFirstName());
+        user.setLastName(userRequest.getLastName());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(userRequest.getPassword());
+        user.setImageUrl(userRequest.getImageUrl());
+        user.setPhone(userRequest.getPhone());
+        user.setRole(userRequest.getRole());
+        user.setStatus(userRequest.getStatus());
         return user;
     }
 }

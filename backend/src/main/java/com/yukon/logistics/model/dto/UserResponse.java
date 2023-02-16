@@ -14,12 +14,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserResponse {
-    Long id;
-    String firstName;
-    String lastName;
-    String email;
-    String imageUrl;
-    String phone;
-    Role role;
-    Status status;
+    private Long id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String imageUrl;
+    private String phone;
+    private Role role;
+    private Status status;
 }
