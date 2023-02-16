@@ -1,7 +1,7 @@
 package com.yukon.logistics.service.impl;
 
 import com.yukon.logistics.persistence.entity.City;
-import com.yukon.logistics.repository.CityRepository;
+import com.yukon.logistics.persistence.repository.CityRepository;
 import com.yukon.logistics.service.CityService;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.stereotype.Service;

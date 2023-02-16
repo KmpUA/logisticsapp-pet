@@ -1,7 +1,7 @@
 package com.yukon.logistics.service.impl;
 
 import com.yukon.logistics.persistence.entity.Order;
-import com.yukon.logistics.repository.OrderRepository;
+import com.yukon.logistics.persistence.repository.OrderRepository;
 import com.yukon.logistics.service.OrderService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
