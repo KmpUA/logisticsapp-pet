@@ -14,10 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderResponse {
-    //private Long id;
+    private Long id;
     private Long cityFrom;
     private Long cityTo;
-    private Long trucker;
     private String cargoDescription;
     private double cargoWeight;
     private LocalDateTime created;

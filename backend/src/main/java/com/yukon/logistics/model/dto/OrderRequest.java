@@ -12,10 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderRequest {
-    //private Long id;
     private Long cityFrom;
     private Long cityTo;
-    private Long trucker;
     String cargoDescription;
     double cargoWeight;
 }
