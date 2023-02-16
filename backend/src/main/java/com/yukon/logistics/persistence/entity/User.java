@@ -21,6 +21,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
+/**
+ * User class represents a user in the db.
+ */
 @Entity
 @Data
 @NoArgsConstructor
