@@ -10,16 +10,22 @@ import java.util.List;
 
 public class TruckerMapper {
     public TruckerResponse toResponse(Trucker trucker) {
-        List<String> orders = new ArrayList<>();
-        for(Order order: trucker.getOrders()){
-            orders.add(order.getId().toString());
+        List<Long> orders = new ArrayList<>();
+        if(trucker.getOrders() != null) {
+            for (Order order : trucker.getOrders()) {
+                orders.add(order.getId());
+            }
         }
-        new TruckerResponse();
-        return TruckerResponse.builder().
-                truckName(trucker.getTruck().getModel()).
-                dispatcherName(trucker.getDispatcher().getFirstName()
-                        + trucker.getDispatcher().getLastName()).
-                orders(orders).build();
+        return TruckerResponse.builder().ordersId(orders)
+                .id(trucker.getId())
+                .firstName(trucker.getFirstName())
+                .lastName(trucker.getLastName())
+                .email(trucker.getEmail())
+                .imageUrl(trucker.getImageUrl())
+                .phone(trucker.getPhone())
+                .role(trucker.getRole())
+                .status(trucker.getStatus())
+                .build();
     }
 
     public List<TruckerResponse> toListResponse(List<Trucker> truckers) {
@@ -32,8 +38,14 @@ public class TruckerMapper {
 
     public Trucker toEntity(TruckerRequest truckerRequest) {
         Trucker trucker = new Trucker();
-        trucker.setDispatcher(truckerRequest.getDispatcher());
-        trucker.setTruck(truckerRequest.getTruck());
+        trucker.setFirstName(truckerRequest.getFirstName());
+        trucker.setLastName(truckerRequest.getLastName());
+        trucker.setEmail(truckerRequest.getEmail());
+        trucker.setPassword(truckerRequest.getPassword());
+        trucker.setImageUrl(truckerRequest.getImageUrl());
+        trucker.setPhone(truckerRequest.getPhone());
+        trucker.setRole(truckerRequest.getRole());
+        trucker.setStatus(truckerRequest.getStatus());
         return trucker;
     }
 }
