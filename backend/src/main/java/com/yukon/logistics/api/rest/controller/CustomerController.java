@@ -45,7 +45,7 @@ public class CustomerController {
         return new ResponseEntity<>(customerResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<CustomerResponse> addCustomer(@RequestBody CustomerRequest customerRequest){
         Customer customer = new CustomerMapper().toEntity(customerRequest);
         CustomerResponse customerResponse = new CustomerMapper()
@@ -53,15 +53,17 @@ public class CustomerController {
         return new ResponseEntity<>(customerResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<CustomerResponse> updateCustomer(@RequestBody CustomerRequest customerRequest){
+    @PutMapping("/{id}")
+    public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable("id") String id,
+                                                           @RequestBody CustomerRequest customerRequest){
         Customer customer = new CustomerMapper().toEntity(customerRequest);
+        customer.setId(parseLong(id));
         CustomerResponse customerResponse = new CustomerMapper()
                 .toResponse(customerService.updateCustomer(customer));
         return new ResponseEntity<>(customerResponse, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCustomer(@PathVariable String id){
         customerService.deleteCustomerById(parseLong(id));
         return new ResponseEntity<>(HttpStatus.OK);

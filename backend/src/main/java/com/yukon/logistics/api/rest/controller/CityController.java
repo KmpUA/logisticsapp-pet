@@ -41,7 +41,7 @@ public class CityController {
         return new ResponseEntity<>(cityResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<CityResponse> addCity(@RequestBody CityRequest cityRequest){
         City city = new CityMapper().toEntity(cityRequest,
                 countryService.findCountryByName(cityRequest.getCountryName()));
@@ -49,15 +49,17 @@ public class CityController {
         return new ResponseEntity<>(cityResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<CityResponse> updateCity(@RequestBody CityRequest cityRequest){
+    @PutMapping("/{id}")
+    public ResponseEntity<CityResponse> updateCity(@PathVariable("id") String id,
+                                                   @RequestBody CityRequest cityRequest){
         City city = new CityMapper().toEntity(cityRequest,
                 countryService.findCountryByName(cityRequest.getCountryName()));
+        city.setId(parseLong(id));
         CityResponse cityResponse = new CityMapper().toResponse(cityService.updateCity(city));
         return new ResponseEntity<>(cityResponse, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCity(@PathVariable String id){
         cityService.deleteCityById(parseLong(id));
         return new ResponseEntity<>(HttpStatus.OK);

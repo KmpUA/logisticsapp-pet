@@ -52,24 +52,26 @@ public class TruckerController {
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<TruckerResponse> addTrucker(@RequestBody TruckerRequest truckerRequest){
+    @PostMapping
+    public ResponseEntity<TruckerResponse> addTrucker(@RequestBody TruckerRequest truckerRequest) {
         Trucker trucker = new TruckerMapper().toEntity(truckerRequest);
         TruckerResponse truckerResponse = new TruckerMapper()
                 .toResponse(truckerService.addTrucker(trucker));
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<TruckerResponse> updateTrucker(@RequestBody TruckerRequest truckerRequest){
+    @PutMapping("/{id}")
+    public ResponseEntity<TruckerResponse> updateTrucker(@PathVariable("id") String id,
+                                                         @RequestBody TruckerRequest truckerRequest) {
         Trucker trucker = new TruckerMapper().toEntity(truckerRequest);
+        trucker.setId(parseLong(id));
         TruckerResponse truckerResponse= new TruckerMapper()
                 .toResponse(truckerService.updateTrucker(trucker));
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteTrucker(@PathVariable String id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTrucker(@PathVariable String id) {
         truckerService.deleteCityById(parseLong(id));
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -1,5 +1,6 @@
 package com.yukon.logistics.api.rest.controller;
 
+import com.yukon.logistics.model.dto.UserRequest;
 import com.yukon.logistics.model.dto.UserResponse;
 import com.yukon.logistics.model.mapper.UserMapper;
 import com.yukon.logistics.persistence.entity.User;
@@ -20,26 +21,29 @@ import java.util.List;
 import static java.lang.Long.parseLong;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {
     private final UserServiceImpl userService;
 
     @GetMapping("/all")
     public ResponseEntity<List<UserResponse>> getAll() {
-        List<UserResponse> response = new UserMapper().toListResponse(userService.findAllUsers());
+        List<UserResponse> response = new UserMapper()
+                .toListResponse(userService.findAllUsers());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getById(@PathVariable("id") String id) {
-        UserResponse userResponse = new UserMapper().toResponse(userService.findById(parseLong(id)));
+        UserResponse userResponse = new UserMapper()
+                .toResponse(userService.findById(parseLong(id)));
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
     @GetMapping("/email/{email}")
     public ResponseEntity<UserResponse> getByEmail(@PathVariable("email") String email) {
-        UserResponse userResponse = new UserMapper().toResponse(userService.findByEmail(email));
+        UserResponse userResponse = new UserMapper()
+                .toResponse(userService.findByEmail(email));
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 
@@ -49,8 +53,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<UserResponse> add(@RequestBody User user) {
+    @PostMapping
+    public ResponseEntity<UserResponse> add(@RequestBody UserRequest userRequest) {
+        User user = new UserMapper().toEntity(userRequest);
         UserResponse userResponse = new UserMapper().toResponse(userService.addUser(user));
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
@@ -61,8 +66,11 @@ public class UserController {
         return new ResponseEntity<>(isAvailable, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<UserResponse> update(@RequestBody User user) {
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponse> update(@PathVariable("id") String id,
+                                               @RequestBody UserRequest userRequest) {
+        User user = new UserMapper().toEntity(userRequest);
+        user.setId(parseLong(id));
         UserResponse userResponse = new UserMapper().toResponse(userService.updateUser(user));
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
