@@ -6,7 +6,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +24,5 @@ public class AuthenticationController {
             @Valid @NonNull @RequestBody AuthenticationRequest authRequest) {
         
         return ResponseEntity.ok(authenticationService.authenticate(authRequest));
-    }
-    
-    @GetMapping("/test")
-    public ResponseEntity<String> test() {
-        
-        return ResponseEntity.ok("q");
     }
 }
