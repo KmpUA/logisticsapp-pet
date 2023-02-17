@@ -15,7 +15,7 @@ public class ApplicationConstants {
     public class Security {
         public static final String TOKEN_PREFIX = "Bearer ";
         public static final String TOKEN_HEADER_NAME = "Authorization";
-    
+        
         /**
          * Inner class containing paths that need special security settings.
          */
@@ -39,5 +39,11 @@ public class ApplicationConstants {
         public static final int MAX_SIZE_OF_EMAIL = 100;
         public static final int MIN_SIZE_OF_PASSWORD = 6;
         public static final int MAX_SIZE_OF_PASSWORD = 255;
+    }
+    
+    @UtilityClass
+    public class ErrorMassage {
+        public static final String UNAUTHORIZED_ERROR_MESSAGE = "The user does not have the necessary permissions or authorization.";
+        public static final String UNKNOWN_ERROR_MESSAGE = "An unknown error has occurred.";
     }
 }

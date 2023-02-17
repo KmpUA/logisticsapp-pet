@@ -59,7 +59,7 @@ public class JwtServiceImpl implements JwtService {
     }
     
     @Override
-    public String createToken(@NonNull String email, @NonNull Role role) {
+    public String createToken(@NonNull final String email, @NonNull final Role role) {
         final var jwtIssuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         final var jwtExpiration = jwtIssuedAt.plusMillis(jwtValidityInMs);
         

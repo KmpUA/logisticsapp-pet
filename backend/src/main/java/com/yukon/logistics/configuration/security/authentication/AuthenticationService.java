@@ -2,8 +2,9 @@ package com.yukon.logistics.configuration.security.authentication;
 
 import com.yukon.logistics.configuration.security.jwt.JwtServiceImpl;
 import com.yukon.logistics.exceptions.UserNotFoundException;
-import com.yukon.logistics.persistence.entity.repository.UserRepository;
+import com.yukon.logistics.persistence.repository.UserRepository;
 import lombok.AccessLevel;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,10 +20,13 @@ public class AuthenticationService {
     AuthenticationManager authenticationManager;
     JwtServiceImpl jwtService;
     
-    public AuthenticationResponse authenticate(final AuthenticationRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+    public AuthenticationResponse authenticate(@NonNull final AuthenticationRequest request) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                request.getEmail(), request.getPassword()));
         
-        final var user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new UserNotFoundException("Failed to" + " authenticate the user. User is not found"));
+        final var user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("Failed to"
+                        + " authenticate the user. User is not found"));
         
         final var token = jwtService.createToken(user.getEmail(), user.getRole());
         

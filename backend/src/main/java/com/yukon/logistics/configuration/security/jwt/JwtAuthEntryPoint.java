@@ -1,13 +1,14 @@
 package com.yukon.logistics.configuration.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yukon.logistics.common.ExceptionMessage;
+import com.yukon.logistics.common.ApplicationConstants;
 import com.yukon.logistics.model.dto.ErrorMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -18,20 +19,21 @@ import java.util.Date;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class JwtAuthEntryPoint implements AuthenticationEntryPoint {
     
-    ExceptionMessage exceptionMessage;
     ObjectMapper objectMapper;
     
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
+        log.error("Some error occurred while authorize: " + authException);
         
         final var message = ErrorMessage.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .date(new Date())
-                .description(exceptionMessage.getUnauthorizedErrorMessage())
+                .description(ApplicationConstants.ErrorMassage.UNAUTHORIZED_ERROR_MESSAGE)
                 .url(request.getRequestURL().toString())
                 .build();
         
