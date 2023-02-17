@@ -11,7 +11,6 @@ public interface SecretKeyProvider {
      * Returns an encoded secret.
      *
      * @return the encoded secret
-     * @see Key
      */
     Key getEncodedSecret();
 }

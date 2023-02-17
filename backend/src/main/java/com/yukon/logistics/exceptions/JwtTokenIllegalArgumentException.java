@@ -14,8 +14,4 @@ public class JwtTokenIllegalArgumentException extends JwtException {
     public JwtTokenIllegalArgumentException(String message, Throwable cause) {
         super(message, cause);
     }
-    
-    public JwtTokenIllegalArgumentException(String message) {
-        super(message);
-    }
 }

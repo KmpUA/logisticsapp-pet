@@ -38,5 +38,5 @@ public interface JwtService {
      * @param token the JWT we will validate
      * @return true if token valid and false otherwise
      */
-    boolean isTokenValid(@NonNull String token, @NonNull UserDetails userDetails);
+    boolean isTokenValid(@NonNull final String token, @NonNull final UserDetails userDetails);
 }
