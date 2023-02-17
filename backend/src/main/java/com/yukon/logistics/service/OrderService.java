@@ -12,5 +12,5 @@ public interface OrderService {
     Order findOrderByCityFrom(String city);
     Order findOrderByCityTo(String city);
     Order findOrderByTrucker(String truckerName);
-    void deleteCityById(Long id);
+    void deleteOrderById(Long id);
 }

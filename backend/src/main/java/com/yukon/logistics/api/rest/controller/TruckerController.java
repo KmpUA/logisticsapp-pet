@@ -1,8 +1,11 @@
 package com.yukon.logistics.api.rest.controller;
 
+import com.yukon.logistics.model.dto.TruckerRequest;
 import com.yukon.logistics.model.dto.TruckerResponse;
 import com.yukon.logistics.model.mapper.TruckerMapper;
+import com.yukon.logistics.persistence.entity.Trucker;
 import com.yukon.logistics.service.TruckerService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,14 +16,10 @@ import java.util.List;
 import static java.lang.Long.parseLong;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/truckers")
 public class TruckerController {
     private final TruckerService truckerService;
-
-    public TruckerController(TruckerService truckerService) {
-        super();
-        this.truckerService = truckerService;
-    }
 
     @GetMapping("/all")
     public ResponseEntity<List<TruckerResponse>> getAll() {
@@ -44,5 +43,25 @@ public class TruckerController {
     public ResponseEntity<TruckerResponse> getByOrder(@PathVariable("order_id") String id) {
         TruckerResponse truckerResponse = new TruckerMapper().toResponse(truckerService.findTruckerByOrder(parseLong(id)));
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<TruckerResponse> addTrucker(@RequestBody TruckerRequest truckerRequest){
+        Trucker trucker = new TruckerMapper().toEntity(truckerRequest);
+        TruckerResponse truckerResponse = new TruckerMapper().toResponse(truckerService.addTrucker(trucker));
+        return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<TruckerResponse> updateTrucker(@RequestBody TruckerRequest truckerRequest){
+        Trucker trucker = new TruckerMapper().toEntity(truckerRequest);
+        TruckerResponse truckerResponse= new TruckerMapper().toResponse(truckerService.updateTrucker(trucker));
+        return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteTrucker(@PathVariable String id){
+        truckerService.deleteCityById(parseLong(id));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,15 +1,15 @@
 package com.yukon.logistics.api.rest.controller;
 
+import com.yukon.logistics.model.dto.CityRequest;
 import com.yukon.logistics.model.dto.CityResponse;
 import com.yukon.logistics.model.mapper.CityMapper;
+import com.yukon.logistics.persistence.entity.City;
 import com.yukon.logistics.service.CityService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -37,5 +37,25 @@ public class CityController {
     public ResponseEntity<CityResponse> getByName(@PathVariable("name") String name) {
         CityResponse cityResponse = new CityMapper().toResponse(cityService.findCityByName(name));
         return new ResponseEntity<>(cityResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<CityResponse> addCity(@RequestBody CityRequest cityRequest){
+        City city = new CityMapper().toEntity(cityRequest);
+        CityResponse cityResponse = new CityMapper().toResponse(cityService.addCity(city));
+        return new ResponseEntity<>(cityResponse, HttpStatus.OK);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<CityResponse> updateCity(@RequestBody CityRequest cityRequest){
+        City city = new CityMapper().toEntity(cityRequest);
+        CityResponse cityResponse = new CityMapper().toResponse(cityService.updateCity(city));
+        return new ResponseEntity<>(cityResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCity(@PathVariable String id){
+        cityService.deleteCityById(parseLong(id));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

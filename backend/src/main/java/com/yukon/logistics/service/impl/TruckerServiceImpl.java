@@ -50,6 +50,11 @@ public class TruckerServiceImpl implements TruckerService {
 
     @Override
     public void deleteCityById(Long id) {
-        truckerRepository.deleteById(id);
+        if(truckerRepository.findById(id).isPresent()){
+            truckerRepository.deleteById(id);
+        }
+        else{
+            throw new EntityNotFoundException(id + "Trucker not found");
+        }
     }
 }
