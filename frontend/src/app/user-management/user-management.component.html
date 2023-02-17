@@ -1,0 +1,51 @@
+<div class="add-button-wrapper"><button mat-raised-button color="accent" (click)="openDialog()">Add</button></div>
+<mat-paginator [length]="200" [pageSize]="20" hidePageSize showFirstLastButtons (page)="changePage($event)"
+    aria-label="Select page">
+</mat-paginator>
+<mat-table [dataSource]="users" #table class="mat-elevation-z8">
+
+    <ng-container matColumnDef="firstName">
+        <mat-header-cell *matHeaderCellDef> First name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.firstName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+        <mat-header-cell *matHeaderCellDef> Last name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.lastName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+        <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.phone}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+        <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <mat-select [(value)]="element.role" (selectionChange)="changeRole($event.value, element)">
+                <mat-option *ngFor="let role of roles" [value]="role">
+                    {{role}}
+                </mat-option>
+            </mat-select>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <mat-select [(value)]="element.status" (selectionChange)="changeStatus($event.value, element)">
+                <mat-option *ngFor=" let status of statuses" [value]="status">
+                    {{status}}
+                </mat-option>
+            </mat-select>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

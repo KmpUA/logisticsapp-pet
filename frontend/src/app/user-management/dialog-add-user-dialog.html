@@ -1,0 +1,53 @@
+<h2 mat-dialog-title>Add user</h2>
+<form mat-dialog-content [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)">
+    <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input formControlName="firstName" type="text" placeholder="First name" matInput required>
+        <mat-error>Please enter first name</mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input formControlName="lastName" type="text" placeholder="Last name" matInput required>
+        <mat-error>Please enter last name</mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Phone</mat-label>
+        <input formControlName="phone" type="text" pattern="^[\+]?[(]?[0-9]{3}[)]?[0-9]{3}[0-9]{4,6}$"
+            placeholder="Phone" matInput required>
+        <mat-error>Enter valid phone number</mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="role">
+            <mat-option *ngFor="let role of roles" [value]="role">
+                {{role}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" type="email"
+            placeholder="Email" matInput required>
+        <mat-error>Not a valid email</mat-error>
+    </mat-form-field>
+    <br>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input formControlName="password" minlength="5" type="password" placeholder="Password" matInput required>
+        <mat-error>Not a valid password</mat-error>
+    </mat-form-field>
+    <br>
+
+    <div mat-dialog-actions class="center-button">
+        <button type="submit" mat-raised-button color="primary">Submit</button>
+    </div>
+</form>
