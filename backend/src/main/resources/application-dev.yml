@@ -1,3 +1,6 @@
+###
+# Spring settings
+###
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/logDB
@@ -5,4 +8,5 @@ spring:
     password: LogisticsPASS
   jpa:
     show-sql: true
-    ddl-auto: update
+    hibernate:
+      ddl-auto: update

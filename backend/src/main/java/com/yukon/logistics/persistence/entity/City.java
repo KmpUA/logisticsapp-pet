@@ -25,7 +25,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "city")
+@Table(name = "cities")
 public class City {
 
     @Id
@@ -37,7 +37,6 @@ public class City {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
-    @Column(nullable = false)
     Country country;
 
     @Override

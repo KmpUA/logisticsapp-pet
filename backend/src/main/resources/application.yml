@@ -1,5 +1,18 @@
+###
+# Spring settings
+###
 spring:
   profiles:
     active: dev
+  security:
+    #Validity time of JWT in milliseconds.
+    jwtValidityInMs: 36000000
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+
+#Spring server settings
+server:
+  #Servlet Settings
+  servlet:
+    context-path: /api
