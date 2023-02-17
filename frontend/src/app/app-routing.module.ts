@@ -8,7 +8,7 @@ import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'dispatcher', component: DashboardDispatcherComponent },
-  { path: 'trucker', component: DashboardTruckerComponent }
+  { path: 'trucker', component: DashboardTruckerComponent },
   { path: 'login', component: LoginComponent }
 ];
 

@@ -13,10 +13,29 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
+
+import { DashboardComponent } from './dashboard/dashboard-user/dashboard.component';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { DashboardAdminComponent } from './dashboard/dashboard-admin/dashboard-admin.component';
+import { DashboardTruckerComponent } from './dashboard/dashboard-trucker/dashboard-trucker.component';
+import { DashboardDispatcherComponent } from './dashboard/dashboard-dispatcher/dashboard-dispatcher.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogContentExampleDialog } from './dashboard/dashboard-user/dashboard.component';
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DialogContentAssign } from './dashboard/dashboard-dispatcher/dashboard-dispatcher.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
+    DashboardAdminComponent,
+    DashboardTruckerComponent,
+    DashboardDispatcherComponent,
+    DialogContentExampleDialog,
+    DialogContentAssign
   ],
   imports: [
     BrowserModule,
@@ -28,6 +47,12 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     FormsModule,
     HttpClientModule,
+    MatListModule,
+    MatIconModule,
+    MatDialogModule,
+    MatSelectModule,
+    ReactiveFormsModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
