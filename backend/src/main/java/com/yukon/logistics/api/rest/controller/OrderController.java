@@ -4,6 +4,7 @@ import com.yukon.logistics.model.dto.OrderRequest;
 import com.yukon.logistics.model.dto.OrderResponse;
 import com.yukon.logistics.model.mapper.OrderMapper;
 import com.yukon.logistics.persistence.entity.Order;
+import com.yukon.logistics.service.CityService;
 import com.yukon.logistics.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import static java.lang.Long.parseLong;
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
+    private final CityService cityService;
 
     @GetMapping("/all")
     public ResponseEntity<List<OrderResponse>> getAll() {
@@ -45,27 +47,34 @@ public class OrderController {
         return new ResponseEntity<>(orderResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/trucker_name/{trucker_name}")
-    public ResponseEntity<OrderResponse> getByTruckerName(@PathVariable("trucker_name") String truckerName) {
-        OrderResponse orderResponse = new OrderMapper().toResponse(orderService.findOrderByTrucker(truckerName));
+    @GetMapping("/trucker_id/{trucker_id}")
+    public ResponseEntity<OrderResponse> getByTruckerName(@PathVariable("trucker_id") String truckerId) {
+        OrderResponse orderResponse = new OrderMapper().toResponse(orderService
+                .findOrderByTruckerId(parseLong(truckerId)));
         return new ResponseEntity<>(orderResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<OrderResponse> addOrder(@RequestBody OrderRequest orderRequest){
-        Order order = new OrderMapper().toEntity(orderRequest);
+        Order order = new OrderMapper().toEntity(orderRequest,
+                cityService.findCityById(orderRequest.getCityFrom()),
+                cityService.findCityById(orderRequest.getCityTo()));
         OrderResponse orderResponse = new OrderMapper().toResponse(orderService.addOrder(order));
         return new ResponseEntity<>(orderResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<OrderResponse> updateOrder(@RequestBody OrderRequest orderRequest){
-        Order order = new OrderMapper().toEntity(orderRequest);
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderResponse> updateOrder(@PathVariable("id") String id,
+                                                     @RequestBody OrderRequest orderRequest){
+        Order order = new OrderMapper().toEntity(orderRequest,
+                cityService.findCityById(orderRequest.getCityFrom()),
+                cityService.findCityById(orderRequest.getCityTo()));
+        order.setId(parseLong(id));
         OrderResponse orderResponse = new OrderMapper().toResponse(orderService.updateOrder(order));
         return new ResponseEntity<>(orderResponse, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteOrder(@PathVariable String id){
         orderService.deleteOrderById(parseLong(id));
         return new ResponseEntity<>(HttpStatus.OK);

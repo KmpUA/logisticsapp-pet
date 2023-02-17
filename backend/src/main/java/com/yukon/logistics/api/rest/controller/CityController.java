@@ -5,6 +5,7 @@ import com.yukon.logistics.model.dto.CityResponse;
 import com.yukon.logistics.model.mapper.CityMapper;
 import com.yukon.logistics.persistence.entity.City;
 import com.yukon.logistics.service.CityService;
+import com.yukon.logistics.service.CountryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import static java.lang.Long.parseLong;
 @RequestMapping("/cities")
 public class CityController {
     private final CityService cityService;
+    private final CountryService countryService;
 
     @GetMapping("/all")
     public ResponseEntity<List<CityResponse>> getAll() {
@@ -39,21 +41,25 @@ public class CityController {
         return new ResponseEntity<>(cityResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<CityResponse> addCity(@RequestBody CityRequest cityRequest){
-        City city = new CityMapper().toEntity(cityRequest);
+        City city = new CityMapper().toEntity(cityRequest,
+                countryService.findCountryByName(cityRequest.getCountryName()));
         CityResponse cityResponse = new CityMapper().toResponse(cityService.addCity(city));
         return new ResponseEntity<>(cityResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<CityResponse> updateCity(@RequestBody CityRequest cityRequest){
-        City city = new CityMapper().toEntity(cityRequest);
+    @PutMapping("/{id}")
+    public ResponseEntity<CityResponse> updateCity(@PathVariable("id") String id,
+                                                   @RequestBody CityRequest cityRequest){
+        City city = new CityMapper().toEntity(cityRequest,
+                countryService.findCountryByName(cityRequest.getCountryName()));
+        city.setId(parseLong(id));
         CityResponse cityResponse = new CityMapper().toResponse(cityService.updateCity(city));
         return new ResponseEntity<>(cityResponse, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCity(@PathVariable String id){
         cityService.deleteCityById(parseLong(id));
         return new ResponseEntity<>(HttpStatus.OK);

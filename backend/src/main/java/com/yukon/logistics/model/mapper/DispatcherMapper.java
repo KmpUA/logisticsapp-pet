@@ -11,11 +11,22 @@ import java.util.List;
 public class DispatcherMapper {
     public DispatcherResponse toResponse(Dispatcher dispatcher) {
         List<Long> truckers = new ArrayList<>();
-        for(Trucker trucker : dispatcher.getTruckers()) {
-            truckers.add(trucker.getId());
+        if(dispatcher.getTruckers() != null) {
+            for (Trucker trucker : dispatcher.getTruckers()) {
+                truckers.add(trucker.getId());
+            }
         }
         return DispatcherResponse.builder()
-                .truckersId(truckers).build();
+                .truckersId(truckers)
+                .id(dispatcher.getId())
+                .firstName(dispatcher.getFirstName())
+                .lastName(dispatcher.getLastName())
+                .email(dispatcher.getEmail())
+                .imageUrl(dispatcher.getImageUrl())
+                .phone(dispatcher.getPhone())
+                .role(dispatcher.getRole())
+                .status(dispatcher.getStatus())
+                .build();
     }
 
     public List<DispatcherResponse> toListResponse(List<Dispatcher> dispatchers) {
@@ -28,9 +39,15 @@ public class DispatcherMapper {
 
     public Dispatcher toEntity (DispatcherRequest dispatcherRequest) {
         Dispatcher dispatcher = new Dispatcher();
-        List<Trucker> truckers = new ArrayList<>();
-        truckers.add(dispatcherRequest.getTrucker());
-        dispatcher.setTruckers(truckers);
+        dispatcher.setFirstName(dispatcherRequest.getFirstName());
+        dispatcher.setLastName(dispatcherRequest.getLastName());
+        dispatcher.setEmail(dispatcherRequest.getEmail());
+        dispatcher.setPassword(dispatcherRequest.getPassword());
+        dispatcher.setImageUrl(dispatcherRequest.getImageUrl());
+        dispatcher.setPhone(dispatcherRequest.getPhone());
+        dispatcher.setRole(dispatcherRequest.getRole());
+        dispatcher.setStatus(dispatcherRequest.getStatus());
+
         return dispatcher;
     }
 }

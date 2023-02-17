@@ -11,8 +11,8 @@ import java.util.Optional;
 @NonNullApi
 public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findById(Long id);
-    Optional<Order> findByFrom(String city);
-    Optional<Order> findByTo(String city);
-    Optional<Order> findByTrucker(String truckerName);
+    Optional<Order> findByFromName(String city);
+    Optional<Order> findByToName(String city);
+    Optional<Order> findByTruckerId(Long truckerId);
     void deleteById(Long id);
 }

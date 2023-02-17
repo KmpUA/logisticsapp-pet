@@ -9,15 +9,17 @@ import java.util.List;
 
 public class TruckMapper {
     public TruckResponse toResponse(Truck truck) {
+        Long locationCityId = truck.getLocation() != null ? truck.getLocation().getId() : null;
+        Long truckerId = truck.getTrucker() != null ? truck.getTrucker().getId() : null;
         return TruckResponse.builder().id(truck.getId())
                 .model(truck.getModel())
-                .locationCityId(truck.getLocation().getId())
+                .locationCityId(locationCityId)
                 .fuelConsumption(truck.getFuelConsumption())
                 .orderCapacity(truck.getOrderCapacity())
                 .spaceCapacity(truck.getSpaceCapacity())
                 .condition(truck.getCondition())
                 .licensePlate(truck.getLicensePlate())
-                .truckerId(truck.getTrucker().getId()).build();
+                .truckerId(truckerId).build();
     }
 
     public List<TruckResponse> toListResponse(List<Truck> trucks) {
@@ -30,8 +32,13 @@ public class TruckMapper {
 
     public Truck toEntity(TruckRequest truckRequest) {
         Truck truck = new Truck();
-        truck.setId(truckRequest.getId());
         truck.setCondition(truckRequest.getCondition());
+        truck.setModel(truckRequest.getModel());
+        truck.setFuelConsumption(truckRequest.getFuelConsumption());
+        truck.setOrderCapacity(truckRequest.getOrderCapacity());
+        truck.setSpaceCapacity(truckRequest.getSpaceCapacity());
+        truck.setVinCode(truckRequest.getVinCode());
+        truck.setLicensePlate(truckRequest.getLicensePlate());
         return truck;
     }
 }

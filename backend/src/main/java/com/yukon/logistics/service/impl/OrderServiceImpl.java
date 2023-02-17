@@ -41,17 +41,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findOrderByCityFrom(String city) {
-        return orderRepository.findByFrom(city).orElseThrow(EntityExistsException::new);
+        return orderRepository.findByFromName(city).orElseThrow(EntityExistsException::new);
     }
 
     @Override
     public Order findOrderByCityTo(String city) {
-        return orderRepository.findByTo(city).orElseThrow(EntityExistsException::new);
+        return orderRepository.findByToName(city).orElseThrow(EntityExistsException::new);
     }
 
     @Override
-    public Order findOrderByTrucker(String truckerName) {
-        return orderRepository.findByTrucker(truckerName).orElseThrow(EntityExistsException::new);
+    public Order findOrderByTruckerId(Long truckerId) {
+        return orderRepository.findByTruckerId(truckerId).orElseThrow(EntityExistsException::new);
     }
 
     @Override
