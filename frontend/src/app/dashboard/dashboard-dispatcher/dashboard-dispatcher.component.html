@@ -1,0 +1,42 @@
+<div class="main">
+
+        <div class="container">
+                <div class="container-item" *ngFor="let item of orderList">
+                        <p class="created"><mat-icon class="clock" aria-hidden="false" aria-label="Example home icon"
+                                        fontIcon="schedule"></mat-icon>{{item.created}}</p>
+                        <div class="flex-container">
+                                <mat-list>
+                                        <mat-list-item><mat-icon class="calendar" aria-hidden="false"
+                                                        aria-label="Example home icon"
+                                                        fontIcon="calendar_month"></mat-icon>{{item.startDeliver}}<span
+                                                        class="dash">&ndash;</span>{{item.endDeliver}}</mat-list-item>
+                                        <mat-list-item><mat-icon class="fitness_center" aria-hidden="false"
+                                                        aria-label="Example home icon"
+                                                        fontIcon="fitness_center"></mat-icon>{{item.cargoWeight}}</mat-list-item>
+                                        <mat-list-item><mat-icon class="zoom_out_map" aria-hidden="false"
+                                                        aria-label="Example home icon"
+                                                        fontIcon="zoom_out_map"></mat-icon>{{item.cargoSize}}</mat-list-item>
+                                </mat-list>
+                        </div>
+
+                        <p class="description">
+                                {{item.cargoDescription}}
+                        </p>
+
+                        <mat-list>
+                                <mat-list-item><mat-icon class="public" aria-hidden="false"
+                                                aria-label="Example home icon"
+                                                fontIcon="public"></mat-icon>{{item.cityFrom}}<span
+                                                class="dash">&mdash;</span>{{item.cityTo}}</mat-list-item>
+                        </mat-list>
+
+                        <div class="create-order">
+                                <button style="font-size: large;" class="btn" mat-button
+                                        (click)="openDialog()">Assign</button>
+                        </div>
+
+                        <div class="btn-delete"><button class="btn" mat-flat-button color="warn" mat-button
+                                        (click)="deleteOrder()">Delete</button></div>
+                </div>
+        </div>
+</div>
