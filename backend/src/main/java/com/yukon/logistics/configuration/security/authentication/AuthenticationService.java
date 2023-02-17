@@ -2,7 +2,7 @@ package com.yukon.logistics.configuration.security.authentication;
 
 import com.yukon.logistics.configuration.security.jwt.JwtServiceImpl;
 import com.yukon.logistics.exceptions.UserNotFoundException;
-import com.yukon.logistics.persistence.entity.repository.UserRepository;
+import com.yukon.logistics.persistence.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
