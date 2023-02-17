@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface TruckerService {
     Trucker addTrucker(Trucker trucker);
+    Trucker findTruckerById(Long id);
     List<Trucker> findAllTruckers();
     Trucker updateTrucker(Trucker trucker);
     Trucker findTruckerByTruck(Long id);

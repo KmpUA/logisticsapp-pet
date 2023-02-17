@@ -24,6 +24,11 @@ public class TruckerServiceImpl implements TruckerService {
     }
 
     @Override
+    public Trucker findTruckerById(Long id) {
+        return truckerRepository.findById(id).orElseThrow();
+    }
+
+    @Override
     public List<Trucker> findAllTruckers() {
         return truckerRepository.findAll();
     }
@@ -50,6 +55,11 @@ public class TruckerServiceImpl implements TruckerService {
 
     @Override
     public void deleteCityById(Long id) {
-        truckerRepository.deleteById(id);
+        if(truckerRepository.findById(id).isPresent()){
+            truckerRepository.deleteById(id);
+        }
+        else{
+            throw new EntityNotFoundException(id + "Trucker not found");
+        }
     }
 }

@@ -11,8 +11,10 @@ import java.util.List;
 public class CountryMapper {
     public CountryResponse toResponse(Country country) {
         List<String> cityNames = new ArrayList<>();
-        for (City city : country.getCities()) {
-            cityNames.add(city.getName());
+        if(country.getCities() != null) {
+            for (City city : country.getCities()) {
+                cityNames.add(city.getName());
+            }
         }
         return CountryResponse.builder().id(country.getId())
                 .countryName(country.getName()).cityNames(cityNames).build();
@@ -28,7 +30,7 @@ public class CountryMapper {
 
     public Country toEntity(CountryRequest countryResponse) {
         Country country = new Country();
-        country.setId(countryResponse.getId());
+        //country.setId(countryResponse.getId());
         country.setName(countryResponse.getCountryName());
         return country;
     }

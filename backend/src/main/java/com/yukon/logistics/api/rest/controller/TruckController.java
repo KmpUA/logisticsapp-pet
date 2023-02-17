@@ -1,5 +1,6 @@
 package com.yukon.logistics.api.rest.controller;
 
+import com.yukon.logistics.model.dto.TruckRequest;
 import com.yukon.logistics.model.dto.TruckResponse;
 import com.yukon.logistics.model.mapper.TruckMapper;
 import com.yukon.logistics.persistence.entity.Truck;
@@ -66,15 +67,19 @@ public class TruckController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<TruckResponse> addTruck(@RequestBody Truck truck) {
+    @PostMapping
+    public ResponseEntity<TruckResponse> addTruck(@RequestBody TruckRequest truckRequest) {
+        Truck truck = new TruckMapper().toEntity(truckRequest);
         TruckResponse truckResponse = new TruckMapper()
                 .toResponse(truckService.addTruck(truck));
         return new ResponseEntity<>(truckResponse, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<TruckResponse> updateTruck(@RequestBody Truck truck) {
+    @PutMapping("/{id}")
+    public ResponseEntity<TruckResponse> updateTruck(@PathVariable("id") String id,
+                                                     @RequestBody TruckRequest truckRequest) {
+        Truck truck = new TruckMapper().toEntity(truckRequest);
+        truck.setId(parseLong(id));
         TruckResponse truckResponse = new TruckMapper()
                 .toResponse(truckService.updateTruck(truck));
         return new ResponseEntity<>(truckResponse, HttpStatus.CREATED);

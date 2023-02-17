@@ -1,5 +1,6 @@
 package com.yukon.logistics.api.rest.controller;
 
+import com.yukon.logistics.model.dto.DispatcherRequest;
 import com.yukon.logistics.model.dto.DispatcherResponse;
 import com.yukon.logistics.model.mapper.DispatcherMapper;
 import com.yukon.logistics.persistence.entity.Dispatcher;
@@ -45,15 +46,19 @@ public class DispatcherController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<DispatcherResponse> add(@RequestBody Dispatcher dispatcher) {
+    @PostMapping
+    public ResponseEntity<DispatcherResponse> add(@RequestBody DispatcherRequest dispatcherRequest) {
+        Dispatcher dispatcher = new DispatcherMapper().toEntity(dispatcherRequest);
         DispatcherResponse dispatcherResponse = new DispatcherMapper()
                 .toResponse(dispatcherService.addDispatcher(dispatcher));
         return new ResponseEntity<>(dispatcherResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<DispatcherResponse> update(@RequestBody Dispatcher dispatcher) {
+    @PutMapping("/{id}")
+    public ResponseEntity<DispatcherResponse> update(@PathVariable("id") String id,
+                                                     @RequestBody DispatcherRequest dispatcherRequest) {
+        Dispatcher dispatcher = new DispatcherMapper().toEntity(dispatcherRequest);
+        dispatcher.setId(parseLong(id));
         DispatcherResponse dispatcherResponse = new DispatcherMapper()
                 .toResponse(dispatcherService.updateDispatcher(dispatcher));
         return new ResponseEntity<>(dispatcherResponse, HttpStatus.OK);

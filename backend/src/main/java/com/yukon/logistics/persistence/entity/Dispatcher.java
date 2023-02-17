@@ -21,6 +21,6 @@ import java.util.List;
 @Table(name = "dispatchers")
 public class Dispatcher extends User {
 
-    @OneToMany(mappedBy = "dispatcher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "dispatcher", cascade = CascadeType.ALL)
     List<Trucker> truckers;
 }

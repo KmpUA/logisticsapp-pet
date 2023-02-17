@@ -13,13 +13,13 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustomerRequest {
-    String firstName;
-    String lastName;
-    String email;
-    String password;
-    String imageUrl;
-    String phone;
-    Role role;
-    Status status;
+public class UserRequest {
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private String imageUrl;
+    private String phone;
+    private Role role;
+    private Status status;
 }
