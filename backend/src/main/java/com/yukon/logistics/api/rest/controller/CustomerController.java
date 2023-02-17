@@ -5,6 +5,7 @@ import com.yukon.logistics.model.dto.CustomerResponse;
 import com.yukon.logistics.model.mapper.CustomerMapper;
 import com.yukon.logistics.persistence.entity.Customer;
 import com.yukon.logistics.service.CustomerService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,14 +16,10 @@ import java.util.List;
 import static java.lang.Long.parseLong;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/customers")
 public class CustomerController {
     private final CustomerService customerService;
-
-    public CustomerController(CustomerService customerService) {
-        super();
-        this.customerService = customerService;
-    }
 
     @GetMapping("/all")
     public ResponseEntity<List<CustomerResponse>> getAll() {
