@@ -1,6 +1,6 @@
 package com.yukon.logistics.exceptions.handler;
 
-import com.yukon.logistics.common.ExceptionMessage;
+import com.yukon.logistics.common.ApplicationConstants;
 import com.yukon.logistics.model.dto.ErrorMessage;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,12 +17,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
+/**
+ * Exception handler for application.
+ * TODO we should add handling of specific exceptions as needed
+ */
 @RestControllerAdvice
 @RequiredArgsConstructor
 @Slf4j
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
-    
-    private final ExceptionMessage exceptionMessage;
     
     /**
      * Handle AuthenticationExceptions.
@@ -37,7 +39,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         final var message = ErrorMessage.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .date(new Date())
-                .description(exceptionMessage.getUnauthorizedErrorMessage())
+                .description(ApplicationConstants.ErrorMassage.UNAUTHORIZED_ERROR_MESSAGE)
                 .url(request.getRequestURL().toString())
                 .build();
         
@@ -61,7 +63,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         final var message = ErrorMessage.builder()
                 .status(status.value())
                 .date(new Date())
-                .description(exceptionMessage.getInternalServerErrorMessage())
+                .description(ApplicationConstants.ErrorMassage.UNKNOWN_ERROR_MESSAGE)
                 .url(request.getRequestURL().toString())
                 .build();
         
