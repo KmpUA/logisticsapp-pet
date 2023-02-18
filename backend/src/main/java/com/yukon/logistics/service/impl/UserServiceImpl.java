@@ -4,6 +4,8 @@ import com.yukon.logistics.persistence.entity.User;
 import com.yukon.logistics.persistence.repository.UserRepository;
 import com.yukon.logistics.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,13 @@ public class UserServiceImpl implements UserService {
     public User addUser(User user) {
         return userRepository.save(user);
     }
-
+    
+    @Override
+    public Page<User> findOnePage(Pageable pageable) {
+        
+        return userRepository.findAll(pageable);
+    }
+    
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
