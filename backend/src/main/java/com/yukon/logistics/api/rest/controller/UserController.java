@@ -6,6 +6,8 @@ import com.yukon.logistics.model.mapper.UserMapper;
 import com.yukon.logistics.persistence.entity.User;
 import com.yukon.logistics.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+
 import static java.lang.Long.parseLong;
 
 @Controller
@@ -25,53 +28,69 @@ import static java.lang.Long.parseLong;
 @AllArgsConstructor
 public class UserController {
     private final UserServiceImpl userService;
-
+    private final UserMapper userMapper;
+    
     @GetMapping("/all")
     public ResponseEntity<List<UserResponse>> getAll() {
-        List<UserResponse> response = new UserMapper()
-                .toListResponse(userService.findAllUsers());
+        
+        List<UserResponse> response = userMapper.toListResponse(userService.findAllUsers());
+        
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
+    
+    @GetMapping
+    public ResponseEntity<List<UserResponse>> getOnePage(@NonNull final PageRequest pageRequest) {
+        List<UserResponse> response = userService.findOnePage(pageRequest)
+                .stream().map(userMapper::toResponse).toList();
+        
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getById(@PathVariable("id") String id) {
-        UserResponse userResponse = new UserMapper()
+        UserResponse userResponse = userMapper
                 .toResponse(userService.findById(parseLong(id)));
+        
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
-
+    
     @GetMapping("/email/{email}")
     public ResponseEntity<UserResponse> getByEmail(@PathVariable("email") String email) {
-        UserResponse userResponse = new UserMapper()
+        UserResponse userResponse = userMapper
                 .toResponse(userService.findByEmail(email));
+        
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
-
+    
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable("id") String id) {
+    public ResponseEntity<String> deleteById(@PathVariable("id") String id) {
         userService.deleteUserById(parseLong(id));
-        return new ResponseEntity<>(HttpStatus.OK);
+        
+        return ResponseEntity.ok("Entity successfully deleted.");
     }
-
+    
     @PostMapping
     public ResponseEntity<UserResponse> add(@RequestBody UserRequest userRequest) {
-        User user = new UserMapper().toEntity(userRequest);
-        UserResponse userResponse = new UserMapper().toResponse(userService.addUser(user));
+        User user = userMapper.toEntity(userRequest);
+        UserResponse userResponse = userMapper.toResponse(userService.addUser(user));
+        
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
-
+    
     @GetMapping("/available/{email}")
     public ResponseEntity<Boolean> checkEmailAvailability(@PathVariable("email") String email) {
         Boolean isAvailable = userService.checkEmailAvailability(email);
+        
         return new ResponseEntity<>(isAvailable, HttpStatus.OK);
     }
-
+    
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> update(@PathVariable("id") String id,
                                                @RequestBody UserRequest userRequest) {
-        User user = new UserMapper().toEntity(userRequest);
+        User user = userMapper.toEntity(userRequest);
         user.setId(parseLong(id));
-        UserResponse userResponse = new UserMapper().toResponse(userService.updateUser(user));
+        UserResponse userResponse = userMapper.toResponse(userService.updateUser(user));
+        
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 }
