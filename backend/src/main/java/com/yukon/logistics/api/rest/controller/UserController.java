@@ -6,8 +6,9 @@ import com.yukon.logistics.model.mapper.UserMapper;
 import com.yukon.logistics.persistence.entity.User;
 import com.yukon.logistics.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
-import lombok.NonNull;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,8 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import static java.lang.Long.parseLong;
 
@@ -30,20 +30,16 @@ public class UserController {
     private final UserServiceImpl userService;
     private final UserMapper userMapper;
     
-    @GetMapping("/all")
-    public ResponseEntity<List<UserResponse>> getAll() {
-        
-        List<UserResponse> response = userMapper.toListResponse(userService.findAllUsers());
-        
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-    
     @GetMapping
-    public ResponseEntity<List<UserResponse>> getOnePage(@NonNull final PageRequest pageRequest) {
-        List<UserResponse> response = userService.findOnePage(pageRequest)
-                .stream().map(userMapper::toResponse).toList();
+    public ResponseEntity<Page<UserResponse>> getAll(
+            @RequestParam(defaultValue = "0") final int page,
+            @RequestParam(defaultValue = "20") final int size,
+            @RequestParam(defaultValue = "DESC") final Sort.Direction sortDirection,
+            @RequestParam(defaultValue = "id") final String sortField) {
+        Page<User> response = userService.findAll(
+                PageRequest.of(page, size, sortDirection, sortField));
         
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response.map(userMapper::toResponse), HttpStatus.OK);
     }
     
     @GetMapping("/{id}")

@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface UserService {
     User addUser(User user);
-    Page<User> findOnePage(Pageable pageable);
-    List<User> findAllUsers();
+    Page<User> findAll(Pageable pageable);
+    List<User> findAll();
     User updateUser(User user);
     User findById(Long id);
     User findByEmail(String email);
