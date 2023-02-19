@@ -1,7 +1,10 @@
-<div class="add-button-wrapper"><button mat-raised-button color="accent" (click)="openDialog()">Add</button></div>
-<mat-paginator [length]="200" [pageSize]="20" hidePageSize showFirstLastButtons (page)="changePage($event)"
-    aria-label="Select page">
-</mat-paginator>
+
+<div class="toolbar-wrapper">
+    <button mat-raised-button color="primary" (click)="openDialog()">Add</button>
+    <mat-paginator [length]="length" [pageSize]="20" hidePageSize showFirstLastButtons (page)="changePage($event)"
+        aria-label="Select page">
+    </mat-paginator>
+</div>
 <mat-table [dataSource]="users" #table class="mat-elevation-z8">
 
     <ng-container matColumnDef="firstName">

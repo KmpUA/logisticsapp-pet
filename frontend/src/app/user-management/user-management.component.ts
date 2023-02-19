@@ -7,6 +7,7 @@ import { UsersService } from '../services/users.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Statuses } from '../models/Statueses';
 import { Roles } from '../models/Roles';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -21,45 +22,44 @@ export class UserManagementComponent {
   displayedColumns: string[] = ['firstName', 'lastName', 'email', 'phone', 'role', 'status'];
   roles = Object.values(Roles);
   statuses = Object.values(Statuses);
-
-  constructor(private userService: UsersService, public dialog: MatDialog) { }
+  length: number = 0;
+  constructor(private userService: UsersService, public dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe(
+    this.userService.getUsers(0).subscribe(
       response => {
-        console.log(response);
-        this.users = response;
-
+        this.users = response.content;
+        this.length = response.totalElements;
+        this.table.renderRows();
       }
     );
   }
 
   changeRole(role: string, element: User) {
-    console.log(role, element);
-    this.userService.updateRole(element.id!, role).subscribe(
-      response => {
-        console.log(response);
+    this.userService.updateRole(element.id!, role, element).subscribe({
+      error: error => {
+        this.snackBar.open('Cannot edit user\'s role! Code: ' + error.status, '', {
+          duration: 3000
+        });
       }
-    )
+    });
   }
 
   changeStatus(status: string, element: User) {
-    console.log(status, element);
-    this.userService.updateStatus(element.id!, status).subscribe(
-      response => {
-        console.log(response);
+    this.userService.updateStatus(element.id!, status, element).subscribe({
+      error: error => {
+        this.snackBar.open('Cannot edit user\'s status! Code: ' + error.status, '', {
+          duration: 3000
+        });
       }
-    )
+    });
   }
 
   changePage(event: PageEvent) {
     let page: number = event.pageIndex;
-    console.log(page);
-    page++;
     this.userService.getUsers(page).subscribe(
       response => {
-        console.log(response);
-        this.users.pop(); // replace this with: this.users = response;
+        this.users = response.content;
         this.table.renderRows();
       }
     );
@@ -89,13 +89,21 @@ export class DialogAddUserDialog {
     password: new FormControl(''),
   });
 
-  constructor(private userService: UsersService) { }
+  constructor(private userService: UsersService, private snackBar: MatSnackBar) { }
 
   onSubmit(userForm: FormGroup) {
     if (userForm.valid) {
-      this.userService.addUser(userForm.value).subscribe(
-        response => console.log(response)
-      )
+      this.userService.addUser(userForm.value).subscribe({
+        error: error => {
+          this.snackBar.open('Error while addin user! Code: ' + error.status, '', {
+            duration: 3000
+          });
+        }
+      });
+    } else {
+      this.snackBar.open('Cannot add user! Invalid form', '', {
+        duration: 3000
+      });
     }
   }
 }

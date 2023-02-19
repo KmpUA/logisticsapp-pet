@@ -16,9 +16,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DialogAddUserDialog } from './user-management/user-management.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { UserManagementComponent } from './user-management/user-management.component';
+import { DialogAddUserDialog } from './user-management/user-management.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
     MatPaginatorModule,
     MatDialogModule,
     ReactiveFormsModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

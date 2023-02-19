@@ -17,23 +17,40 @@ const httpOptions = {
 export class UsersService {
   constructor(private http: HttpClient) { }
 
-  getUsers(page: number = -1): Observable<User[]> {
-    // delete this if else, leave only else
-    if (page == -1)
-      return this.http.get<User[]>(API_URL + 'users');
-    else
-      return this.http.get<User[]>(API_URL + 'users?page=' + page);
+  getUsers(page: number): Observable<any> {
+    return this.http.get<User[]>(API_URL + 'users?page=' + page);
   }
 
-  updateRole(id: number, role: string): Observable<any> {
-    return this.http.patch(API_URL + 'users/' + id.toString(), role, httpOptions);
+  updateRole(id: number, role: string, user: User): Observable<any> {
+    return this.http.put(API_URL + 'users/' + id.toString(), {
+      "role": role,
+      "id": user.id,
+      "firstName": user.firstName,
+      "lastName": user.lastName,
+      "email": user.email,
+      "imageUrl": null,
+      "phone": user.phone,
+      "status": user.status,
+      "password": "password"
+    }, httpOptions);
   }
 
-  updateStatus(id: number, status: string): Observable<any> {
-    return this.http.patch(API_URL + 'users/' + id.toString(), status, httpOptions);
+  updateStatus(id: number, status: string, user: User): Observable<any> {
+    return this.http.put(API_URL + 'users/' + id.toString(), {
+      "status": status,
+      "id": user.id,
+      "firstName": user.firstName,
+      "lastName": user.lastName,
+      "email": user.email,
+      "imageUrl": null,
+      "phone": user.phone,
+      "role": user.role,
+      "password": "password"
+    }, httpOptions);
   }
 
   addUser(user: User): Observable<any> {
-    return this.http.post(API_URL + 'users/', user, httpOptions);
+    user.status = "ACTIVE";
+    return this.http.post(API_URL + 'users', user, httpOptions);
   }
 }

@@ -3,3 +3,9 @@
     justify-content: center;
     align-items: center;
 }
+
+.toolbar-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
