@@ -34,10 +34,10 @@ public class UserController {
     public ResponseEntity<Page<UserResponse>> getAll(
             @RequestParam(defaultValue = "0") final int page,
             @RequestParam(defaultValue = "20") final int size,
-            @RequestParam(defaultValue = "DESC") final Sort.Direction sortDirection,
+            @RequestParam(defaultValue = "DESC") final String sortDirection,
             @RequestParam(defaultValue = "id") final String sortField) {
-        Page<User> response = userService.findAll(
-                PageRequest.of(page, size, sortDirection, sortField));
+        Page<User> response = userService.findAll(PageRequest.of(page,
+                size, Sort.Direction.fromString(sortDirection), sortField));
         
         return new ResponseEntity<>(response.map(userMapper::toResponse), HttpStatus.OK);
     }
