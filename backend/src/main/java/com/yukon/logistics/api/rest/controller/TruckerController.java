@@ -69,7 +69,7 @@ public class TruckerController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTrucker(@PathVariable String id) {
-        truckerService.deleteCityById(parseLong(id));
+        truckerService.deleteTruckerById(parseLong(id));
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

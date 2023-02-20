@@ -12,6 +12,6 @@ public interface TruckerService {
     Trucker findTruckerByTruck(Long id);
     List<Trucker> findTruckerByDispatcher(Long id);
     Trucker findTruckerByOrder(Long id);
-    void deleteCityById(Long id);
+    void deleteTruckerById(Long id);
 
 }

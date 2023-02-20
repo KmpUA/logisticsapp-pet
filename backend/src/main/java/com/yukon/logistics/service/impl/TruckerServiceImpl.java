@@ -40,26 +40,21 @@ public class TruckerServiceImpl implements TruckerService {
 
     @Override
     public Trucker findTruckerByTruck(Long id) {
-        return truckerRepository.findByTruck(id.toString()).orElseThrow(EntityNotFoundException::new);
+        return truckerRepository.findByTruck(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public List<Trucker> findTruckerByDispatcher(Long id) {
-        return truckerRepository.findByDispatcher(id.toString()).orElseThrow(EntityNotFoundException::new);
+        return truckerRepository.findByDispatcher(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public Trucker findTruckerByOrder(Long id) {
-        return truckerRepository.findByOrders(id.toString()).orElseThrow(EntityNotFoundException::new);
+        return truckerRepository.findByOrders(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public void deleteCityById(Long id) {
-        if(truckerRepository.findById(id).isPresent()){
-            truckerRepository.deleteById(id);
-        }
-        else{
-            throw new EntityNotFoundException(id + "Trucker not found");
-        }
+    public void deleteTruckerById(Long id) {
+        truckerRepository.deleteById(id);
     }
 }
