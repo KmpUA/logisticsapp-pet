@@ -45,11 +45,6 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public void deleteCityById(Long id) {
-        if(cityRepository.findById(id).isEmpty()){
-            throw new EntityExistsException();
-        }
-        else{
-            cityRepository.deleteById(id);
-        }
+        cityRepository.deleteById(id);
     }
 }
