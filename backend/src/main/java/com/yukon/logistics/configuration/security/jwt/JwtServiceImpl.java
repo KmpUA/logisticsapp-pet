@@ -1,50 +1,48 @@
 package com.yukon.logistics.configuration.security.jwt;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.yukon.logistics.common.ApplicationConstants;
-import com.yukon.logistics.exceptions.JwtTokenIllegalArgumentException;
 import com.yukon.logistics.persistence.entity.Role;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
 import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.Objects;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class JwtServiceImpl implements JwtService {
     
-    @NonFinal
-    @Value("${spring.security.jwtValidityInMs}")
     long jwtValidityInMs;
+    Algorithm signAlgorithm;
     
-    SecretKeyProvider secretKeyProvider;
+    public JwtServiceImpl(
+            @Value("${spring.security.jwtValidityInMs}") long jwtValidityInMs,
+            @Value("${spring.security.jwtSecret}") String jwtSecretKey) {
+        this.jwtValidityInMs = jwtValidityInMs;
+        signAlgorithm = Algorithm.HMAC256(jwtSecretKey);
+    }
     
     @Override
     @Nullable
     public String getJwtFromRequest(@NonNull final HttpServletRequest request) {
         final var header = request.getHeader(ApplicationConstants.Security.TOKEN_HEADER_NAME);
-        final var tokenPrefix = ApplicationConstants.Security.TOKEN_PREFIX;
         
         if (Objects.nonNull(header)
-                && header.startsWith(tokenPrefix)) {
+                && header.startsWith(ApplicationConstants.Security.TOKEN_PREFIX)) {
             
-            return header.substring(tokenPrefix.length());
+            return header.replace(ApplicationConstants.Security.TOKEN_PREFIX, "");
         }
         
         log.warn("Unable resolve token" +
@@ -55,7 +53,7 @@ public class JwtServiceImpl implements JwtService {
     
     @Override
     public String extractUsername(@NonNull final String token) {
-        return extractAllClaims(token).getSubject();
+        return extractDecodedJWT(token).getSubject();
     }
     
     @Override
@@ -63,52 +61,27 @@ public class JwtServiceImpl implements JwtService {
         final var jwtIssuedAt = Instant.now().truncatedTo(ChronoUnit.SECONDS);
         final var jwtExpiration = jwtIssuedAt.plusMillis(jwtValidityInMs);
         
-        final var claims = Jwts.claims()
-                .setSubject(email)
-                .setIssuedAt(Date.from(jwtIssuedAt))
-                .setExpiration(Date.from(jwtExpiration));
-        claims.put(ApplicationConstants.JwtClaims.USER_ROLE, role);
-        
-        return Jwts.builder()
-                .setClaims(claims)
-                .signWith(secretKeyProvider.getEncodedSecret())
-                .compact();
-    }
-    
-    @Override
-    public boolean isTokenValid(@NonNull final String token, @NonNull final UserDetails userDetails) {
-        final var username = extractUsername(token);
-        
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        return JWT.create()
+                .withSubject(email)
+                .withClaim(ApplicationConstants.JwtClaims.USER_ROLE, role.toString())
+                .withIssuedAt(jwtIssuedAt)
+                .withExpiresAt(jwtExpiration)
+                .sign(signAlgorithm);
     }
     
     /**
-     * Check if the passed token is expired.
+     * Create DecodedJWT object from token.
+     * If the token is valid, it returns a DecodedJWT object
+     * that can be used to extract certain fields from the token
+     * otherwise it throws a JWTVerificationException.
      *
-     * @param token the JWT token we will validate
-     * @return true if token expired and false otherwise
+     * @param token the JWT token we will create DecodedJWT from
+     * @return DecodedJWT object
+     * @see JWTVerificationException
      */
-    private boolean isTokenExpired(@NonNull final String token) {
-        final var tokenExpiration = extractAllClaims(token).getExpiration();
-        
-        return tokenExpiration.before(Date.from(Instant.now()));
-    }
-    
-    /**
-     * Extract claims from token.
-     * It can be used for extract specific fields from the token
-     *
-     * @param token the JWT token we will extract claims from
-     * @return extracted claims from token
-     */
-    private Claims extractAllClaims(@NonNull final String token) {
-        try {
-            return Jwts.parserBuilder().setSigningKey(secretKeyProvider.getEncodedSecret())
-                    .build().parseClaimsJws(token).getBody();
-        } catch (JwtException e) {
-            throw new JwtTokenIllegalArgumentException(
-                    "An error occurred while parsing the provided JWT token. "
-                            + "It may be expired or invalid.", e);
-        }
+    private DecodedJWT extractDecodedJWT(@NonNull final String token) {
+        return JWT.require(signAlgorithm)
+                .build()
+                .verify(token);
     }
 }
