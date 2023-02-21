@@ -71,6 +71,12 @@ public class UserController {
                                                @RequestBody UserRequest userRequest) {
         User user = new UserMapper().toEntity(userRequest);
         user.setId(parseLong(id));
+
+        if(userRequest.getPassword() == null) {
+            user.setPassword(userService.findById(parseLong(id)).getPassword());
+        }
+
+        user.setCreated(userService.findById(parseLong(id)).getCreated());
         UserResponse userResponse = new UserMapper().toResponse(userService.updateUser(user));
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
