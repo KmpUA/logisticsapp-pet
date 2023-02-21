@@ -1,12 +1,14 @@
 package com.yukon.logistics.api.rest.controller;
 
+import com.yukon.logistics.common.ApplicationConstants;
+import com.yukon.logistics.model.dto.PageResponse;
 import com.yukon.logistics.model.dto.UserRequest;
 import com.yukon.logistics.model.dto.UserResponse;
 import com.yukon.logistics.model.mapper.UserMapper;
 import com.yukon.logistics.persistence.entity.User;
 import com.yukon.logistics.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
+import lombok.NonNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -31,15 +33,24 @@ public class UserController {
     private final UserMapper userMapper;
     
     @GetMapping
-    public ResponseEntity<Page<UserResponse>> getAll(
-            @RequestParam(defaultValue = "0") final int page,
-            @RequestParam(defaultValue = "20") final int size,
-            @RequestParam(defaultValue = "DESC") final String sortDirection,
-            @RequestParam(defaultValue = "id") final String sortField) {
-        Page<User> response = userService.findAll(PageRequest.of(page,
-                size, Sort.Direction.fromString(sortDirection), sortField));
+    public ResponseEntity<PageResponse<UserResponse>> getAll(
+            @RequestParam @NonNull final Integer page,
+            @RequestParam(defaultValue = ApplicationConstants.Web.
+                    DefaultPagingAttributes.PAGE_SIZE) final Integer size,
+            @RequestParam(defaultValue = ApplicationConstants.Web.
+                    DefaultPagingAttributes.SORT_DIRECTION) final String sortDirection,
+            @RequestParam(defaultValue = ApplicationConstants.Web.
+                    DefaultPagingAttributes.SORT_FIELD) final String sortField) {
         
-        return new ResponseEntity<>(response.map(userMapper::toResponse), HttpStatus.OK);
+        final var pageRequest = PageRequest.of(page,
+                size, Sort.Direction.fromString(sortDirection), sortField);
+        
+        final var pageUserResponse = userService.findAll(pageRequest).map(userMapper::toResponse);
+        
+        final var pageResponse = PageResponse.<UserResponse>builder().
+                content(pageUserResponse.getContent()).totalElements(pageUserResponse.getTotalElements()).build();
+        
+        return new ResponseEntity<>(pageResponse, HttpStatus.OK);
     }
     
     @GetMapping("/{id}")
@@ -85,8 +96,13 @@ public class UserController {
                                                @RequestBody UserRequest userRequest) {
         User user = userMapper.toEntity(userRequest);
         user.setId(parseLong(id));
-        UserResponse userResponse = userMapper.toResponse(userService.updateUser(user));
-        
+
+        if(userRequest.getPassword() == null) {
+            user.setPassword(userService.findById(parseLong(id)).getPassword());
+        }
+
+        user.setCreated(userService.findById(parseLong(id)).getCreated());
+        UserResponse userResponse = new UserMapper().toResponse(userService.updateUser(user));
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 }

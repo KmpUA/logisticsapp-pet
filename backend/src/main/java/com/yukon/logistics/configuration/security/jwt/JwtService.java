@@ -3,7 +3,6 @@ package com.yukon.logistics.configuration.security.jwt;
 import com.yukon.logistics.persistence.entity.Role;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.NonNull;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public interface JwtService {
     
@@ -32,11 +31,4 @@ public interface JwtService {
      */
     String createToken(@NonNull final String email, @NonNull final Role role);
     
-    /**
-     * Checks if the token is valid
-     *
-     * @param token the JWT we will validate
-     * @return true if token valid and false otherwise
-     */
-    boolean isTokenValid(@NonNull final String token, @NonNull final UserDetails userDetails);
 }
