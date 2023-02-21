@@ -5,6 +5,7 @@ import com.yukon.logistics.common.ApplicationConstants;
 import com.yukon.logistics.configuration.security.jwt.JwtAuthEntryPoint;
 import com.yukon.logistics.configuration.security.jwt.JwtAuthenticationFilter;
 import com.yukon.logistics.configuration.security.jwt.JwtUserServiceImpl;
+import com.yukon.logistics.exceptions.handler.JwtAccessDeniedHandler;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ public class SecurityConfig {
     JwtAuthenticationFilter jwtAuthFilter;
     JwtUserServiceImpl jwtUserService;
     JwtAuthEntryPoint jwtAuthEntryPoint;
+    JwtAccessDeniedHandler jwtAccessDeniedHandler;
     
     @Bean
     public SecurityFilterChain filterChain(@NonNull final HttpSecurity http) throws Exception {
@@ -47,6 +49,7 @@ public class SecurityConfig {
                         .permitAll().anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint).and()
+                .exceptionHandling().accessDeniedHandler(jwtAccessDeniedHandler).and()
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
