@@ -12,6 +12,24 @@ public class ApplicationConstants {
      * Inner utility class for constants related to security part.
      */
     @UtilityClass
+    public class Web {
+        
+        /**
+         * Inner utility class for constants related to security part.
+         */
+        @UtilityClass
+        public class DefaultPagingAttributes {
+            public static final String PAGE_SIZE = "20";
+            public static final String SORT_DIRECTION = "DESC";
+            public static final String SORT_FIELD = "id";
+        }
+        
+    }
+    
+    /**
+     * Inner utility class for constants related to security part.
+     */
+    @UtilityClass
     public class Security {
         public static final String TOKEN_PREFIX = "Bearer ";
         public static final String TOKEN_HEADER_NAME = "Authorization";

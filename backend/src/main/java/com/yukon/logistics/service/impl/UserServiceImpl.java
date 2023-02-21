@@ -2,6 +2,7 @@ package com.yukon.logistics.service.impl;
 
 import com.yukon.logistics.persistence.entity.User;
 import com.yukon.logistics.persistence.repository.UserRepository;
+import com.yukon.logistics.service.PageableService;
 import com.yukon.logistics.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,7 +15,7 @@ import java.util.List;
 @Service
 @Transactional
 @AllArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, PageableService<User> {
     public final UserRepository userRepository;
 
     @Override
