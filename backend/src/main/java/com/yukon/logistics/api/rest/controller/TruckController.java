@@ -82,6 +82,6 @@ public class TruckController {
         truck.setId(parseLong(id));
         TruckResponse truckResponse = new TruckMapper()
                 .toResponse(truckService.updateTruck(truck));
-        return new ResponseEntity<>(truckResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(truckResponse, HttpStatus.OK);
     }
 }
