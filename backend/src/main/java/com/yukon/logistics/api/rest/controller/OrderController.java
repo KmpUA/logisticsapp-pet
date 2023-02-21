@@ -62,6 +62,7 @@ public class OrderController {
         Order order = new OrderMapper().toEntity(orderRequest,
                 cityService.findCityById(orderRequest.getCityFrom()),
                 cityService.findCityById(orderRequest.getCityTo()), null);
+        order.setCompleted(false);
         OrderResponse orderResponse = new OrderMapper().toResponse(orderService.addOrder(order));
         return new ResponseEntity<>(orderResponse, HttpStatus.OK);
     }

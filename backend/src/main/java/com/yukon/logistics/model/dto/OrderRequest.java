@@ -21,4 +21,5 @@ public class OrderRequest {
     private Long trucker;
     private LocalDateTime startDeliver;
     private LocalDateTime endDeliver;
+    private Boolean completed;
 }

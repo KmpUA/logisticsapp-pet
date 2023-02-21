@@ -24,4 +24,5 @@ public class OrderResponse {
     private LocalDateTime modify;
     private LocalDateTime startDeliver;
     private LocalDateTime endDeliver;
+    private Boolean completed;
 }

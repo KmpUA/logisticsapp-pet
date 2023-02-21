@@ -61,9 +61,12 @@ public class Order {
     @Column(name = "modify")
     LocalDateTime modify;
 
-    @Column(name = "start_deliver")
+    @Column(name = "start_deliver", nullable = false)
     LocalDateTime startDeliver;
 
-    @Column(name = "end_deliver")
+    @Column(name = "end_deliver", nullable = false)
     LocalDateTime endDeliver;
+
+    @Column(name = "completed", nullable = false)
+    Boolean completed;
 }

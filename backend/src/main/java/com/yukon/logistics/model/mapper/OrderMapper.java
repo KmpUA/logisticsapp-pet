@@ -22,6 +22,7 @@ public class OrderMapper {
                 .modify(order.getModify())
                 .startDeliver(order.getStartDeliver())
                 .endDeliver(order.getEndDeliver())
+                .completed(order.getCompleted())
                 .build();
 
         if(order.getTrucker() != null) {
@@ -48,6 +49,7 @@ public class OrderMapper {
         order.setTrucker(trucker);
         order.setStartDeliver(orderRequest.getStartDeliver());
         order.setEndDeliver(orderRequest.getEndDeliver());
+        order.setCompleted(orderRequest.getCompleted());
         return order;
     }
 }
