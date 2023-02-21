@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Getter
 @Setter
@@ -14,6 +16,9 @@ import lombok.Setter;
 public class OrderRequest {
     private Long cityFrom;
     private Long cityTo;
-    String cargoDescription;
-    double cargoWeight;
+    private String cargoDescription;
+    private Double cargoWeight;
+    private Long trucker;
+    private LocalDateTime startDeliver;
+    private LocalDateTime endDeliver;
 }

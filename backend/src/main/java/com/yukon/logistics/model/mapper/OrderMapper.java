@@ -4,6 +4,7 @@ import com.yukon.logistics.model.dto.OrderRequest;
 import com.yukon.logistics.model.dto.OrderResponse;
 import com.yukon.logistics.persistence.entity.City;
 import com.yukon.logistics.persistence.entity.Order;
+import com.yukon.logistics.persistence.entity.Trucker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,7 @@ import java.util.List;
 public class OrderMapper {
 
     public OrderResponse toResponse(Order order) {
-        new OrderResponse();
-        return OrderResponse.builder()
+        OrderResponse response = OrderResponse.builder()
                 .id(order.getId())
                 .cityFrom(order.getFrom().getId())
                 .cityTo(order.getTo().getId())
@@ -23,6 +23,12 @@ public class OrderMapper {
                 .startDeliver(order.getStartDeliver())
                 .endDeliver(order.getEndDeliver())
                 .build();
+
+        if(order.getTrucker() != null) {
+            response.setTrucker(order.getTrucker().getId());
+        }
+
+        return response;
     }
 
     public List<OrderResponse> toListResponse(List<Order> orders) {
@@ -33,12 +39,15 @@ public class OrderMapper {
         return response;
     }
 
-    public Order toEntity(OrderRequest orderRequest, City from, City to) {
+    public Order toEntity(OrderRequest orderRequest, City from, City to, Trucker trucker) {
         Order order = new Order();
         order.setFrom(from);
         order.setTo(to);
         order.setCargoDescription(orderRequest.getCargoDescription());
         order.setCargoWeight(orderRequest.getCargoWeight());
+        order.setTrucker(trucker);
+        order.setStartDeliver(orderRequest.getStartDeliver());
+        order.setEndDeliver(orderRequest.getEndDeliver());
         return order;
     }
 }

@@ -6,7 +6,9 @@ spring:
     active: dev
   security:
     #Validity time of JWT in milliseconds.
-    jwtValidityInMs: 36000000
+    jwtValidityInMs: 900000
+    # Secret used for signing JWT token.
+    jwtSecret: 2F423F4528482B4D6251655468566D597133743677397A24432646294A404E63
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
