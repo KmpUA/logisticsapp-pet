@@ -9,5 +9,6 @@ export class User {
         public modified?: string,
         public status?: string,
         public role?: string,
+        public password?: string
     ) { }
 }

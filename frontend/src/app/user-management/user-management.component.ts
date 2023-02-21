@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
 import { User } from '../models/User';
@@ -35,8 +35,9 @@ export class UserManagementComponent {
     );
   }
 
-  changeRole(role: string, element: User) {
-    this.userService.updateRole(element.id!, role, element).subscribe({
+  changeRole(role: string, user: User) {
+    user.role = role;
+    this.userService.put(user).subscribe({
       error: error => {
         this.snackBar.open('Cannot edit user\'s role! Code: ' + error.status, '', {
           duration: 3000
@@ -45,8 +46,9 @@ export class UserManagementComponent {
     });
   }
 
-  changeStatus(status: string, element: User) {
-    this.userService.updateStatus(element.id!, status, element).subscribe({
+  changeStatus(status: string, user: User) {
+    user.status = status;
+    this.userService.put(user).subscribe({
       error: error => {
         this.snackBar.open('Cannot edit user\'s status! Code: ' + error.status, '', {
           duration: 3000
@@ -66,7 +68,10 @@ export class UserManagementComponent {
   }
 
   openDialog() {
-    this.dialog.open(DialogAddUserDialog)
+    const dialogRef = this.dialog.open(DialogAddUserDialog);
+    dialogRef.afterClosed().subscribe(result => {
+      window.location.reload();
+    });
   }
 }
 
@@ -89,7 +94,8 @@ export class DialogAddUserDialog {
     password: new FormControl(''),
   });
 
-  constructor(private userService: UsersService, private snackBar: MatSnackBar) { }
+  constructor(private userService: UsersService, private snackBar: MatSnackBar, private dialogRef: MatDialogRef<DialogAddUserDialog>) { }
+
 
   onSubmit(userForm: FormGroup) {
     if (userForm.valid) {

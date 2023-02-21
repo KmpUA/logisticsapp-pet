@@ -21,32 +21,8 @@ export class UsersService {
     return this.http.get<User[]>(API_URL + 'users?page=' + page);
   }
 
-  updateRole(id: number, role: string, user: User): Observable<any> {
-    return this.http.put(API_URL + 'users/' + id.toString(), {
-      "role": role,
-      "id": user.id,
-      "firstName": user.firstName,
-      "lastName": user.lastName,
-      "email": user.email,
-      "imageUrl": null,
-      "phone": user.phone,
-      "status": user.status,
-      "password": "password"
-    }, httpOptions);
-  }
-
-  updateStatus(id: number, status: string, user: User): Observable<any> {
-    return this.http.put(API_URL + 'users/' + id.toString(), {
-      "status": status,
-      "id": user.id,
-      "firstName": user.firstName,
-      "lastName": user.lastName,
-      "email": user.email,
-      "imageUrl": null,
-      "phone": user.phone,
-      "role": user.role,
-      "password": "password"
-    }, httpOptions);
+  put(user: User): Observable<any> {
+    return this.http.put(API_URL + 'users/' + user.id!.toString(), user, httpOptions);
   }
 
   addUser(user: User): Observable<any> {
