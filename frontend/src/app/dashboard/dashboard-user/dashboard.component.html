@@ -7,11 +7,11 @@
     <div class="container" *ngFor="let item of orderList">
 
         <p class="created"><mat-icon class="clock" aria-hidden="false" aria-label="Example home icon"
-                fontIcon="schedule"></mat-icon>{{item.created}}
-                
+                fontIcon="schedule"></mat-icon>{{item.created | date:'medium'}}
         </p>
         <div style="font-size: 25px;" class="trucker">
-            <mat-icon class="local_shipping" aria-hidden="false" aria-label="Example home icon" fontIcon="local_shipping"></mat-icon>{{item.trucker}}
+            <mat-icon class="local_shipping" aria-hidden="false" aria-label="Example home icon"
+                fontIcon="local_shipping"></mat-icon>{{item.trucker}}
         </div>
         <div class="flex-container">
             <mat-list>
@@ -31,7 +31,7 @@
 
         <mat-list>
             <mat-list-item><mat-icon class="public" aria-hidden="false" aria-label="Example home icon"
-                    fontIcon="public"></mat-icon>{{item.cityFrom}}<span
+                    fontIcon="public"></mat-icon> {{item.cityFrom}}<span
                     class="dash">&mdash;</span>{{item.cityTo}}</mat-list-item>
         </mat-list>
 

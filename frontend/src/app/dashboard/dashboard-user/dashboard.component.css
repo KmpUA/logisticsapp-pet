@@ -33,6 +33,7 @@
     font-size: 18px;
     padding-left: 15px;
     padding-top: 10px;
+    color: rgb(80, 237, 80);
 }
 
 mat-list-item {
@@ -58,13 +59,6 @@ mat-list-item {
     justify-content: center;
 }
 
-/* .btn {
-    color: white;
-    background-color: green;
-    border: none;
-    cursor: pointer;
-} */
-
 .dash {
     padding-left: 5px;
     padding-right: 5px;
@@ -84,11 +78,13 @@ mat-list-item {
     top: 7px;
     font-size: 22px;
 }
+
 .trucker {
     margin-top: -25px;
     text-align: end;
     margin-right: 25px;
 }
-.local_shipping{
+
+.local_shipping {
     margin-bottom: -3px;
 }

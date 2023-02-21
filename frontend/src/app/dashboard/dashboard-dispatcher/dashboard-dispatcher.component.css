@@ -42,6 +42,7 @@
     font-size: 18px;
     padding-left: 15px;
     padding-top: 10px;
+    color: rgb(80, 237, 80);
 }
 
 mat-list-item {
@@ -92,4 +93,9 @@ mat-list-item {
     position: relative;
     top: 7px;
     font-size: 22px;
+}
+.trucker {
+    margin-top: -25px;
+    text-align: end;
+    margin-right: 25px;
 }

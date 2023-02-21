@@ -25,7 +25,8 @@ import { DialogContentExampleDialog } from './dashboard/dashboard-user/dashboard
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DialogContentAssign } from './dashboard/dashboard-dispatcher/dashboard-dispatcher.component';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +52,10 @@ import { DialogContentAssign } from './dashboard/dashboard-dispatcher/dashboard-
     MatIconModule,
     MatDialogModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    
     
   ],
   providers: [],

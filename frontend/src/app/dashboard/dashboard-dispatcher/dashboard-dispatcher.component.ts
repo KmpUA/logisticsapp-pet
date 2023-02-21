@@ -3,6 +3,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Order } from 'src/app/models/order';
+import { Trucker } from 'src/app/models/trucker';
 
 
 @Component({
@@ -30,7 +31,14 @@ export class DashboardDispatcherComponent implements OnInit {
     });
   }
 
-  deleteOrder() {
+  deleteOrder(id: number) {
+    {
+
+      this.api.deleteOrder(id)
+        .subscribe(response => {
+          this.orderList = this.orderList.filter(item => item.id !== id);
+        });
+    }
 
   }
 
@@ -48,8 +56,24 @@ export class DialogContentAssign {
     startDeliver: new FormControl(''),
     endDeliver: new FormControl(''),
   });
-  saveOrder() {
 
+  truckerList: Trucker[] = [];
+
+  ngOnInit(): void {
+
+    this.api.getTrucker().subscribe((response: Trucker[]) => {
+      this.truckerList = response;
+
+    });
+  }
+  saveOrder(orderForm: FormGroup) {
+
+    if (this.orderForm.valid == true) {
+      console.log(this.orderForm);
+    }
+    this.api.postOrder(orderForm.value).subscribe((response) =>
+      console.log(response)
+    )
   }
 
 }

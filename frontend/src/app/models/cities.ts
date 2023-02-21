@@ -1,5 +1,6 @@
 export class Cities {
     constructor(
-        public name: string
+        public id?: number,
+        public cityName?: string
     ){}
 }

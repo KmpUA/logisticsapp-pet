@@ -5,25 +5,25 @@
         <div class="form"><mat-form-field appearance="fill">
                 <mat-label>City from</mat-label>
                 <mat-select required matNativeControl formControlName="cityFrom">
-                    <mat-option *ngFor="let x of cityList" [value]="x">{{x.name}}</mat-option>
+                    <mat-option *ngFor="let x of cityList" [value]="x.id">{{x.cityName}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
         <div class="form"><mat-form-field appearance="fill">
                 <mat-label>City to</mat-label>
                 <mat-select required matNativeControl formControlName="cityTo">
-                    <mat-option *ngFor="let x of cityList" [value]="x">{{x.name}}</mat-option>
+                    <mat-option *ngFor="let x of cityList" [value]="x.id">{{x.cityName}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="form"><mat-form-field appearance="fill">
+        <!-- <div class="form"><mat-form-field appearance="fill">
                 <mat-label>Cargo size</mat-label>
                 <input required id="cargoSize" formControlName="cargoSize" matInput type="text">
             </mat-form-field>
-        </div>
+        </div> -->
         <div class="form"><mat-form-field appearance="fill">
-                <mat-label>Cargo weight</mat-label>
-                <input required id="cargoWeight" formControlName="cargoWeight" matInput type="text">
+                <mat-label>Cargo weigh</mat-label>
+                <input required id="cargoWeight" formControlName="cargoWeight" matInput type="number">
             </mat-form-field>
         </div>
         <mat-form-field appearance="fill">

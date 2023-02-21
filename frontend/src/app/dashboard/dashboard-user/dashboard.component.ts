@@ -41,7 +41,6 @@ export class DashboardComponent implements OnInit {
   deleteOrder(id: number) {
     //Delete
     {
-
       this.api.deleteOrder(id)
         .subscribe(response => {
           this.orderList = this.orderList.filter(item => item.id !== id);
@@ -84,11 +83,7 @@ export class DialogContentExampleDialog {
       console.log(this.orderForm);
     }
 
-    this.api.postOrder(orderForm.value).subscribe((response) => 
-      console.log(response)
-      
-    
-    )
+    this.api.postOrder(orderForm.value).subscribe()
   }
 
 
