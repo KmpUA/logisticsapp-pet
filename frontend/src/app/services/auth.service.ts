@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { User } from '../models/User';
 
 const AUTH_API = environment.API_URL + 'auth/';
 const TOKEN_KEY = 'auth-token';
+const USER_KEY = 'user';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -14,6 +16,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+  get token() {
+    return localStorage.getItem(TOKEN_KEY);
+  }
 
   constructor(private http: HttpClient) { }
 
@@ -30,5 +35,9 @@ export class AuthService {
 
   saveToken(token: string): void {
     localStorage.setItem(TOKEN_KEY, token);
+  }
+
+  saveUser(user: User): void {
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 }

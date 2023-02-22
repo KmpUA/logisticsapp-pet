@@ -20,6 +20,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { UserManagementComponent } from './user-management/user-management.component';
 import { DialogAddUserDialog } from './user-management/user-management.component';
+import { AuthInterceptorProvider } from './interceptor/auth.interceptor';
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { DialogAddUserDialog } from './user-management/user-management.component
     ReactiveFormsModule,
     MatSnackBarModule,
   ],
-  providers: [],
+  providers: [AuthInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
