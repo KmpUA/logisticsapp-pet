@@ -19,7 +19,7 @@ export class UserManagementComponent {
   @ViewChild(MatTable) table!: MatTable<any>;
 
   users: User[] = [];
-  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'phone', 'role', 'status'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'email', 'phone', 'role', 'status', 'action'];
   roles = Object.values(Roles);
   statuses = Object.values(Statuses);
   length: number = 0;
@@ -37,7 +37,7 @@ export class UserManagementComponent {
 
   changeRole(role: string, user: User) {
     user.role = role;
-    this.userService.put(user).subscribe({
+    this.userService.updateUser(user).subscribe({
       error: error => {
         this.snackBar.open('Cannot edit user\'s role! Code: ' + error.status, '', {
           duration: 3000
@@ -48,7 +48,7 @@ export class UserManagementComponent {
 
   changeStatus(status: string, user: User) {
     user.status = status;
-    this.userService.put(user).subscribe({
+    this.userService.updateUser(user).subscribe({
       error: error => {
         this.snackBar.open('Cannot edit user\'s status! Code: ' + error.status, '', {
           duration: 3000
@@ -72,6 +72,10 @@ export class UserManagementComponent {
     dialogRef.afterClosed().subscribe(result => {
       window.location.reload();
     });
+  }
+
+  deleteUser(id: number) {
+    this.userService.deleteUser(id).subscribe();
   }
 }
 

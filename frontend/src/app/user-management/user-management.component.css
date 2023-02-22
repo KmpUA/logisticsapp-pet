@@ -9,3 +9,11 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.mat-column-action {
+    max-width: fit-content !important;
+}
+
+.mat-column-email {
+    min-width: fit-content !important;
+}
