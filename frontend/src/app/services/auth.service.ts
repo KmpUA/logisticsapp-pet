@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/User';
+import { UsersService } from './users.service';
 
 const AUTH_API = environment.API_URL + 'auth/';
 const TOKEN_KEY = 'auth-token';
@@ -20,7 +21,10 @@ export class AuthService {
     return localStorage.getItem(TOKEN_KEY);
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private userService: UsersService
+  ) { }
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(AUTH_API + 'authenticate', {
@@ -38,6 +42,6 @@ export class AuthService {
   }
 
   saveUser(user: User): void {
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    this.userService.user = user;
   }
 }
