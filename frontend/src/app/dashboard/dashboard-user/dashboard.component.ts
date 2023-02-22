@@ -4,6 +4,7 @@ import { Order } from 'src/app/models/order';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Cities } from 'src/app/models/cities';
+import { Trucker } from 'src/app/models/trucker';
 
 
 
@@ -68,12 +69,17 @@ export class DialogContentExampleDialog {
 
   constructor(private api: OrderService) { }
   cityList: Cities[] = [];
+  truckerList: Trucker[] = [];
   order: Order = new Order();
 
   ngOnInit(): void {
 
     this.api.getCities().subscribe((response: Cities[]) => {
       this.cityList = response;
+
+      this.api.getTrucker().subscribe((res: Trucker[]) => {
+        this.truckerList = res;
+      })
 
     });
   }

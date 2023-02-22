@@ -1,5 +1,6 @@
 export class Trucker {
     constructor(
-        public name: string
+        public id: number,
+        public firstName: string
     ) { }
 }

@@ -29,7 +29,13 @@ export class OrderService {
     return this.http.get<Cities[]>(ORD_COU_API + 'cities/all')
   }
   getTrucker(): Observable<Trucker[]> {
-    return this.http.get<Trucker[]>(ORD_COU_API + 'trucker/all')
+    return this.http.get<Trucker[]>(ORD_COU_API + 'truckers/all')
+  }
+  // getUserById(id:number) {
+  //   return this.http.get<Trucker>(ORD_COU_API + 'truckers/' + id)
+  // }
+  updateOrder(order: Order): Observable<any> {
+    return this.http.put(ORD_COU_API + 'orders/' + order.id, order, httpOptions);
   }
   deleteOrder(id: number) {
     return this.http.delete(ORD_COU_API + 'orders/' + id);

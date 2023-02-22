@@ -26,6 +26,24 @@
                 <input required id="cargoWeight" formControlName="cargoWeight" matInput type="number">
             </mat-form-field>
         </div>
+
+        <div class="form"><mat-form-field style="width: 212px;" appearance="fill">
+            <mat-label>Start deliver</mat-label>
+            <input required matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        </div>
+        
+        <div class="form"><mat-form-field style="width: 212px;" appearance="fill">
+            <mat-label>End deliver</mat-label>
+            <input required matInput [matDatepicker]="picker1">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        </div>
         <mat-form-field appearance="fill">
             <mat-label>Cargo-Description</mat-label>
             <textarea required id="cargoDescription" formControlName="cargoDescription" matInput></textarea>

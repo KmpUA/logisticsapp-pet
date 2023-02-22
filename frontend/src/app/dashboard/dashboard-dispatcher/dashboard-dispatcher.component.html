@@ -4,23 +4,23 @@
                 <div class="container-item" *ngFor="let item of orderList">
                         <p class="created"><mat-icon class="clock" aria-hidden="false" aria-label="Example home icon"
                                         fontIcon="schedule"></mat-icon>{{item.created | date:'medium'}}</p>
-                                        <div style="font-size: 25px;" class="trucker">
-                                                <mat-icon class="local_shipping" aria-hidden="false" aria-label="Example home icon"
-                                                        fontIcon="local_shipping"></mat-icon>{{item.trucker}}
-                                        </div>
+                        <div style="font-size: 25px;" class="trucker">
+                                <mat-icon class="local_shipping" aria-hidden="false" aria-label="Example home icon"
+                                        fontIcon="local_shipping"></mat-icon>{{item.trucker}}
+                        </div>
                         <div class="flex-container">
-                                
+
                                 <mat-list>
-                                        <mat-list-item><mat-icon class="calendar" aria-hidden="false"
+                                        <mat-list-item>
+                                                <mat-icon class="calendar" aria-hidden="false"
                                                         aria-label="Example home icon"
                                                         fontIcon="calendar_month"></mat-icon>{{item.startDeliver}}<span
                                                         class="dash">&ndash;</span>{{item.endDeliver}}</mat-list-item>
-                                        <mat-list-item><mat-icon class="fitness_center" aria-hidden="false"
+                                        <mat-list-item>
+                                                <mat-icon class="fitness_center" aria-hidden="false"
                                                         aria-label="Example home icon"
                                                         fontIcon="fitness_center"></mat-icon>{{item.cargoWeight}}</mat-list-item>
-                                        <mat-list-item><mat-icon class="zoom_out_map" aria-hidden="false"
-                                                        aria-label="Example home icon"
-                                                        fontIcon="zoom_out_map"></mat-icon>{{item.cargoSize}}</mat-list-item>
+
                                 </mat-list>
                         </div>
 
@@ -36,12 +36,19 @@
                         </mat-list>
 
                         <div class="create-order">
-                                <button style="font-size: large;" class="btn" mat-button
-                                        (click)="openDialog()">Assign</button>
+                                <mat-form-field appearance="fill">
+                                        <mat-label>Trucker</mat-label>
+                                        <mat-select [(value)]="item.trucker"
+                                                (selectionChange)="assignTrucker($event.value, item)" required
+                                                matNativeControl formControlName="trucker">
+                                                <mat-option *ngFor="let x of truckerList"
+                                                        [value]="x.id">{{x.firstName}}</mat-option>
+                                        </mat-select>
+                                </mat-form-field>
+
                         </div>
 
-                        <div class="btn-delete"><button class="btn" mat-flat-button color="warn" mat-button
-                                        (click)="deleteOrder(item.id!)">Delete</button></div>
+
                 </div>
         </div>
 </div>

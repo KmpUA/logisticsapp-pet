@@ -1,5 +1,6 @@
 .main {
-    background-color: #D9D9D9;
+    background: rgb(91, 181, 167);
+        background: linear-gradient(90deg, rgba(91, 181, 167, 1) 0%, rgba(141, 156, 184, 0.7091211484593838) 54%, rgba(158, 242, 238, 1) 100%);
     min-height: 100%;
     width: 1200px;
     margin-left: auto;
@@ -15,8 +16,8 @@
 .create-order {
     position: relative;
     text-align: end;
-    padding-right: 80px;
-    padding-bottom: 2px;
+    padding-right: auto;
+    margin-bottom: -22px;
 }
 
 .container {

@@ -24,7 +24,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogContentExampleDialog } from './dashboard/dashboard-user/dashboard.component';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DialogContentAssign } from './dashboard/dashboard-dispatcher/dashboard-dispatcher.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
@@ -36,7 +35,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     DashboardTruckerComponent,
     DashboardDispatcherComponent,
     DialogContentExampleDialog,
-    DialogContentAssign
   ],
   imports: [
     BrowserModule,
