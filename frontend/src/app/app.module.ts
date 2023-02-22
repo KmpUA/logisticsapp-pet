@@ -17,6 +17,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 
 import { UserManagementComponent } from './user-management/user-management.component';
 import { DialogAddUserDialog } from './user-management/user-management.component';
@@ -46,6 +50,10 @@ import { AuthInterceptorProvider } from './interceptor/auth.interceptor';
     MatDialogModule,
     ReactiveFormsModule,
     MatSnackBarModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatMenuModule,
+    MatDividerModule,
   ],
   providers: [AuthInterceptorProvider],
   bootstrap: [AppComponent]
