@@ -15,7 +15,6 @@ const httpOptions = {
 })
 
 export class UsersService {
-  public user: User = {};
   constructor(private http: HttpClient) { }
 
   getUsers(page: number): Observable<any> {

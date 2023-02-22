@@ -42,6 +42,6 @@ export class AuthService {
   }
 
   saveUser(user: User): void {
-    this.userService.user = user;
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
   }
 }
