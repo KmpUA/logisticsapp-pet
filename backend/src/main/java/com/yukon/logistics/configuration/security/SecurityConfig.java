@@ -45,7 +45,8 @@ public class SecurityConfig {
         return http
                 .csrf().disable()
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
-                                "/**")
+                                ApplicationConstants.Security.Routing.LOGIN_PATH)
+
                         .permitAll().anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint).and()

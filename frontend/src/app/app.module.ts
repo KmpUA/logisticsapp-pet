@@ -30,10 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { DashboardAdminComponent } from './dashboard/dashboard-admin/dashboard-admin.component';
 import { DashboardTruckerComponent } from './dashboard/dashboard-trucker/dashboard-trucker.component';
 import { DashboardDispatcherComponent } from './dashboard/dashboard-dispatcher/dashboard-dispatcher.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import { DialogContentExampleDialog } from './dashboard/dashboard-user/dashboard.component';
-import { MatSelectModule } from '@angular/material/select';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({

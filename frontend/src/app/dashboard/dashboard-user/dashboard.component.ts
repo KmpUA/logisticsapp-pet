@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
+import { CityService } from 'src/app/services/city.service';
 import { Order } from 'src/app/models/order';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Cities } from 'src/app/models/cities';
 import { Trucker } from 'src/app/models/trucker';
+import { TruckerService } from 'src/app/services/trucker.service';
 
 
 
@@ -17,48 +19,55 @@ export class DashboardComponent implements OnInit {
 
   orderList: Order[] = [];
   cityList: Cities[] = [];
+  truckerList: Trucker[] = [];
 
-
-  constructor(private api: OrderService, private dialog: MatDialog) { }
+  constructor(public ord: OrderService, public cit: CityService,public tru: TruckerService, private dialog: MatDialog) { }
 
 
   ngOnInit(): void {
-    this.api.getCities().subscribe((response: Cities[]) => {
+    this.cit.getCities().subscribe((response: Cities[]) => {
       this.cityList = response;
       console.log(this.cityList)
       localStorage.setItem("cities", JSON.stringify(this.cityList))
     });
-    this.api.getOrders().subscribe((response: Order[]) => {
+    this.ord.getOrders().subscribe((response: Order[]) => {
       this.orderList = response;
+      console.log(response)
+    });
+    this.tru.getTrucker().subscribe((response: Trucker[]) => {
+      this.truckerList = response;
       console.log(response)
     });
 
   }
 
-
-  // mapOrders(orders: Order[]) {
-  //   this.orderList.map(o => o.cityFrom = )
-  // }
   openDialog() {
     const dialogRef = this.dialog.open(DialogContentExampleDialog);
-
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
 
+  }
+  getCityName(id:undefined|number) {
+    if (id) {
+      return this.cit.getCity(id)?.cityName;
 
+    }
+  return {}
+  }
+  
+  getTruckerName(id: undefined | number) {
+    return this.truckerList.find(trucker => trucker.id === id)?.firstName;
   }
 
   deleteOrder(id: number) {
-    //Delete
     {
-      this.api.deleteOrder(id)
+      this.ord.deleteOrder(id)
         .subscribe(response => {
           this.orderList = this.orderList.filter(item => item.id !== id);
         });
     }
-
   }
 }
 
@@ -66,7 +75,6 @@ export class DashboardComponent implements OnInit {
   selector: 'dialog-content-example-dialog',
   templateUrl: './dialog-content-example-dialog.html',
 })
-
 
 export class DialogContentExampleDialog {
 
@@ -78,17 +86,16 @@ export class DialogContentExampleDialog {
     cargoDescription: new FormControl(''),
   });
 
-  constructor(private api: OrderService) { }
+  constructor(private ord: OrderService, private tru: TruckerService) { }
   truckerList: Trucker[] = [];
   order: Order = new Order();
   cityList: Cities[] = [];
 
   ngOnInit(): void {
     this.cityList = JSON.parse(localStorage.getItem("cities")||'{}');
-    this.api.getTrucker().subscribe((res: Trucker[]) => {
+    this.tru.getTrucker().subscribe((res: Trucker[]) => {
       this.truckerList = res;
     })
-
 
   }
   saveOrder(orderForm: FormGroup) {
@@ -97,7 +104,7 @@ export class DialogContentExampleDialog {
       console.log(this.orderForm);
     }
 
-    this.api.postOrder(orderForm.value).subscribe()
+    this.ord.postOrder(orderForm.value).subscribe()
   }
 
   

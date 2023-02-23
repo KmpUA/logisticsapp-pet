@@ -1,7 +1,7 @@
 export class Order {
     constructor(
-        public cityFrom?: string,
-        public cityTo?: string,
+        public cityFrom?: number,
+        public cityTo?: number,
         public cargoDescription?: string,
         public cargoWeight?: number,
         public trucker?: number,
