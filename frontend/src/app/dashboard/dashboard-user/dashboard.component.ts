@@ -16,18 +16,29 @@ import { Trucker } from 'src/app/models/trucker';
 export class DashboardComponent implements OnInit {
 
   orderList: Order[] = [];
+  cityList: Cities[] = [];
 
 
   constructor(private api: OrderService, private dialog: MatDialog) { }
 
 
   ngOnInit(): void {
+    this.api.getCities().subscribe((response: Cities[]) => {
+      this.cityList = response;
+      console.log(this.cityList)
+      localStorage.setItem("cities", JSON.stringify(this.cityList))
+    });
     this.api.getOrders().subscribe((response: Order[]) => {
       this.orderList = response;
       console.log(response)
     });
+
   }
 
+
+  // mapOrders(orders: Order[]) {
+  //   this.orderList.map(o => o.cityFrom = )
+  // }
   openDialog() {
     const dialogRef = this.dialog.open(DialogContentExampleDialog);
 
@@ -68,20 +79,17 @@ export class DialogContentExampleDialog {
   });
 
   constructor(private api: OrderService) { }
-  cityList: Cities[] = [];
   truckerList: Trucker[] = [];
   order: Order = new Order();
+  cityList: Cities[] = [];
 
   ngOnInit(): void {
+    this.cityList = JSON.parse(localStorage.getItem("cities")||'{}');
+    this.api.getTrucker().subscribe((res: Trucker[]) => {
+      this.truckerList = res;
+    })
 
-    this.api.getCities().subscribe((response: Cities[]) => {
-      this.cityList = response;
 
-      this.api.getTrucker().subscribe((res: Trucker[]) => {
-        this.truckerList = res;
-      })
-
-    });
   }
   saveOrder(orderForm: FormGroup) {
 
@@ -92,6 +100,6 @@ export class DialogContentExampleDialog {
     this.api.postOrder(orderForm.value).subscribe()
   }
 
-
+  
 };
 
