@@ -1,5 +1,6 @@
 package com.yukon.logistics.configuration.security.authentication;
 
+import com.yukon.logistics.model.dto.UserResponse;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,4 +18,5 @@ import lombok.experimental.FieldDefaults;
 public class AuthenticationResponse {
     
     String token;
+    UserResponse userResponse;
 }

@@ -4,12 +4,14 @@ import { DashboardDispatcherComponent } from './dashboard/dashboard-dispatcher/d
 import { DashboardTruckerComponent } from './dashboard/dashboard-trucker/dashboard-trucker.component';
 import { DashboardComponent } from './dashboard/dashboard-user/dashboard.component';
 import { LoginComponent } from './login/login.component';
+import { UserManagementComponent } from './user-management/user-management.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'dispatcher', component: DashboardDispatcherComponent },
   { path: 'trucker', component: DashboardTruckerComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'user-management', component: UserManagementComponent }
 ];
 
 @NgModule({
