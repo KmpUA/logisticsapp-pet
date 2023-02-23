@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,24 +22,18 @@ import static java.lang.Long.parseLong;
 public class CustomerController {
     private final CustomerService customerService;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<CustomerResponse>> getAll() {
+    @GetMapping()
+    @Transactional
+    public ResponseEntity<List<CustomerResponse>> getAll(boolean includeOrders) {
         List<CustomerResponse> customerResponseList = new CustomerMapper()
-                .toListResponse(customerService.findAllCustomers());
+                .toListResponse(customerService.findAllCustomers(), includeOrders);
         return new ResponseEntity<>(customerResponseList, HttpStatus.OK);
-    }
-
-    @GetMapping("/order/{order_id}")
-    public ResponseEntity<CustomerResponse> getCustomerByOrder(@PathVariable("order_id") String id) {
-        CustomerResponse customerResponse = new CustomerMapper()
-                .toResponse(customerService.findCustomerByOrder(parseLong(id)));
-        return new ResponseEntity<>(customerResponse, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponse> getById(@PathVariable("id") String id) {
         CustomerResponse customerResponse = new CustomerMapper()
-                .toResponse(customerService.findCustomerById(parseLong(id)));
+                .toResponse(customerService.findCustomerById(parseLong(id)), true);
         return new ResponseEntity<>(customerResponse, HttpStatus.OK);
     }
 
@@ -46,7 +41,7 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> addCustomer(@RequestBody CustomerRequest customerRequest){
         Customer customer = new CustomerMapper().toEntity(customerRequest);
         CustomerResponse customerResponse = new CustomerMapper()
-                .toResponse(customerService.addCustomer(customer));
+                .toResponse(customerService.addCustomer(customer), false);
         return new ResponseEntity<>(customerResponse, HttpStatus.OK);
     }
 
@@ -56,7 +51,7 @@ public class CustomerController {
         Customer customer = new CustomerMapper().toEntity(customerRequest);
         customer.setId(parseLong(id));
         CustomerResponse customerResponse = new CustomerMapper()
-                .toResponse(customerService.updateCustomer(customer));
+                .toResponse(customerService.updateCustomer(customer), false);
         return new ResponseEntity<>(customerResponse, HttpStatus.OK);
     }
 

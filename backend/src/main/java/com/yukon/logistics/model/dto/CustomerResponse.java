@@ -23,5 +23,5 @@ public class CustomerResponse {
     private String phone;
     private Role role;
     private Status status;
-    private List<Long> ordersId;
+    private List<OrderResponse> orders;
 }
