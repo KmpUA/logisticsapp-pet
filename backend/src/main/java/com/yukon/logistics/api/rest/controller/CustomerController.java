@@ -50,6 +50,7 @@ public class CustomerController {
                                                            @RequestBody CustomerRequest customerRequest){
         Customer customer = new CustomerMapper().toEntity(customerRequest);
         customer.setId(parseLong(id));
+        customer.setOrders(customerService.findCustomerById(parseLong(id)).getOrders());
         CustomerResponse customerResponse = new CustomerMapper()
                 .toResponse(customerService.updateCustomer(customer), false);
         return new ResponseEntity<>(customerResponse, HttpStatus.OK);
