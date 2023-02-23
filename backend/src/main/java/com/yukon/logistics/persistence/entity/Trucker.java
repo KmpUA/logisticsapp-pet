@@ -1,5 +1,6 @@
 package com.yukon.logistics.persistence.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -31,6 +32,6 @@ public class Trucker extends User {
     @ManyToOne(fetch = FetchType.LAZY)
     Dispatcher dispatcher;
 
-    @OneToMany(mappedBy = "trucker")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "trucker")
     List<Order> orders;
 }

@@ -19,9 +19,11 @@ public class OrderResponse {
     private Long cityTo;
     private String cargoDescription;
     private Double cargoWeight;
-    private Long trucker;
+    private TruckerResponse trucker;
+    private CustomerResponse customer;
     private LocalDateTime created;
     private LocalDateTime modify;
     private LocalDateTime startDeliver;
     private LocalDateTime endDeliver;
+    private Boolean completed;
 }
