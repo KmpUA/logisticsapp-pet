@@ -21,6 +21,13 @@ export class AuthService {
     return localStorage.getItem(TOKEN_KEY);
   }
 
+  get user(): User {
+    let user = localStorage.getItem(USER_KEY);
+    if (user)
+      return JSON.parse(user);
+    return {};
+  }
+
   constructor(
     private http: HttpClient,
     private userService: UsersService
@@ -43,5 +50,9 @@ export class AuthService {
 
   saveUser(user: User): void {
     localStorage.setItem(USER_KEY, JSON.stringify(user));
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem(TOKEN_KEY);
   }
 }
