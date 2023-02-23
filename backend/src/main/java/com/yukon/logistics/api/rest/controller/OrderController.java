@@ -3,9 +3,11 @@ package com.yukon.logistics.api.rest.controller;
 import com.yukon.logistics.model.dto.OrderRequest;
 import com.yukon.logistics.model.dto.OrderResponse;
 import com.yukon.logistics.model.mapper.OrderMapper;
+import com.yukon.logistics.persistence.entity.Customer;
 import com.yukon.logistics.persistence.entity.Order;
 import com.yukon.logistics.persistence.entity.Trucker;
 import com.yukon.logistics.service.CityService;
+import com.yukon.logistics.service.CustomerService;
 import com.yukon.logistics.service.OrderService;
 import com.yukon.logistics.service.TruckerService;
 import lombok.AllArgsConstructor;
@@ -25,6 +27,7 @@ public class OrderController {
     private final OrderService orderService;
     private final CityService cityService;
     private final TruckerService truckerService;
+    private final CustomerService customerService;
 
     @GetMapping("/all")
     public ResponseEntity<List<OrderResponse>> getAll() {
@@ -61,7 +64,8 @@ public class OrderController {
     public ResponseEntity<OrderResponse> addOrder(@RequestBody OrderRequest orderRequest){
         Order order = new OrderMapper().toEntity(orderRequest,
                 cityService.findCityById(orderRequest.getCityFrom()),
-                cityService.findCityById(orderRequest.getCityTo()), null);
+                cityService.findCityById(orderRequest.getCityTo()), null,
+                customerService.findCustomerById(orderRequest.getCustomer()));
         order.setCompleted(false);
         OrderResponse orderResponse = new OrderMapper().toResponse(orderService.addOrder(order));
         return new ResponseEntity<>(orderResponse, HttpStatus.OK);
@@ -75,9 +79,10 @@ public class OrderController {
             trucker = truckerService.findTruckerById(orderRequest.getTrucker());
         }
 
+        Customer customer = customerService.findCustomerById(orderRequest.getCustomer());
         Order order = new OrderMapper().toEntity(orderRequest,
                 cityService.findCityById(orderRequest.getCityFrom()),
-                cityService.findCityById(orderRequest.getCityTo()), trucker);
+                cityService.findCityById(orderRequest.getCityTo()), trucker, customer);
         order.setId(parseLong(id));
         order.setCreated(orderService.findOrderById(parseLong(id)).getCreated());
         OrderResponse orderResponse = new OrderMapper().toResponse(orderService.updateOrder(order));

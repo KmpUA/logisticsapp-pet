@@ -3,6 +3,7 @@ package com.yukon.logistics.model.mapper;
 import com.yukon.logistics.model.dto.OrderRequest;
 import com.yukon.logistics.model.dto.OrderResponse;
 import com.yukon.logistics.persistence.entity.City;
+import com.yukon.logistics.persistence.entity.Customer;
 import com.yukon.logistics.persistence.entity.Order;
 import com.yukon.logistics.persistence.entity.Trucker;
 
@@ -22,13 +23,15 @@ public class OrderMapper {
                 .modify(order.getModify())
                 .startDeliver(order.getStartDeliver())
                 .endDeliver(order.getEndDeliver())
+                .customer(new CustomerMapper().toResponse(order.getCustomer(), false))
                 .completed(order.getCompleted())
                 .build();
-
         if(order.getTrucker() != null) {
-            response.setTrucker(order.getTrucker().getId());
+            response.setTrucker(new TruckerMapper().toResponse(order.getTrucker()));
         }
-
+        else {
+            response.setTrucker(null);
+        }
         return response;
     }
 
@@ -40,10 +43,11 @@ public class OrderMapper {
         return response;
     }
 
-    public Order toEntity(OrderRequest orderRequest, City from, City to, Trucker trucker) {
+    public Order toEntity(OrderRequest orderRequest, City from, City to, Trucker trucker, Customer customer) {
         Order order = new Order();
         order.setFrom(from);
         order.setTo(to);
+        order.setCustomer(customer);
         order.setCargoDescription(orderRequest.getCargoDescription());
         order.setCargoWeight(orderRequest.getCargoWeight());
         order.setTrucker(trucker);

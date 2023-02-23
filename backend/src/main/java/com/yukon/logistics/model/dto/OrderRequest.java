@@ -19,6 +19,7 @@ public class OrderRequest {
     private String cargoDescription;
     private Double cargoWeight;
     private Long trucker;
+    private Long customer;
     private LocalDateTime startDeliver;
     private LocalDateTime endDeliver;
     private Boolean completed;
