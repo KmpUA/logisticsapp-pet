@@ -53,6 +53,10 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     Trucker trucker;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    Customer customer;
+
     @CreatedDate
     @Column(name = "created")
     LocalDateTime created;
