@@ -12,7 +12,7 @@ import java.util.List;
 
 public class OrderMapper {
 
-    public OrderResponse toResponse(Order order) {
+    public OrderResponse toResponse(Order order, boolean includeTrucker, boolean includeCustomer) {
         OrderResponse response = OrderResponse.builder()
                 .id(order.getId())
                 .cityFrom(order.getFrom().getId())
@@ -23,22 +23,21 @@ public class OrderMapper {
                 .modify(order.getModify())
                 .startDeliver(order.getStartDeliver())
                 .endDeliver(order.getEndDeliver())
-                .customer(new CustomerMapper().toResponse(order.getCustomer(), false))
                 .completed(order.getCompleted())
                 .build();
-        if(order.getTrucker() != null) {
-            response.setTrucker(new TruckerMapper().toResponse(order.getTrucker()));
+        if(order.getTrucker() != null && includeTrucker) {
+            response.setTrucker(new TruckerMapper().toResponse(order.getTrucker(), false));
         }
-        else {
-            response.setTrucker(null);
+        if(includeCustomer) {
+            response.setCustomer(new CustomerMapper().toResponse(order.getCustomer(), false));
         }
         return response;
     }
 
-    public List<OrderResponse> toListResponse(List<Order> orders) {
+    public List<OrderResponse> toListResponse(List<Order> orders, boolean includeTrucker, boolean includeCustomer) {
         List<OrderResponse> response = new ArrayList<>();
         for (Order order: orders) {
-            response.add(toResponse(order));
+            response.add(toResponse(order, includeTrucker, includeCustomer));
         }
         return response;
     }

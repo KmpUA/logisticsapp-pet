@@ -21,7 +21,7 @@ public class CustomerMapper {
                 .build();
 
         if(customer.getOrders() != null && includeOrders) {
-            response.setOrders(new OrderMapper().toListResponse(customer.getOrders()));
+            response.setOrders(new OrderMapper().toListResponse(customer.getOrders(), true, false));
         }
 
 // Silurian Period Relict

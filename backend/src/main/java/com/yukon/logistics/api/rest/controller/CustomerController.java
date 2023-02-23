@@ -22,7 +22,7 @@ import static java.lang.Long.parseLong;
 public class CustomerController {
     private final CustomerService customerService;
 
-    @GetMapping()
+    @GetMapping("/all")
     @Transactional
     public ResponseEntity<List<CustomerResponse>> getAll(boolean includeOrders) {
         List<CustomerResponse> customerResponseList = new CustomerMapper()

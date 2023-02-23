@@ -51,6 +51,7 @@ public class Order {
     double cargoWeight;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trucker_id")
     Trucker trucker;
 
     @ManyToOne(fetch = FetchType.LAZY)
