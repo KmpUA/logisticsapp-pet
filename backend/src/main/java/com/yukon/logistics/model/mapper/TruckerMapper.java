@@ -2,21 +2,14 @@ package com.yukon.logistics.model.mapper;
 
 import com.yukon.logistics.model.dto.TruckerRequest;
 import com.yukon.logistics.model.dto.TruckerResponse;
-import com.yukon.logistics.persistence.entity.Order;
 import com.yukon.logistics.persistence.entity.Trucker;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TruckerMapper {
-    public TruckerResponse toResponse(Trucker trucker) {
-        List<Long> orders = new ArrayList<>();
-        if(trucker.getOrders() != null) {
-            for (Order order : trucker.getOrders()) {
-                orders.add(order.getId());
-            }
-        }
-        return TruckerResponse.builder().ordersId(orders)
+    public TruckerResponse toResponse(Trucker trucker, boolean includeOrders) {
+        TruckerResponse response = TruckerResponse.builder()
                 .id(trucker.getId())
                 .firstName(trucker.getFirstName())
                 .lastName(trucker.getLastName())
@@ -26,12 +19,18 @@ public class TruckerMapper {
                 .role(trucker.getRole())
                 .status(trucker.getStatus())
                 .build();
+
+        if(trucker.getOrders() != null && includeOrders) {
+            response.setOrders(new OrderMapper().toListResponse(trucker.getOrders(), false, true));
+        }
+
+        return response;
     }
 
-    public List<TruckerResponse> toListResponse(List<Trucker> truckers) {
+    public List<TruckerResponse> toListResponse(List<Trucker> truckers, boolean includeOrders) {
         List<TruckerResponse> response = new ArrayList<>();
         for (Trucker trucker: truckers) {
-            response.add(toResponse(trucker));
+            response.add(toResponse(trucker, includeOrders));
         }
         return response;
     }
