@@ -33,10 +33,10 @@ public class DispatcherController {
         return new ResponseEntity<>(dispatcherResponseList, HttpStatus.OK);
     }
 
-    @GetMapping("/trucker/{id}")
-    public ResponseEntity<DispatcherResponse> getByTrucker(@PathVariable("id") String id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<DispatcherResponse> getById(@PathVariable("id") String id) {
         DispatcherResponse dispatcherResponse = new DispatcherMapper()
-                .toResponse(dispatcherService.findDispatcherByTrucker(parseLong(id)));
+                .toResponse(dispatcherService.findDispatcherById(parseLong(id)), true);
         return new ResponseEntity<>(dispatcherResponse, HttpStatus.OK);
     }
 
