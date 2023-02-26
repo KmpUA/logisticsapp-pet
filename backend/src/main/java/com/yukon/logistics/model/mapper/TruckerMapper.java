@@ -4,10 +4,12 @@ import com.yukon.logistics.model.dto.TruckerRequest;
 import com.yukon.logistics.model.dto.TruckerResponse;
 import com.yukon.logistics.persistence.entity.Dispatcher;
 import com.yukon.logistics.persistence.entity.Trucker;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TruckerMapper {
     public TruckerResponse toResponse(Trucker trucker, boolean includeOrders, boolean includeDispatcher) {
         TruckerResponse response = TruckerResponse.builder()

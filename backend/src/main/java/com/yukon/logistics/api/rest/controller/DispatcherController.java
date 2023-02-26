@@ -25,17 +25,18 @@ import static java.lang.Long.parseLong;
 @AllArgsConstructor
 public class DispatcherController {
     private final DispatcherService dispatcherService;
+    private final DispatcherMapper dispatcherMapper;
 
     @GetMapping("/all")
     public ResponseEntity<List<DispatcherResponse>> getAll(boolean includeTruckers) {
-        List<DispatcherResponse> dispatcherResponseList = new DispatcherMapper()
+        List<DispatcherResponse> dispatcherResponseList = dispatcherMapper
                 .toListResponse(dispatcherService.findAllDispatchers(), includeTruckers);
         return new ResponseEntity<>(dispatcherResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DispatcherResponse> getById(@PathVariable("id") String id) {
-        DispatcherResponse dispatcherResponse = new DispatcherMapper()
+        DispatcherResponse dispatcherResponse = dispatcherMapper
                 .toResponse(dispatcherService.findDispatcherById(parseLong(id)), true);
         return new ResponseEntity<>(dispatcherResponse, HttpStatus.OK);
     }
@@ -48,8 +49,8 @@ public class DispatcherController {
 
     @PostMapping
     public ResponseEntity<DispatcherResponse> add(@RequestBody DispatcherRequest dispatcherRequest) {
-        Dispatcher dispatcher = new DispatcherMapper().toEntity(dispatcherRequest);
-        DispatcherResponse dispatcherResponse = new DispatcherMapper()
+        Dispatcher dispatcher = dispatcherMapper.toEntity(dispatcherRequest);
+        DispatcherResponse dispatcherResponse = dispatcherMapper
                 .toResponse(dispatcherService.addDispatcher(dispatcher), false);
         return new ResponseEntity<>(dispatcherResponse, HttpStatus.OK);
     }
@@ -57,9 +58,9 @@ public class DispatcherController {
     @PutMapping("/{id}")
     public ResponseEntity<DispatcherResponse> update(@PathVariable("id") String id,
                                                      @RequestBody DispatcherRequest dispatcherRequest) {
-        Dispatcher dispatcher = new DispatcherMapper().toEntity(dispatcherRequest);
+        Dispatcher dispatcher = dispatcherMapper.toEntity(dispatcherRequest);
         dispatcher.setId(parseLong(id));
-        DispatcherResponse dispatcherResponse = new DispatcherMapper()
+        DispatcherResponse dispatcherResponse = dispatcherMapper
                 .toResponse(dispatcherService.updateDispatcher(dispatcher), false);
         return new ResponseEntity<>(dispatcherResponse, HttpStatus.OK);
     }

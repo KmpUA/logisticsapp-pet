@@ -21,26 +21,27 @@ import static java.lang.Long.parseLong;
 @RequestMapping("/customers")
 public class CustomerController {
     private final CustomerService customerService;
+    private final CustomerMapper customerMapper;
 
     @GetMapping("/all")
     @Transactional
     public ResponseEntity<List<CustomerResponse>> getAll(boolean includeOrders) {
-        List<CustomerResponse> customerResponseList = new CustomerMapper()
+        List<CustomerResponse> customerResponseList = customerMapper
                 .toListResponse(customerService.findAllCustomers(), includeOrders);
         return new ResponseEntity<>(customerResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponse> getById(@PathVariable("id") String id) {
-        CustomerResponse customerResponse = new CustomerMapper()
+        CustomerResponse customerResponse = customerMapper
                 .toResponse(customerService.findCustomerById(parseLong(id)), true);
         return new ResponseEntity<>(customerResponse, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<CustomerResponse> addCustomer(@RequestBody CustomerRequest customerRequest){
-        Customer customer = new CustomerMapper().toEntity(customerRequest);
-        CustomerResponse customerResponse = new CustomerMapper()
+        Customer customer = customerMapper.toEntity(customerRequest);
+        CustomerResponse customerResponse = customerMapper
                 .toResponse(customerService.addCustomer(customer), false);
         return new ResponseEntity<>(customerResponse, HttpStatus.OK);
     }
@@ -48,10 +49,10 @@ public class CustomerController {
     @PutMapping("/{id}")
     public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable("id") String id,
                                                            @RequestBody CustomerRequest customerRequest){
-        Customer customer = new CustomerMapper().toEntity(customerRequest);
+        Customer customer = customerMapper.toEntity(customerRequest);
         customer.setId(parseLong(id));
         customer.setOrders(customerService.findCustomerById(parseLong(id)).getOrders());
-        CustomerResponse customerResponse = new CustomerMapper()
+        CustomerResponse customerResponse = customerMapper
                 .toResponse(customerService.updateCustomer(customer), false);
         return new ResponseEntity<>(customerResponse, HttpStatus.OK);
     }

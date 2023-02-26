@@ -5,10 +5,12 @@ import com.yukon.logistics.model.dto.CountryRequest;
 import com.yukon.logistics.model.dto.CountryResponse;
 import com.yukon.logistics.persistence.entity.City;
 import com.yukon.logistics.persistence.entity.Country;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CountryMapper {
     public CountryResponse toResponse(Country country) {
         List<CityResponse> cities = new ArrayList<>();

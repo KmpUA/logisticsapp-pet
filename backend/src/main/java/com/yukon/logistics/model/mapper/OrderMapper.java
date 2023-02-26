@@ -6,10 +6,12 @@ import com.yukon.logistics.persistence.entity.City;
 import com.yukon.logistics.persistence.entity.Customer;
 import com.yukon.logistics.persistence.entity.Order;
 import com.yukon.logistics.persistence.entity.Trucker;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class OrderMapper {
 
     public OrderResponse toResponse(Order order, boolean includeTrucker, boolean includeCustomer) {

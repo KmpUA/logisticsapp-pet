@@ -3,10 +3,12 @@ package com.yukon.logistics.model.mapper;
 import com.yukon.logistics.model.dto.UserRequest;
 import com.yukon.logistics.model.dto.UserResponse;
 import com.yukon.logistics.persistence.entity.User;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class UserMapper {
     public UserResponse toResponse(User user) {
         return UserResponse.builder()

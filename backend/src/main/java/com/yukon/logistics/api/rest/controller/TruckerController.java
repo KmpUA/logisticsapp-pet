@@ -23,39 +23,40 @@ import static java.lang.Long.parseLong;
 public class TruckerController {
     private final TruckerService truckerService;
     private final DispatcherService dispatcherService;
+    private final TruckerMapper truckerMapper;
 
     @GetMapping("/all")
     public ResponseEntity<List<TruckerResponse>> getAll(boolean includeOrders) {
-        List<TruckerResponse> truckerResponseList = new TruckerMapper()
+        List<TruckerResponse> truckerResponseList = truckerMapper
                 .toListResponse(truckerService.findAllTruckers(), includeOrders);
         return new ResponseEntity<>(truckerResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/truck/{truck_id}")
     public ResponseEntity<TruckerResponse> getByTruck(@PathVariable("truck_id") String id) {
-        TruckerResponse truckerResponse = new TruckerMapper()
+        TruckerResponse truckerResponse = truckerMapper
                 .toResponse(truckerService.findTruckerByTruck(parseLong(id)), true, true);
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
     @GetMapping("/dispatcher/{dispatcher_id}")
     public ResponseEntity<List<TruckerResponse>> getByDispatcher(@PathVariable("dispatcher_id") String id) {
-        List<TruckerResponse> truckerResponse = new TruckerMapper()
+        List<TruckerResponse> truckerResponse = truckerMapper
                 .toListResponse(truckerService.findTruckerByDispatcher(parseLong(id)), false);
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
     @GetMapping("/order/{order_id}")
     public ResponseEntity<TruckerResponse> getByOrder(@PathVariable("order_id") String id) {
-        TruckerResponse truckerResponse = new TruckerMapper()
+        TruckerResponse truckerResponse = truckerMapper
                 .toResponse(truckerService.findTruckerByOrder(parseLong(id)), false, true);
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<TruckerResponse> addTrucker(@RequestBody TruckerRequest truckerRequest) {
-        Trucker trucker = new TruckerMapper().toEntity(truckerRequest, null);
-        TruckerResponse truckerResponse = new TruckerMapper()
+        Trucker trucker = truckerMapper.toEntity(truckerRequest, null);
+        TruckerResponse truckerResponse = truckerMapper
                 .toResponse(truckerService.addTrucker(trucker), false, false);
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
@@ -68,7 +69,7 @@ public class TruckerController {
         if(truckerRequest.getDispatcher() != null) {
             dispatcher = dispatcherService.findDispatcherById(truckerRequest.getDispatcher());
         }
-        Trucker trucker = new TruckerMapper().toEntity(truckerRequest, dispatcher);
+        Trucker trucker = truckerMapper.toEntity(truckerRequest, dispatcher);
         trucker.setId(parseLong(id));
 
         if(truckerRequest.getPassword() == null) {
