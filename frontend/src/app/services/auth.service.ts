@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from '../models/User';
+import { User } from '../models/user';
 import { UsersService } from './users.service';
 
 const AUTH_API = environment.API_URL + 'auth/';
@@ -30,7 +30,6 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private userService: UsersService
   ) { }
 
   login(email: string, password: string): Observable<any> {
