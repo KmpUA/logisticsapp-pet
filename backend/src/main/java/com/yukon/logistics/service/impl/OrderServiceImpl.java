@@ -50,8 +50,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order findOrderByTruckerId(Long truckerId) {
-        return orderRepository.findByTruckerId(truckerId).orElseThrow(EntityExistsException::new);
+    public List<Order> findOrdersByTruckerId(Long truckerId) {
+        return orderRepository.findAllByTruckerId(truckerId);
     }
 
     @Override
