@@ -2,6 +2,7 @@ package com.yukon.logistics.model.mapper;
 
 import com.yukon.logistics.model.dto.DispatcherRequest;
 import com.yukon.logistics.model.dto.DispatcherResponse;
+import com.yukon.logistics.model.dto.TruckerResponse;
 import com.yukon.logistics.persistence.entity.Dispatcher;
 import com.yukon.logistics.persistence.entity.Trucker;
 
@@ -9,15 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DispatcherMapper {
-    public DispatcherResponse toResponse(Dispatcher dispatcher) {
-        List<Long> truckers = new ArrayList<>();
-        if(dispatcher.getTruckers() != null) {
-            for (Trucker trucker : dispatcher.getTruckers()) {
-                truckers.add(trucker.getId());
-            }
-        }
-        return DispatcherResponse.builder()
-                .truckersId(truckers)
+    public DispatcherResponse toResponse(Dispatcher dispatcher, boolean includeTruckers) {
+                DispatcherResponse response = DispatcherResponse.builder()
                 .id(dispatcher.getId())
                 .firstName(dispatcher.getFirstName())
                 .lastName(dispatcher.getLastName())
@@ -27,12 +21,24 @@ public class DispatcherMapper {
                 .role(dispatcher.getRole())
                 .status(dispatcher.getStatus())
                 .build();
+
+        if(includeTruckers) {
+            List<TruckerResponse> truckers = new ArrayList<>();
+            if(dispatcher.getTruckers() != null) {
+                for (Trucker trucker : dispatcher.getTruckers()) {
+                    truckers.add(new TruckerMapper().toResponse(trucker, false, false));
+                }
+            }
+            response.setTruckers(truckers);
+        }
+
+        return response;
     }
 
-    public List<DispatcherResponse> toListResponse(List<Dispatcher> dispatchers) {
+    public List<DispatcherResponse> toListResponse(List<Dispatcher> dispatchers, boolean includeTruckers) {
         List<DispatcherResponse> response = new ArrayList<>();
         for(Dispatcher dispatcher : dispatchers) {
-            response.add(toResponse(dispatcher));
+            response.add(toResponse(dispatcher, includeTruckers));
         }
         return response;
     }
@@ -47,7 +53,6 @@ public class DispatcherMapper {
         dispatcher.setPhone(dispatcherRequest.getPhone());
         dispatcher.setRole(dispatcherRequest.getRole());
         dispatcher.setStatus(dispatcherRequest.getStatus());
-
         return dispatcher;
     }
 }

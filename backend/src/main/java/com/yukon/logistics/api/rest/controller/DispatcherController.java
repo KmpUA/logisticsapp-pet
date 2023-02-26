@@ -27,9 +27,9 @@ public class DispatcherController {
     private final DispatcherService dispatcherService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<DispatcherResponse>> getAll() {
+    public ResponseEntity<List<DispatcherResponse>> getAll(boolean includeTruckers) {
         List<DispatcherResponse> dispatcherResponseList = new DispatcherMapper()
-                .toListResponse(dispatcherService.findAllDispatchers());
+                .toListResponse(dispatcherService.findAllDispatchers(), includeTruckers);
         return new ResponseEntity<>(dispatcherResponseList, HttpStatus.OK);
     }
 
@@ -50,7 +50,7 @@ public class DispatcherController {
     public ResponseEntity<DispatcherResponse> add(@RequestBody DispatcherRequest dispatcherRequest) {
         Dispatcher dispatcher = new DispatcherMapper().toEntity(dispatcherRequest);
         DispatcherResponse dispatcherResponse = new DispatcherMapper()
-                .toResponse(dispatcherService.addDispatcher(dispatcher));
+                .toResponse(dispatcherService.addDispatcher(dispatcher), false);
         return new ResponseEntity<>(dispatcherResponse, HttpStatus.OK);
     }
 
@@ -60,7 +60,7 @@ public class DispatcherController {
         Dispatcher dispatcher = new DispatcherMapper().toEntity(dispatcherRequest);
         dispatcher.setId(parseLong(id));
         DispatcherResponse dispatcherResponse = new DispatcherMapper()
-                .toResponse(dispatcherService.updateDispatcher(dispatcher));
+                .toResponse(dispatcherService.updateDispatcher(dispatcher), false);
         return new ResponseEntity<>(dispatcherResponse, HttpStatus.OK);
     }
 }

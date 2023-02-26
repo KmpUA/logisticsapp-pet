@@ -34,7 +34,7 @@ public class TruckerController {
     @GetMapping("/truck/{truck_id}")
     public ResponseEntity<TruckerResponse> getByTruck(@PathVariable("truck_id") String id) {
         TruckerResponse truckerResponse = new TruckerMapper()
-                .toResponse(truckerService.findTruckerByTruck(parseLong(id)), true);
+                .toResponse(truckerService.findTruckerByTruck(parseLong(id)), true, true);
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
@@ -48,7 +48,7 @@ public class TruckerController {
     @GetMapping("/order/{order_id}")
     public ResponseEntity<TruckerResponse> getByOrder(@PathVariable("order_id") String id) {
         TruckerResponse truckerResponse = new TruckerMapper()
-                .toResponse(truckerService.findTruckerByOrder(parseLong(id)), false);
+                .toResponse(truckerService.findTruckerByOrder(parseLong(id)), false, true);
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
@@ -56,7 +56,7 @@ public class TruckerController {
     public ResponseEntity<TruckerResponse> addTrucker(@RequestBody TruckerRequest truckerRequest) {
         Trucker trucker = new TruckerMapper().toEntity(truckerRequest, null);
         TruckerResponse truckerResponse = new TruckerMapper()
-                .toResponse(truckerService.addTrucker(trucker), false);
+                .toResponse(truckerService.addTrucker(trucker), false, false);
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
@@ -76,7 +76,7 @@ public class TruckerController {
         }
 
         TruckerResponse truckerResponse= new TruckerMapper()
-                .toResponse(truckerService.updateTrucker(trucker), false);
+                .toResponse(truckerService.updateTrucker(trucker), false, true);
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TruckerMapper {
-    public TruckerResponse toResponse(Trucker trucker, boolean includeOrders) {
+    public TruckerResponse toResponse(Trucker trucker, boolean includeOrders, boolean includeDispatcher) {
         TruckerResponse response = TruckerResponse.builder()
                 .id(trucker.getId())
                 .firstName(trucker.getFirstName())
@@ -25,8 +25,8 @@ public class TruckerMapper {
             response.setOrders(new OrderMapper().toListResponse(trucker.getOrders(), false, true));
         }
 
-        if(trucker.getDispatcher() != null) {
-            response.setDispatcher(new DispatcherMapper().toResponse(trucker.getDispatcher()));
+        if(trucker.getDispatcher() != null && includeDispatcher) {
+            response.setDispatcher(new DispatcherMapper().toResponse(trucker.getDispatcher(), false));
         }
 
         return response;
@@ -35,7 +35,7 @@ public class TruckerMapper {
     public List<TruckerResponse> toListResponse(List<Trucker> truckers, boolean includeOrders) {
         List<TruckerResponse> response = new ArrayList<>();
         for (Trucker trucker: truckers) {
-            response.add(toResponse(trucker, includeOrders));
+            response.add(toResponse(trucker, includeOrders, true));
         }
         return response;
     }

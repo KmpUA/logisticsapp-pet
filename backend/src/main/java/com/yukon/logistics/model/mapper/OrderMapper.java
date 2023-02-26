@@ -26,7 +26,7 @@ public class OrderMapper {
                 .completed(order.getCompleted())
                 .build();
         if(order.getTrucker() != null && includeTrucker) {
-            response.setTrucker(new TruckerMapper().toResponse(order.getTrucker(), false));
+            response.setTrucker(new TruckerMapper().toResponse(order.getTrucker(), false, false));
         }
         if(includeCustomer) {
             response.setCustomer(new CustomerMapper().toResponse(order.getCustomer(), false));
