@@ -3,7 +3,9 @@ package com.yukon.logistics.api.rest.controller;
 import com.yukon.logistics.model.dto.TruckerRequest;
 import com.yukon.logistics.model.dto.TruckerResponse;
 import com.yukon.logistics.model.mapper.TruckerMapper;
+import com.yukon.logistics.persistence.entity.Dispatcher;
 import com.yukon.logistics.persistence.entity.Trucker;
+import com.yukon.logistics.service.DispatcherService;
 import com.yukon.logistics.service.TruckerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import static java.lang.Long.parseLong;
 @RequestMapping("/truckers")
 public class TruckerController {
     private final TruckerService truckerService;
+    private final DispatcherService dispatcherService;
 
     @GetMapping("/all")
     public ResponseEntity<List<TruckerResponse>> getAll(boolean includeOrders) {
@@ -51,17 +54,27 @@ public class TruckerController {
 
     @PostMapping
     public ResponseEntity<TruckerResponse> addTrucker(@RequestBody TruckerRequest truckerRequest) {
-        Trucker trucker = new TruckerMapper().toEntity(truckerRequest);
+        Trucker trucker = new TruckerMapper().toEntity(truckerRequest, null);
         TruckerResponse truckerResponse = new TruckerMapper()
                 .toResponse(truckerService.addTrucker(trucker), false);
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<TruckerResponse> updateTrucker(@PathVariable("id") String id,
                                                          @RequestBody TruckerRequest truckerRequest) {
-        Trucker trucker = new TruckerMapper().toEntity(truckerRequest);
+        Dispatcher dispatcher = null;
+        if(truckerRequest.getDispatcher() != null) {
+            dispatcher = dispatcherService.findDispatcherById(truckerRequest.getDispatcher());
+        }
+        Trucker trucker = new TruckerMapper().toEntity(truckerRequest, dispatcher);
         trucker.setId(parseLong(id));
+
+        if(truckerRequest.getPassword() == null) {
+            trucker.setPassword(truckerService.findTruckerById(parseLong(id)).getPassword());
+        }
+
         TruckerResponse truckerResponse= new TruckerMapper()
                 .toResponse(truckerService.updateTrucker(trucker), false);
         return new ResponseEntity<>(truckerResponse, HttpStatus.OK);

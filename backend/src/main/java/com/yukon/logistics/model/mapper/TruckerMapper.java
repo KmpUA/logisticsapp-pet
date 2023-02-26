@@ -2,6 +2,7 @@ package com.yukon.logistics.model.mapper;
 
 import com.yukon.logistics.model.dto.TruckerRequest;
 import com.yukon.logistics.model.dto.TruckerResponse;
+import com.yukon.logistics.persistence.entity.Dispatcher;
 import com.yukon.logistics.persistence.entity.Trucker;
 
 import java.util.ArrayList;
@@ -24,6 +25,10 @@ public class TruckerMapper {
             response.setOrders(new OrderMapper().toListResponse(trucker.getOrders(), false, true));
         }
 
+        if(trucker.getDispatcher() != null) {
+            response.setDispatcher(new DispatcherMapper().toResponse(trucker.getDispatcher()));
+        }
+
         return response;
     }
 
@@ -35,7 +40,7 @@ public class TruckerMapper {
         return response;
     }
 
-    public Trucker toEntity(TruckerRequest truckerRequest) {
+    public Trucker toEntity(TruckerRequest truckerRequest, Dispatcher dispatcher) {
         Trucker trucker = new Trucker();
         trucker.setFirstName(truckerRequest.getFirstName());
         trucker.setLastName(truckerRequest.getLastName());
@@ -45,6 +50,7 @@ public class TruckerMapper {
         trucker.setPhone(truckerRequest.getPhone());
         trucker.setRole(truckerRequest.getRole());
         trucker.setStatus(truckerRequest.getStatus());
+        trucker.setDispatcher(dispatcher);
         return trucker;
     }
 }
