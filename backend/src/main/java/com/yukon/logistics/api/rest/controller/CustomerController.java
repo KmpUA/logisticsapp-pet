@@ -4,6 +4,7 @@ import com.yukon.logistics.model.dto.CustomerRequest;
 import com.yukon.logistics.model.dto.CustomerResponse;
 import com.yukon.logistics.model.mapper.CustomerMapper;
 import com.yukon.logistics.persistence.entity.Customer;
+import com.yukon.logistics.persistence.entity.Status;
 import com.yukon.logistics.service.CustomerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -59,7 +60,9 @@ public class CustomerController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCustomer(@PathVariable String id){
-        customerService.deleteCustomerById(parseLong(id));
+        Customer customer = customerService.findCustomerById(parseLong(id));
+        customer.setStatus(Status.DELETED);
+        customerService.updateCustomer(customer);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

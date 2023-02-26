@@ -3,6 +3,7 @@ package com.yukon.logistics.api.rest.controller;
 import com.yukon.logistics.model.dto.UserRequest;
 import com.yukon.logistics.model.dto.UserResponse;
 import com.yukon.logistics.model.mapper.UserMapper;
+import com.yukon.logistics.persistence.entity.Status;
 import com.yukon.logistics.persistence.entity.User;
 import com.yukon.logistics.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
@@ -47,7 +48,9 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") String id) {
-        userService.deleteUserById(parseLong(id));
+        User user = userService.findById(parseLong(id));
+        user.setStatus(Status.DELETED);
+        userService.updateUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -4,6 +4,7 @@ import com.yukon.logistics.model.dto.DispatcherRequest;
 import com.yukon.logistics.model.dto.DispatcherResponse;
 import com.yukon.logistics.model.mapper.DispatcherMapper;
 import com.yukon.logistics.persistence.entity.Dispatcher;
+import com.yukon.logistics.persistence.entity.Status;
 import com.yukon.logistics.service.DispatcherService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,9 @@ public class DispatcherController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteById(@PathVariable("id") String id) {
-        dispatcherService.deleteDispatcherById(parseLong(id));
+        Dispatcher dispatcher = dispatcherService.findDispatcherById(parseLong(id));
+        dispatcher.setStatus(Status.DELETED);
+        dispatcherService.updateDispatcher(dispatcher);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

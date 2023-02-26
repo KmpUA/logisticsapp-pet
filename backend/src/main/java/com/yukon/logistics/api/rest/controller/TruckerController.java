@@ -4,6 +4,7 @@ import com.yukon.logistics.model.dto.TruckerRequest;
 import com.yukon.logistics.model.dto.TruckerResponse;
 import com.yukon.logistics.model.mapper.TruckerMapper;
 import com.yukon.logistics.persistence.entity.Dispatcher;
+import com.yukon.logistics.persistence.entity.Status;
 import com.yukon.logistics.persistence.entity.Trucker;
 import com.yukon.logistics.service.DispatcherService;
 import com.yukon.logistics.service.TruckerService;
@@ -83,7 +84,9 @@ public class TruckerController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTrucker(@PathVariable String id) {
-        truckerService.deleteCityById(parseLong(id));
+        Trucker trucker = truckerService.findTruckerById(parseLong(id));
+        trucker.setStatus(Status.DELETED);
+        truckerService.updateTrucker(trucker);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
