@@ -1,0 +1,2 @@
+<order-card *ngFor="let item of orderList" [item]="item" [isAdmin]="true"
+    (orderDelete)="deleteOrder($event)"></order-card>
