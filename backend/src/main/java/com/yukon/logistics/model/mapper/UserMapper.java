@@ -6,6 +6,7 @@ import com.yukon.logistics.model.dto.UserRequest;
 import com.yukon.logistics.model.dto.UserResponse;
 import com.yukon.logistics.persistence.entity.User;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -54,8 +55,11 @@ public class UserMapper {
      * @param user we will map
      * @return AuthenticatedUser
      */
-    public AuthenticatedUser toAuthenticatedUser(JwtUser user) {
+    public AuthenticatedUser toAuthenticatedUser(@NonNull final JwtUser user) {
         return AuthenticatedUser.builder()
+                .id(user.getId())
+                .status(user.getStatus())
+                .phone(user.getPhone())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .imageUrl(user.getImageUrl())

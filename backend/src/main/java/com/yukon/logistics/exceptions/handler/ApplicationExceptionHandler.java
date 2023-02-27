@@ -28,26 +28,6 @@ import java.util.Date;
 public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
     
     /**
-     * Handle TokenExpiredException.
-     */
-    @ExceptionHandler(TokenExpiredException.class)
-    public ResponseEntity<ErrorMessage> handleAuthenticationException(
-            @NonNull final HttpServletRequest request,
-            @NonNull final TokenExpiredException exception) {
-        
-        log.error("The request performed with expired token:", exception);
-        
-        final var message = ErrorMessage.builder()
-                .status(HttpStatus.UNAUTHORIZED.value())
-                .date(new Date())
-                .description(ApplicationConstants.ErrorMassage.ACCESS_TOKEN_EXPIRED)
-                .url(request.getRequestURL().toString())
-                .build();
-        
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
-    }
-    
-    /**
      * Handle AuthenticationExceptions.
      */
     @ExceptionHandler({JWTVerificationException.class, AuthenticationException.class})

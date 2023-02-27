@@ -1,6 +1,7 @@
 package com.yukon.logistics.model.dto;
 
 import com.yukon.logistics.persistence.entity.Role;
+import com.yukon.logistics.persistence.entity.Status;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AccessLevel;
@@ -17,9 +18,16 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthenticatedUser {
     
+    Long id;
+    
     String firstName;
     
     String lastName;
+    
+    String phone;
+    
+    @Enumerated(EnumType.STRING)
+    Status status;
     
     @Enumerated(EnumType.STRING)
     Role role;

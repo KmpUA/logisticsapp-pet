@@ -25,10 +25,12 @@ public class JwtUserServiceImpl implements UserDetailsService {
                         "or requested user doesn't exist"));
         
         return JwtUser.builder()
+                .id(user.getId())
                 .imageUrl(user.getImageUrl())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
                 .email(user.getEmail())
+                .phone(user.getPhone())
                 .password(user.getPassword())
                 .role(user.getRole())
                 .status(user.getStatus())

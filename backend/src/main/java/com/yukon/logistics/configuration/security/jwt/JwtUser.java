@@ -25,11 +25,15 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class JwtUser implements UserDetails {
     
+    Long id;
+    
     String firstName;
     
     String lastName;
     
     String email;
+    
+    String phone;
     
     @JsonIgnore
     String password;
