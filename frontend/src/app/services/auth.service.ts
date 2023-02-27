@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
 
 const AUTH_API = environment.API_URL + 'auth/';
 const USER_KEY = 'user';
@@ -25,6 +26,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
+    private _router: Router
   ) { }
 
   login(email: string, password: string): Observable<any> {
@@ -40,6 +42,7 @@ export class AuthService {
 
   logout(): Observable<any> {
     localStorage.removeItem(USER_KEY);
+    //this._router.navigateByUrl('/login'); it should be moved to using this function to route user to login page
     return this.http.post(AUTH_API + 'logout', null, httpOptions);
   }
 

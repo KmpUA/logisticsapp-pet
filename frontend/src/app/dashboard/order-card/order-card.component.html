@@ -6,7 +6,7 @@
         </p>
         <div style="font-size: 25px;" class="trucker" *ngIf="!isTrucker">
             <mat-icon class="local_shipping" aria-hidden="false" aria-label="Example home icon"
-                fontIcon="local_shipping"></mat-icon>{{item.trucker?.firstName!+' '+item.trucker?.lastName}}
+                fontIcon="local_shipping"></mat-icon><span *ngIf="item.trucker">{{item.trucker?.firstName!+' '+item.trucker?.lastName}}</span>
         </div>
     </div>
 
@@ -15,8 +15,8 @@
             <mat-list>
                 <mat-list-item>
                     <mat-icon class="calendar" aria-hidden="false" aria-label="Example home icon"
-                        fontIcon="calendar_month"></mat-icon>{{item.startDeliver}}
-                    <span class="dash">&ndash;</span>{{item.endDeliver}}
+                        fontIcon="calendar_month"></mat-icon>{{item.startDeliver | date:"shortDate"}}
+                    <span class="dash">&ndash;</span>{{item.endDeliver | date:"shortDate"}}
                 </mat-list-item>
                 <mat-list-item>
                     <mat-icon class="fitness_center" aria-hidden="false" aria-label="Example home icon"
@@ -39,7 +39,7 @@
         </mat-list>
 
         <div class="actions" *ngIf="isAdmin">
-            <button mat-raised-button color="primary">Delete</button>
+            <button mat-raised-button color="primary" (click)="onDelete();">Delete</button>
         </div>
 
         <div class="actions" *ngIf="isTrucker">

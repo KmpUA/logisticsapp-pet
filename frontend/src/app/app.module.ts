@@ -28,16 +28,29 @@ import { DialogAddUserDialog } from './user-management/user-management.component
 import { HttpInterceptorProvider } from './interceptor/HttpRequest.interceptor';
 import { OrderCardComponent } from './dashboard/order-card/order-card.component';
 import { TruckerDashboardComponent } from './dashboard/trucker-dashboard/trucker-dashboard.component';
+import { AdminDashboardComponent } from './dashboard/admin-dashboard/admin-dashboard.component';
 
 
+
+import { DashboardComponent } from './dashboard/dashboard-user/dashboard.component';
+import { DashboardDispatcherComponent } from './dashboard/dashboard-dispatcher/dashboard-dispatcher.component';
+import { DialogContentExampleDialog } from './dashboard/dashboard-user/dashboard.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { UserProfileComponent } from './dashboard/user-profile/user-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    DashboardComponent,
+    DashboardDispatcherComponent,
+    DialogContentExampleDialog,
     UserManagementComponent,
     DialogAddUserDialog,
     OrderCardComponent,
-    TruckerDashboardComponent
+    TruckerDashboardComponent,
+    AdminDashboardComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,11 +62,16 @@ import { TruckerDashboardComponent } from './dashboard/trucker-dashboard/trucker
     MatButtonModule,
     FormsModule,
     HttpClientModule,
-    MatTableModule,
+    MatListModule,
+    MatIconModule,
+    MatDialogModule,
     MatSelectModule,
     MatPaginatorModule,
     MatDialogModule,
     ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTableModule,
     MatSnackBarModule,
     MatToolbarModule,
     MatIconModule,
