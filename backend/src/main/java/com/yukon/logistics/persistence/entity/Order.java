@@ -51,7 +51,12 @@ public class Order {
     double cargoWeight;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trucker_id")
     Trucker trucker;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    Customer customer;
 
     @CreatedDate
     @Column(name = "created")
@@ -61,9 +66,12 @@ public class Order {
     @Column(name = "modify")
     LocalDateTime modify;
 
-    @Column(name = "start_deliver")
+    @Column(name = "start_deliver", nullable = false)
     LocalDateTime startDeliver;
 
-    @Column(name = "end_deliver")
+    @Column(name = "end_deliver", nullable = false)
     LocalDateTime endDeliver;
+
+    @Column(name = "completed", nullable = false)
+    Boolean completed;
 }

@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { User } from '../models/user';
+import { UsersService } from './users.service';
 
-const AUTH_API = 'http://localhost:8000/auth/';
+const AUTH_API = environment.API_URL + 'auth/';
 const TOKEN_KEY = 'auth-token';
+const USER_KEY = 'user';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,11 +17,23 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
+  get token() {
+    return localStorage.getItem(TOKEN_KEY);
+  }
 
-  constructor(private http: HttpClient) { }
+  get user(): User {
+    let user = localStorage.getItem(USER_KEY);
+    if (user)
+      return JSON.parse(user);
+    return {};
+  }
+
+  constructor(
+    private http: HttpClient,
+  ) { }
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API + 'login', {
+    return this.http.post(AUTH_API + 'authenticate', {
       email,
       password
     }, httpOptions);
@@ -29,5 +45,13 @@ export class AuthService {
 
   saveToken(token: string): void {
     localStorage.setItem(TOKEN_KEY, token);
+  }
+
+  saveUser(user: User): void {
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem(TOKEN_KEY);
   }
 }

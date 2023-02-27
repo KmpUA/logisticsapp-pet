@@ -25,32 +25,33 @@ import static java.lang.Long.parseLong;
 @AllArgsConstructor
 public class CountryController {
     private final CountryServiceImpl countryService;
+    private final CountryMapper countryMapper;
 
     @GetMapping("/all")
     public ResponseEntity<List<CountryResponse>> getAll() {
-        List<CountryResponse> countryResponseList = new CountryMapper()
+        List<CountryResponse> countryResponseList = countryMapper
                 .toListResponse(countryService.findAllCountries());
         return new ResponseEntity<>(countryResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CountryResponse> getById(@PathVariable("id") String id) {
-        CountryResponse countryResponse = new CountryMapper()
+        CountryResponse countryResponse = countryMapper
                 .toResponse(countryService.findCountryById(parseLong(id)));
         return new ResponseEntity<>(countryResponse, HttpStatus.OK);
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<CountryResponse> getByName(@PathVariable("name") String name) {
-        CountryResponse countryResponse = new CountryMapper()
+        CountryResponse countryResponse = countryMapper
                 .toResponse(countryService.findCountryByName(name));
         return new ResponseEntity<>(countryResponse, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<CountryResponse> add(@RequestBody CountryRequest countryRequest) {
-        Country country = new CountryMapper().toEntity(countryRequest);
-        CountryResponse countryResponse = new CountryMapper().toResponse(countryService.addCountry(country));
+        Country country = countryMapper.toEntity(countryRequest);
+        CountryResponse countryResponse = countryMapper.toResponse(countryService.addCountry(country));
         return new ResponseEntity<>(countryResponse, HttpStatus.CREATED);
     }
 
@@ -63,9 +64,9 @@ public class CountryController {
     @PutMapping("/{id}")
     public ResponseEntity<CountryResponse> update(@PathVariable("id") String id,
                                                   @RequestBody CountryRequest countryRequest) {
-        Country country = new CountryMapper().toEntity(countryRequest);
+        Country country = countryMapper.toEntity(countryRequest);
         country.setId(parseLong(id));
-        CountryResponse countryResponse = new CountryMapper().toResponse(countryService.updateCountry(country));
+        CountryResponse countryResponse = countryMapper.toResponse(countryService.updateCountry(country));
         return  new ResponseEntity<>(countryResponse, HttpStatus.OK);
     }
 }

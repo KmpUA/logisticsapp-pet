@@ -1,0 +1,19 @@
+.center-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toolbar-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mat-column-action {
+    max-width: fit-content !important;
+}
+
+.mat-column-email {
+    min-width: fit-content !important;
+}

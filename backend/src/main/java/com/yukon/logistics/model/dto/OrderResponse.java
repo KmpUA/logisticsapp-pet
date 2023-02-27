@@ -16,11 +16,16 @@ import java.time.LocalDateTime;
 public class OrderResponse {
     private Long id;
     private Long cityFrom;
+    private String cityFromName;
     private Long cityTo;
+    private String cityToName;
     private String cargoDescription;
-    private double cargoWeight;
+    private Double cargoWeight;
+    private TruckerResponse trucker;
+    private CustomerResponse customer;
     private LocalDateTime created;
     private LocalDateTime modify;
     private LocalDateTime startDeliver;
     private LocalDateTime endDeliver;
+    private Boolean completed;
 }

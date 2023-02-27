@@ -5,7 +5,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
@@ -34,8 +33,7 @@ public class Country {
     @Column(name = "name", nullable = false)
     String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "city_id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy="country")
     @JsonManagedReference
     List<City> cities;
 }

@@ -5,6 +5,7 @@ import com.yukon.logistics.model.dto.PageResponse;
 import com.yukon.logistics.model.dto.UserRequest;
 import com.yukon.logistics.model.dto.UserResponse;
 import com.yukon.logistics.model.mapper.UserMapper;
+import com.yukon.logistics.persistence.entity.Status;
 import com.yukon.logistics.persistence.entity.User;
 import com.yukon.logistics.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
@@ -55,32 +56,28 @@ public class UserController {
     
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getById(@PathVariable("id") String id) {
-        UserResponse userResponse = userMapper
-                .toResponse(userService.findById(parseLong(id)));
-        
+        UserResponse userResponse = userMapper.toResponse(userService.findById(parseLong(id)));
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
     
     @GetMapping("/email/{email}")
     public ResponseEntity<UserResponse> getByEmail(@PathVariable("email") String email) {
-        UserResponse userResponse = userMapper
-                .toResponse(userService.findByEmail(email));
-        
+        UserResponse userResponse = userMapper.toResponse(userService.findByEmail(email));
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteById(@PathVariable("id") String id) {
-        userService.deleteUserById(parseLong(id));
-        
-        return ResponseEntity.ok("Entity successfully deleted.");
+    public ResponseEntity<?> deleteById(@PathVariable("id") String id) {
+        User user = userService.findById(parseLong(id));
+        user.setStatus(Status.DELETED);
+        userService.updateUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     
     @PostMapping
     public ResponseEntity<UserResponse> add(@RequestBody UserRequest userRequest) {
         User user = userMapper.toEntity(userRequest);
         UserResponse userResponse = userMapper.toResponse(userService.addUser(user));
-        
         return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
     
