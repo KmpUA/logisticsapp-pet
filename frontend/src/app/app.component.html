@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-    <span>Logistics</span>
+    <span class="cursor"(click)="goToDashboard()">Logistics</span>
     <span class="spacer"></span>
     <div *ngIf="this.authService.isLoggedIn()">
 
@@ -10,7 +10,7 @@
             <mat-icon>person</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>Profile</button>
+            <button mat-menu-item (click)="openDialog()">Profile</button>
             <button mat-menu-item>Edit profile</button>
             <mat-divider></mat-divider>
             <button mat-menu-item (click)="signOut()">Sign out</button>

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/User';
 import { UsersService } from './users.service';
+import { Router } from '@angular/router';
 
 const AUTH_API = environment.API_URL + 'auth/';
 const TOKEN_KEY = 'auth-token';
@@ -20,9 +21,7 @@ export class AuthService {
   get token() {
     return localStorage.getItem(TOKEN_KEY);
   }
-  get user() {
-    return localStorage.getItem(USER_KEY);
-  }
+ 
 
   get user(): User {
     let user = localStorage.getItem(USER_KEY);
@@ -33,7 +32,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private userService: UsersService
+    private _router: Router
   ) { }
 
   login(email: string, password: string): Observable<any> {
@@ -45,7 +44,10 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(TOKEN_KEY);
+    this._router.navigateByUrl('/login')
   }
+
+
 
   saveToken(token: string): void {
     localStorage.setItem(TOKEN_KEY, token);

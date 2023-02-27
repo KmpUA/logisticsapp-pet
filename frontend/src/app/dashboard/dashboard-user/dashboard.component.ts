@@ -8,9 +8,9 @@ import { Trucker } from 'src/app/models/trucker';
 import { TruckerService } from 'src/app/services/trucker.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderResponse } from 'src/app/models/order-response';
+import { Customer } from 'src/app/models/customer';
 
 
-let ids;
 @Component({
   selector: 'app-dashboard',
   templateUrl: 'dashboard.component.html',
@@ -22,8 +22,8 @@ export class DashboardComponent implements OnInit {
   cityList: Cities[] = [];
   truckerList: Trucker[] = [];
   orderList1: OrderResponse = new OrderResponse();
-  customer = null;
-  constructor(public ord: OrderService, public cit: CityService, public tru: TruckerService, private dialog: MatDialog) { }
+  customer: Customer = new Customer;
+  constructor(public ord: OrderService, public cit: CityService, public tru: TruckerService, private dialog: MatDialog, public auth: AuthService) { }
 
 
   ngOnInit(): void {
@@ -32,11 +32,14 @@ export class DashboardComponent implements OnInit {
       console.log(this.cityList)
       localStorage.setItem("cities", JSON.stringify(this.cityList))
     });
-
-    this.ord.getOrders().subscribe((response: OrderResponse[]) => {
-      this.orderList = response;
-      console.log(response)
-    });
+    console.log('user',this.customer)
+    
+    this.ord.getCustomer(this.auth.user.id!).subscribe((response: Customer) => {
+      this.customer = response;
+      if(this.customer.orders != null)
+      this.orderList = this.customer.orders;
+      console.log(this.customer)
+      })
 
     this.tru.getTrucker().subscribe((response: Trucker[]) => {
       this.truckerList = response;
@@ -112,11 +115,11 @@ export class DialogContentExampleDialog {
     }
 
     if (this.user.user)
-      orderForm.value.customer = JSON.parse(this.user.user).id;
+      orderForm.value.customer = this.user.user.id;
 
-    this.ord.postOrder(orderForm.value).subscribe()
+    this.ord.postOrder(orderForm.value).subscribe(()=>{window.location.reload()})
+
   }
-
 
 };
 

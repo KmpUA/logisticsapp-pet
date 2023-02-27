@@ -34,6 +34,7 @@ import { DashboardDispatcherComponent } from './dashboard/dashboard-dispatcher/d
 import { DialogContentExampleDialog } from './dashboard/dashboard-user/dashboard.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { UserProfileComponent } from './dashboard/user-profile/user-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     DialogContentExampleDialog,
     UserManagementComponent,
     DialogAddUserDialog,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,8 +4,10 @@ import { Order } from '../models/order';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
 import { OrderResponse } from '../models/order-response';
+import { Customer } from '../models/customer';
 
 const ORD_API = environment.API_URL + 'orders';
+const ORD_API1 = environment.API_URL + 'customers';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -21,8 +23,8 @@ export class OrderService {
     return this.http.get<OrderResponse[]>(ORD_API + '/all');
   }
 
-  getOrderById(id: number){
-    return this.http.get<OrderResponse>(ORD_API + '/' + id);
+  getCustomer(id: number){
+    return this.http.get<Customer>(ORD_API1 + '/' + id);
   }
  
   updateOrder(order: OrderResponse): Observable<any> {
