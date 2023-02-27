@@ -10,24 +10,7 @@ import { OrderService } from 'src/app/services/order.service';
   styleUrls: ['./trucker-dashboard.component.css']
 })
 export class TruckerDashboardComponent implements OnInit {
-  public orderList: Order[] = [
-    {
-      created: "123.123213",
-      cityFrom: "cityFrom",
-      cityTo: "cityTo",
-      startDeliver: "startDeliver",
-      endDeliver: "endDeliver",
-      cargoDescription: "asdfasfd safddsaf sa fdsadfsadfsad fads fsadfasdf sadf saf safdadsf dsaf sdaf sadf\
-      asdfsad fds fasdfsafddsafdsafasd fdsafasd fdsaf",
-
-    },
-    {
-      created: "123.123213",
-      cityFrom: "cityFrom",
-      cityTo: "cityTo",
-      startDeliver: "startDeliver",
-      endDeliver: "endDeliver"
-    }];
+  public orderList: Order[] = [];
 
   constructor(private orderService: OrderService, private authService: AuthService) { }
 

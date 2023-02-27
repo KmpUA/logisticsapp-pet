@@ -2,8 +2,10 @@ import { User } from "./user";
 
 export class Order {
     constructor(
-        public cityFrom?: string,
-        public cityTo?: string,
+        public cityFromName?: string,
+        public cityFrom?: number,
+        public cityToName?: string,
+        public cityTo?: number,
         public cargoDescription?: string,
         public cargoWeight?: number,
         public trucker?: User | number,
