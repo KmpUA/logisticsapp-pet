@@ -21,17 +21,18 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
 import { UserManagementComponent } from './user-management/user-management.component';
 import { DialogAddUserDialog } from './user-management/user-management.component';
 import { AuthInterceptorProvider } from './interceptor/auth.interceptor';
 import { OrderCardComponent } from './dashboard/order-card/order-card.component';
 import { TruckerDashboardComponent } from './dashboard/trucker-dashboard/trucker-dashboard.component';
+import { AdminDashboardComponent } from './dashboard/admin-dashboard/admin-dashboard.component';
 
 
 
 import { DashboardComponent } from './dashboard/dashboard-user/dashboard.component';
-import { MatListModule } from '@angular/material/list';
 import { DashboardDispatcherComponent } from './dashboard/dashboard-dispatcher/dashboard-dispatcher.component';
 import { DialogContentExampleDialog } from './dashboard/dashboard-user/dashboard.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -48,6 +49,7 @@ import { UserProfileComponent } from './dashboard/user-profile/user-profile.comp
     DialogAddUserDialog,
     OrderCardComponent,
     TruckerDashboardComponent,
+    AdminDashboardComponent,
     UserProfileComponent,
   ],
   imports: [

@@ -14,8 +14,8 @@ export class OrderCardComponent {
   @Input() item: Order | any = new Order();
   @Input() isAdmin: boolean = false;
   @Input() isTrucker: boolean = false;
-  // @Input() onOrderComplete: Function = () => { };
   @Output() orderCompleted = new EventEmitter<Order>();
+  @Output() orderDelete = new EventEmitter<number>();
   constructor(private auth: AuthService) {
   }
   onCompleteToggle() {
@@ -23,5 +23,9 @@ export class OrderCardComponent {
     this.item.customer = this.item.customer.id;
     this.item.completed = !this.item.completed;
     this.orderCompleted.emit(this.item);
+  }
+
+  onDelete() {
+    this.orderDelete.emit(this.item.id);
   }
 }

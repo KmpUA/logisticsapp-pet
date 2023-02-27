@@ -47,4 +47,8 @@ export class OrderService {
   completeOrder(order: Order): Observable<any> {
     return this.http.put(ORD_API + '/' + order.id, order);
   }
+
+  deleteOrder(orderId: number): Observable<any> {
+    return this.http.delete(API_URL + '/' + orderId);
+  }
 }
