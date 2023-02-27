@@ -28,6 +28,7 @@ import { DialogAddUserDialog } from './user-management/user-management.component
 import { AuthInterceptorProvider } from './interceptor/auth.interceptor';
 import { OrderCardComponent } from './dashboard/order-card/order-card.component';
 import { TruckerDashboardComponent } from './dashboard/trucker-dashboard/trucker-dashboard.component';
+import { AdminDashboardComponent } from './dashboard/admin-dashboard/admin-dashboard.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { TruckerDashboardComponent } from './dashboard/trucker-dashboard/trucker
     UserManagementComponent,
     DialogAddUserDialog,
     OrderCardComponent,
-    TruckerDashboardComponent
+    TruckerDashboardComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,
