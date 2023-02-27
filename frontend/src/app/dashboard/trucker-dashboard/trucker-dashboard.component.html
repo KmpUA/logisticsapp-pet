@@ -1,1 +1,2 @@
-<order-card *ngFor="let item of orderList" [item]="item" [isTrucker]="true"></order-card>
+<order-card *ngFor="let item of orderList" [item]="item" [isTrucker]="true"
+    (orderCompleted)="toggleCompleted($event)"></order-card>

@@ -4,9 +4,9 @@
             <mat-icon class="clock" aria-hidden="false" aria-label="Example home icon"
                 fontIcon="schedule"></mat-icon>{{item.created | date:'medium'}}
         </p>
-        <div style="font-size: 25px;" class="trucker">
+        <div style="font-size: 25px;" class="trucker" *ngIf="!isTrucker">
             <mat-icon class="local_shipping" aria-hidden="false" aria-label="Example home icon"
-                fontIcon="local_shipping"></mat-icon>{{item.trucker}}
+                fontIcon="local_shipping"></mat-icon>{{item.trucker?.firstName!+' '+item.trucker?.lastName}}
         </div>
     </div>
 
@@ -38,8 +38,16 @@
             </mat-list-item>
         </mat-list>
 
+        <div class="actions" *ngIf="isAdmin">
+            <button mat-raised-button color="primary">Delete</button>
+        </div>
+
         <div class="actions" *ngIf="isTrucker">
-            <button mat-raised-button color="primary">Assign me</button>
+            <button mat-raised-button color="primary" *ngIf="this.item.completed==false"
+                (click)="onCompleteToggle();">Finish</button>
+            <button mat-raised-button color="accent" *ngIf="this.item.completed==true"
+                (click)="onCompleteToggle();">Finished
+                <mat-icon>done</mat-icon></button>
         </div>
     </div>
 
