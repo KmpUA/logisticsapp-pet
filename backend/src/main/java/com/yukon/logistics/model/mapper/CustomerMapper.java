@@ -3,10 +3,12 @@ package com.yukon.logistics.model.mapper;
 import com.yukon.logistics.model.dto.CustomerRequest;
 import com.yukon.logistics.model.dto.CustomerResponse;
 import com.yukon.logistics.persistence.entity.Customer;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CustomerMapper {
     public CustomerResponse toResponse(Customer customer, Boolean includeOrders) {
 

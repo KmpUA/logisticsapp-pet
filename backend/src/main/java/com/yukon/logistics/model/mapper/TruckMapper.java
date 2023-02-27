@@ -3,10 +3,12 @@ package com.yukon.logistics.model.mapper;
 import com.yukon.logistics.model.dto.TruckRequest;
 import com.yukon.logistics.model.dto.TruckResponse;
 import com.yukon.logistics.persistence.entity.Truck;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TruckMapper {
     public TruckResponse toResponse(Truck truck) {
         Long locationCityId = truck.getLocation() != null ? truck.getLocation().getId() : null;

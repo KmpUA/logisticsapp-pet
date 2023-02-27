@@ -12,7 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CityRequest {
-    //private Long id;
     private String cityName;
     private String countryName;
 }

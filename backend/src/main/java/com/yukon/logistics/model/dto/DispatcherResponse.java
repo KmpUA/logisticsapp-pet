@@ -24,5 +24,5 @@ public class DispatcherResponse {
     private String phone;
     private Role role;
     private Status status;
-    private List<Long> truckersId;
+    private List<TruckerResponse> truckers;
 }

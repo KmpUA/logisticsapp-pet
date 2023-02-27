@@ -4,10 +4,12 @@ import com.yukon.logistics.model.dto.CityRequest;
 import com.yukon.logistics.model.dto.CityResponse;
 import com.yukon.logistics.persistence.entity.City;
 import com.yukon.logistics.persistence.entity.Country;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CityMapper {
 
     public CityResponse toResponse(City city) {
