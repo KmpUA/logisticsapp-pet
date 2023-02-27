@@ -25,6 +25,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { DialogAddUserDialog } from './user-management/user-management.component';
 import { AuthInterceptorProvider } from './interceptor/auth.interceptor';
+import { OrderCardComponent } from './dashboard/order-card/order-card.component';
+import { TruckerDashboardComponent } from './dashboard/trucker-dashboard/trucker-dashboard.component';
 
 
 
@@ -44,6 +46,8 @@ import { UserProfileComponent } from './dashboard/user-profile/user-profile.comp
     DialogContentExampleDialog,
     UserManagementComponent,
     DialogAddUserDialog,
+    OrderCardComponent,
+    TruckerDashboardComponent,
     UserProfileComponent,
   ],
   imports: [
@@ -71,6 +75,7 @@ import { UserProfileComponent } from './dashboard/user-profile/user-profile.comp
     MatIconModule,
     MatMenuModule,
     MatDividerModule,
+    MatListModule,
   ],
   providers: [AuthInterceptorProvider],
   bootstrap: [AppComponent]

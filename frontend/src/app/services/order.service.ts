@@ -15,7 +15,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-  
+
 export class OrderService {
 
   constructor(private http: HttpClient) { }
@@ -26,7 +26,7 @@ export class OrderService {
   getCustomer(id: number){
     return this.http.get<Customer>(ORD_API1 + '/' + id);
   }
- 
+
   updateOrder(order: OrderResponse): Observable<any> {
     return this.http.put(ORD_API + '/' + order.id, order, httpOptions);
   }
@@ -39,5 +39,12 @@ export class OrderService {
     return this.http.post(
       ORD_API, order, httpOptions
     )
+  }
+  getTruckerOrders(truckerId: number): Observable<any> {
+    return this.http.get(ORD_API + '/trucker_id/' + truckerId);
+  }
+
+  completeOrder(order: Order): Observable<any> {
+    return this.http.put(ORD_API + '/' + order.id, order);
   }
 }

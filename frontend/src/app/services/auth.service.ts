@@ -21,7 +21,7 @@ export class AuthService {
   get token() {
     return localStorage.getItem(TOKEN_KEY);
   }
- 
+
 
   get user(): User {
     let user = localStorage.getItem(USER_KEY);

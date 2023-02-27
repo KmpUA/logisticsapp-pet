@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../models/User';
+import { User } from '../models/user';
 import { environment } from 'src/environments/environment';
 
 const USERS_API_URL = environment.API_URL + 'users';
