@@ -59,6 +59,7 @@ public class UserMapper {
         return AuthenticatedUser.builder()
                 .id(user.getId())
                 .status(user.getStatus())
+                .email(user.getEmail())
                 .phone(user.getPhone())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())

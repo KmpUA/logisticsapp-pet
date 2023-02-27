@@ -22,6 +22,8 @@ public class AuthenticatedUser {
     
     String firstName;
     
+    String email;
+    
     String lastName;
     
     String phone;

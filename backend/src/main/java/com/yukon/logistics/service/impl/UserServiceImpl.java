@@ -5,8 +5,10 @@ import com.yukon.logistics.persistence.repository.UserRepository;
 import com.yukon.logistics.service.PageableService;
 import com.yukon.logistics.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +19,12 @@ import java.util.List;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService, PageableService<User> {
     public final UserRepository userRepository;
+    public final BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public User addUser(User user) {
+    public User addUser(@NonNull final User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        
         return userRepository.save(user);
     }
     
@@ -35,7 +40,9 @@ public class UserServiceImpl implements UserService, PageableService<User> {
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(@NonNull final User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        
         return userRepository.save(user);
     }
 
