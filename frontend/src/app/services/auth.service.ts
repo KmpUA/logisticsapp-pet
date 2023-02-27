@@ -3,10 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
-import { UsersService } from './users.service';
 
 const AUTH_API = environment.API_URL + 'auth/';
-const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'user';
 
 const httpOptions = {
@@ -17,9 +15,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  get token() {
-    return localStorage.getItem(TOKEN_KEY);
-  }
 
   get user(): User {
     let user = localStorage.getItem(USER_KEY);
@@ -39,12 +34,13 @@ export class AuthService {
     }, httpOptions);
   }
 
-  logout(): void {
-    localStorage.removeItem(TOKEN_KEY);
+  refreshToken() {
+    return this.http.post(AUTH_API + 'refresh', null, httpOptions);
   }
 
-  saveToken(token: string): void {
-    localStorage.setItem(TOKEN_KEY, token);
+  logout(): Observable<any> {
+    localStorage.removeItem(USER_KEY);
+    return this.http.post(AUTH_API + 'logout', null, httpOptions);
   }
 
   saveUser(user: User): void {
@@ -52,6 +48,6 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem(TOKEN_KEY);
+    return !!localStorage.getItem(USER_KEY);
   }
 }

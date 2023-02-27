@@ -13,8 +13,7 @@ export class LoginComponent {
   onSubmit() {
     this.authService.login(this.email, this.password).subscribe(
       response => {
-        this.authService.saveToken(response.token);
-        this.authService.saveUser(response.userResponse);
+        this.authService.saveUser(response);
       }
     )
   }
