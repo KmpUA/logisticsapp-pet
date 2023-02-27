@@ -19,6 +19,8 @@ public class OrderMapper {
                 .id(order.getId())
                 .cityFrom(order.getFrom().getId())
                 .cityTo(order.getTo().getId())
+                .cityFromName(order.getFrom().getName())
+                .cityToName(order.getTo().getName())
                 .cargoDescription(order.getCargoDescription())
                 .cargoWeight(order.getCargoWeight())
                 .created(order.getCreated())
