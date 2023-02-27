@@ -19,7 +19,7 @@ export class LoginComponent {
         this.authService.saveToken(response.token);
         this.authService.saveUser(response.userResponse);
         if (this.authService.user.role === "TRUCKER") {
-          this._router.navigateByUrl('/trucker')
+          this._router.navigateByUrl('/dashboard-trucker')
         }
         if (this.authService.user.role === "CUSTOMER") {
           this._router.navigateByUrl('/')

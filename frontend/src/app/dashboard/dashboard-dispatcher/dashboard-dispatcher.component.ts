@@ -4,7 +4,7 @@ import { Trucker } from 'src/app/models/trucker';
 import { TruckerService } from 'src/app/services/trucker.service';
 import { CityService } from 'src/app/services/city.service';
 import { OrderResponse } from 'src/app/models/order-response';
-import { User } from 'src/app/models/User';
+import { User } from 'src/app/models/user';
 import { Cities } from 'src/app/models/cities';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Trucker } from "./trucker";
-import { User} from "./User"
+import { User} from "./user"
 
 export class OrderResponse {
     constructor(

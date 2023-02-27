@@ -17,7 +17,7 @@ export class AppComponent {
   }
   goToDashboard() {
     if (this.authService.user.role === "TRUCKER") {
-      this._router.navigateByUrl('/trucker')
+      this._router.navigateByUrl('/dashboard-trucker')
     }
     if (this.authService.user.role === "CUSTOMER") {
       this._router.navigateByUrl('/')
