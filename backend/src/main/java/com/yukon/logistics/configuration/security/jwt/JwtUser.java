@@ -25,6 +25,10 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class JwtUser implements UserDetails {
     
+    String firstName;
+    
+    String lastName;
+    
     String email;
     
     @JsonIgnore
@@ -35,6 +39,8 @@ public class JwtUser implements UserDetails {
     
     @Enumerated(EnumType.STRING)
     Role role;
+    
+    String imageUrl;
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -5,10 +5,14 @@ spring:
   profiles:
     active: dev
   security:
-    #Validity time of JWT in milliseconds.
-    jwtValidityInMs: 900000
-    # Secret used for signing JWT token.
-    jwtSecret: 2F423F4528482B4D6251655468566D597133743677397A24432646294A404E63
+    jwt:
+      access-validity: 900000
+      refresh-validity: 86400000
+      access-cookie-name: 792F423F4528482B
+      refresh-cookie-name: 566B597033733676
+      access-cookie-lifetime: 900
+      refresh-cookie-lifetime: 86400
+      secret: 2F423F4528482B4D6251655468566D597133743677397A24432646294A404E63
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
