@@ -16,6 +16,11 @@ public class DispatcherServiceImpl implements DispatcherService {
     DispatcherRepository dispatcherRepository;
 
     @Override
+    public Dispatcher findDispatcherById(Long id) {
+        return dispatcherRepository.findById(id).orElseThrow();
+    }
+
+    @Override
     public Dispatcher addDispatcher(Dispatcher dispatcher) {
         return dispatcherRepository.save(dispatcher);
     }

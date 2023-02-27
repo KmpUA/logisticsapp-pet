@@ -16,7 +16,9 @@ import java.time.LocalDateTime;
 public class OrderResponse {
     private Long id;
     private Long cityFrom;
+    private String cityFromName;
     private Long cityTo;
+    private String cityToName;
     private String cargoDescription;
     private Double cargoWeight;
     private TruckerResponse trucker;

@@ -6,10 +6,12 @@ import com.yukon.logistics.persistence.entity.City;
 import com.yukon.logistics.persistence.entity.Customer;
 import com.yukon.logistics.persistence.entity.Order;
 import com.yukon.logistics.persistence.entity.Trucker;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class OrderMapper {
 
     public OrderResponse toResponse(Order order, boolean includeTrucker, boolean includeCustomer) {
@@ -17,6 +19,8 @@ public class OrderMapper {
                 .id(order.getId())
                 .cityFrom(order.getFrom().getId())
                 .cityTo(order.getTo().getId())
+                .cityFromName(order.getFrom().getName())
+                .cityToName(order.getTo().getName())
                 .cargoDescription(order.getCargoDescription())
                 .cargoWeight(order.getCargoWeight())
                 .created(order.getCreated())
@@ -26,7 +30,7 @@ public class OrderMapper {
                 .completed(order.getCompleted())
                 .build();
         if(order.getTrucker() != null && includeTrucker) {
-            response.setTrucker(new TruckerMapper().toResponse(order.getTrucker(), false));
+            response.setTrucker(new TruckerMapper().toResponse(order.getTrucker(), false, false));
         }
         if(includeCustomer) {
             response.setCustomer(new CustomerMapper().toResponse(order.getCustomer(), false));
