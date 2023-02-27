@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="container-block">
+        <p class="created">
+            <mat-icon class="clock" aria-hidden="false" aria-label="Example home icon"
+                fontIcon="schedule"></mat-icon>{{item.created | date:'medium'}}
+        </p>
+        <div style="font-size: 25px;" class="trucker" *ngIf="!isTrucker">
+            <mat-icon class="local_shipping" aria-hidden="false" aria-label="Example home icon"
+                fontIcon="local_shipping"></mat-icon>{{item.trucker?.firstName!+' '+item.trucker?.lastName}}
+        </div>
+    </div>
+
+    <div>
+        <div class="flex-container">
+            <mat-list>
+                <mat-list-item>
+                    <mat-icon class="calendar" aria-hidden="false" aria-label="Example home icon"
+                        fontIcon="calendar_month"></mat-icon>{{item.startDeliver}}
+                    <span class="dash">&ndash;</span>{{item.endDeliver}}
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon class="fitness_center" aria-hidden="false" aria-label="Example home icon"
+                        fontIcon="fitness_center"></mat-icon>{{item.cargoWeight}}
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <p class="description">
+            {{item.cargoDescription}}
+        </p>
+    </div>
+
+    <div class="container-block">
+        <mat-list>
+            <mat-list-item>
+                <mat-icon class="public" aria-hidden="false" aria-label="Example home icon"
+                    fontIcon="public"></mat-icon>{{item.cityFromName}}
+                <span class="dash">&mdash;</span>{{item.cityToName}}
+            </mat-list-item>
+        </mat-list>
+
+        <div class="actions" *ngIf="isAdmin">
+            <button mat-raised-button color="primary">Delete</button>
+        </div>
+
+        <div class="actions" *ngIf="isTrucker">
+            <button mat-raised-button color="primary" *ngIf="this.item.completed==false"
+                (click)="onCompleteToggle();">Finish</button>
+            <button mat-raised-button color="accent" *ngIf="this.item.completed==true"
+                (click)="onCompleteToggle();">Finished
+                <mat-icon>done</mat-icon></button>
+        </div>
+    </div>
+
+</div>

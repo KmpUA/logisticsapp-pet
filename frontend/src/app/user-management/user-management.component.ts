@@ -1,12 +1,12 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTable } from '@angular/material/table';
-import { User } from '../models/User';
+import { User } from '../models/user';
 import { UsersService } from '../services/users.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Statuses } from '../models/Statueses';
-import { Roles } from '../models/Roles';
+import { Statuses } from '../models/statuses';
+import { Roles } from '../models/roles';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
@@ -17,6 +17,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class UserManagementComponent {
   @ViewChild(MatTable) table!: MatTable<any>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   users: User[] = [];
   displayedColumns: string[] = ['firstName', 'lastName', 'email', 'phone', 'role', 'status', 'action'];
@@ -75,7 +76,22 @@ export class UserManagementComponent {
   }
 
   deleteUser(id: number) {
-    this.userService.deleteUser(id).subscribe();
+    this.userService.deleteUser(id).subscribe({
+      next: response => {
+        this.reloadTable(this.paginator.pageIndex);
+      }
+    });
+  }
+
+  reloadTable(page: number) {
+    this.userService.getUsers(page).subscribe(
+      response => {
+        this.users = response.content;
+        this.length = response.totalElements;
+        this.paginator.pageIndex = page;
+        this.table.renderRows();
+      }
+    );
   }
 }
 

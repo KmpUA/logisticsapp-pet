@@ -21,10 +21,13 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
 import { UserManagementComponent } from './user-management/user-management.component';
 import { DialogAddUserDialog } from './user-management/user-management.component';
 import { AuthInterceptorProvider } from './interceptor/auth.interceptor';
+import { OrderCardComponent } from './dashboard/order-card/order-card.component';
+import { TruckerDashboardComponent } from './dashboard/trucker-dashboard/trucker-dashboard.component';
 
 
 @NgModule({
@@ -33,6 +36,8 @@ import { AuthInterceptorProvider } from './interceptor/auth.interceptor';
     LoginComponent,
     UserManagementComponent,
     DialogAddUserDialog,
+    OrderCardComponent,
+    TruckerDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +59,7 @@ import { AuthInterceptorProvider } from './interceptor/auth.interceptor';
     MatIconModule,
     MatMenuModule,
     MatDividerModule,
+    MatListModule,
   ],
   providers: [AuthInterceptorProvider],
   bootstrap: [AppComponent]
