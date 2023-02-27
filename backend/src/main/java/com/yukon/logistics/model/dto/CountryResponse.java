@@ -16,5 +16,5 @@ import java.util.List;
 public class CountryResponse {
     private Long id;
     private String countryName;
-    private List<String> cityNames;
+    private List<CityResponse> cities;
 }

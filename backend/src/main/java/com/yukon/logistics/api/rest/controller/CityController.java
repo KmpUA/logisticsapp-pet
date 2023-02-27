@@ -22,40 +22,41 @@ import static java.lang.Long.parseLong;
 public class CityController {
     private final CityService cityService;
     private final CountryService countryService;
+    private final CityMapper cityMapper;
 
     @GetMapping("/all")
     public ResponseEntity<List<CityResponse>> getAll() {
-        List<CityResponse> cityResponseList = new CityMapper().toListResponse(cityService.findAllCities());
+        List<CityResponse> cityResponseList = cityMapper.toListResponse(cityService.findAllCities());
         return new ResponseEntity<>(cityResponseList, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CityResponse> getById(@PathVariable("id") String id) {
-        CityResponse cityResponse = new CityMapper().toResponse(cityService.findCityById(parseLong(id)));
+        CityResponse cityResponse = cityMapper.toResponse(cityService.findCityById(parseLong(id)));
         return new ResponseEntity<>(cityResponse, HttpStatus.OK);
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<CityResponse> getByName(@PathVariable("name") String name) {
-        CityResponse cityResponse = new CityMapper().toResponse(cityService.findCityByName(name));
+        CityResponse cityResponse = cityMapper.toResponse(cityService.findCityByName(name));
         return new ResponseEntity<>(cityResponse, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<CityResponse> addCity(@RequestBody CityRequest cityRequest){
-        City city = new CityMapper().toEntity(cityRequest,
+        City city = cityMapper.toEntity(cityRequest,
                 countryService.findCountryByName(cityRequest.getCountryName()));
-        CityResponse cityResponse = new CityMapper().toResponse(cityService.addCity(city));
+        CityResponse cityResponse = cityMapper.toResponse(cityService.addCity(city));
         return new ResponseEntity<>(cityResponse, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CityResponse> updateCity(@PathVariable("id") String id,
                                                    @RequestBody CityRequest cityRequest){
-        City city = new CityMapper().toEntity(cityRequest,
+        City city = cityMapper.toEntity(cityRequest,
                 countryService.findCountryByName(cityRequest.getCountryName()));
         city.setId(parseLong(id));
-        CityResponse cityResponse = new CityMapper().toResponse(cityService.updateCity(city));
+        CityResponse cityResponse = cityMapper.toResponse(cityService.updateCity(city));
         return new ResponseEntity<>(cityResponse, HttpStatus.OK);
     }
 
