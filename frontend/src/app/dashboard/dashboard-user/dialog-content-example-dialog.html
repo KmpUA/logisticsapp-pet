@@ -1,0 +1,53 @@
+<h2 mat-dialog-title style="text-align: center;font-size: 20px;">Fill out the form</h2>
+<mat-dialog-content style="width: 400px;text-align: center;" class="mat-typography">
+
+    <form [formGroup]="orderForm" (ngSubmit)="saveOrder(orderForm)">
+        <div class="form"><mat-form-field appearance="fill">
+                <mat-label>City from</mat-label>
+                <mat-select required matNativeControl formControlName="cityFrom">
+                    <mat-option *ngFor="let x of cityList" [value]="x.id">{{x.cityName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form"><mat-form-field appearance="fill">
+                <mat-label>City to</mat-label>
+                <mat-select required matNativeControl formControlName="cityTo">
+                    <mat-option *ngFor="let x of cityList" [value]="x.id">{{x.cityName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form"><mat-form-field appearance="fill">
+                <mat-label>Cargo weigh</mat-label>
+                <input required id="cargoWeight" formControlName="cargoWeight" matInput type="number">
+            </mat-form-field>
+        </div>
+
+        <div class="form"><mat-form-field style="width: 212px;" appearance="fill">
+                <mat-label>Start deliver</mat-label>
+                <input required formControlName="startDeliver" matInput [matDatepicker]="picker">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="form"><mat-form-field style="width: 212px;" appearance="fill">
+                <mat-label>End deliver</mat-label>
+                <input required formControlName="endDeliver" matInput [matDatepicker]="picker1">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <mat-form-field appearance="fill">
+            <mat-label>Cargo-Description</mat-label>
+            <textarea required id="cargoDescription" formControlName="cargoDescription" matInput></textarea>
+        </mat-form-field>
+
+        <mat-dialog-actions align="end">
+            <button style="background-color: red;color: white;" mat-button mat-dialog-close>Cancel</button>
+            <button style="background-color: rgb(38, 192, 38);color: white;" mat-button type="submit">Save</button>
+        </mat-dialog-actions>
+    </form>
+
+</mat-dialog-content>

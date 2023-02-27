@@ -6,7 +6,7 @@
         </p>
         <div style="font-size: 25px;" class="trucker" *ngIf="!isTrucker">
             <mat-icon class="local_shipping" aria-hidden="false" aria-label="Example home icon"
-                fontIcon="local_shipping"></mat-icon>{{item.trucker?.firstName!+' '+item.trucker?.lastName}}
+                fontIcon="local_shipping"></mat-icon><span *ngIf="item.trucker">{{item.trucker?.firstName!+' '+item.trucker?.lastName}}</span>
         </div>
     </div>
 

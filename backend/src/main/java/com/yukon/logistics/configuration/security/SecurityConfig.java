@@ -42,11 +42,11 @@ public class SecurityConfig {
     
     @Bean
     public SecurityFilterChain filterChain(@NonNull final HttpSecurity http) throws Exception {
+        // ApplicationConstants.Security.Routing.LOGIN_PATH
         return http
                 .csrf().disable()
-                .authorizeHttpRequests(auth -> auth.requestMatchers(
-                                ApplicationConstants.Security.Routing.LOGIN_PATH)
-                        .permitAll().anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth.requestMatchers(ApplicationConstants.Security.Routing.LOGIN_PATH)
+                                             .permitAll().anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling().authenticationEntryPoint(jwtAuthEntryPoint).and()
                 .exceptionHandling().accessDeniedHandler(jwtAccessDeniedHandler).and()
