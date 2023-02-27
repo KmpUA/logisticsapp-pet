@@ -27,7 +27,7 @@ export class AppComponent {
       this._router.navigateByUrl('/dispatcher')
     }
     if (this.authService.user.role === "ADMIN") {
-      this._router.navigateByUrl('/admin')
+      this._router.navigateByUrl('/dashboard-admin')
 
     }
   }
