@@ -55,9 +55,9 @@ public class OrderController {
     }
 
     @GetMapping("/trucker_id/{trucker_id}")
-    public ResponseEntity<OrderResponse> getByTruckerName(@PathVariable("trucker_id") String truckerId) {
-        OrderResponse orderResponse = orderMapper.toResponse(orderService
-                .findOrderByTruckerId(parseLong(truckerId)), true, true);
+    public ResponseEntity<List<OrderResponse>> getByTruckerId(@PathVariable("trucker_id") String truckerId) {
+        List<OrderResponse> orderResponse = new OrderMapper().toListResponse(orderService
+                .findOrdersByTruckerId(parseLong(truckerId)), false, true);
         return new ResponseEntity<>(orderResponse, HttpStatus.OK);
     }
 

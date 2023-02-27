@@ -12,6 +12,24 @@ public class ApplicationConstants {
      * Inner utility class for constants related to security part.
      */
     @UtilityClass
+    public class Web {
+        
+        /**
+         * Inner utility class for constants related to security part.
+         */
+        @UtilityClass
+        public class DefaultPagingAttributes {
+            public static final String PAGE_SIZE = "20";
+            public static final String SORT_DIRECTION = "DESC";
+            public static final String SORT_FIELD = "id";
+        }
+        
+    }
+    
+    /**
+     * Inner utility class for constants related to security part.
+     */
+    @UtilityClass
     public class Security {
         public static final String TOKEN_PREFIX = "Bearer ";
         public static final String TOKEN_HEADER_NAME = "Authorization";
@@ -45,5 +63,6 @@ public class ApplicationConstants {
     public class ErrorMassage {
         public static final String UNAUTHORIZED_ERROR_MESSAGE = "The user does not have the necessary permissions or authorization.";
         public static final String UNKNOWN_ERROR_MESSAGE = "An unknown error has occurred.";
+        public static final String BAD_REQUEST = "The request has received an argument that is invalid or inappropriate for this method's purposes.";
     }
 }
