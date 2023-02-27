@@ -1,12 +1,15 @@
-export class Order {
+import { Trucker } from "./trucker";
+import { User} from "./User"
+
+export class OrderResponse {
     constructor(
         public id?: number,
         public cityFrom?: number,
         public cityTo?: number,
         public cargoDescription?: string,
         public cargoWeight?: number,
-        public trucker?: number,
-        public customer?: number,
+        public trucker?: Trucker | null | number,
+        public customer?: User | null | number,
         public created?: string,
         public modified?: string,
         public startDeliver?: string,

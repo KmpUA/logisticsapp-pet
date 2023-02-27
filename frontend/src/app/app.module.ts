@@ -27,8 +27,6 @@ import { AuthInterceptorProvider } from './interceptor/auth.interceptor';
 import { DashboardComponent } from './dashboard/dashboard-user/dashboard.component';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import { DashboardAdminComponent } from './dashboard/dashboard-admin/dashboard-admin.component';
-import { DashboardTruckerComponent } from './dashboard/dashboard-trucker/dashboard-trucker.component';
 import { DashboardDispatcherComponent } from './dashboard/dashboard-dispatcher/dashboard-dispatcher.component';
 import { DialogContentExampleDialog } from './dashboard/dashboard-user/dashboard.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -38,8 +36,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    DashboardAdminComponent,
-    DashboardTruckerComponent,
     DashboardDispatcherComponent,
     DialogContentExampleDialog,
     UserManagementComponent,
@@ -66,7 +62,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatNativeDateModule,
     MatTableModule,
     MatSnackBarModule,
-    
+
   ],
   providers: [AuthInterceptorProvider],
   bootstrap: [AppComponent]

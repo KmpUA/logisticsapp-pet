@@ -20,6 +20,9 @@ export class AuthService {
   get token() {
     return localStorage.getItem(TOKEN_KEY);
   }
+  get user() {
+    return localStorage.getItem(USER_KEY);
+  }
 
   constructor(
     private http: HttpClient,

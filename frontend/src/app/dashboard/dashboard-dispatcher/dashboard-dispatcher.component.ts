@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
-import { Order } from 'src/app/models/order';
 import { Trucker } from 'src/app/models/trucker';
 import { TruckerService } from 'src/app/services/trucker.service';
 import { CityService } from 'src/app/services/city.service';
+import { OrderResponse } from 'src/app/models/order-response';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-dashboard-dispatcher',
@@ -13,13 +14,13 @@ import { CityService } from 'src/app/services/city.service';
 })
 export class DashboardDispatcherComponent implements OnInit {
 
-  orderList: Order[] = [];
+  orderList: OrderResponse[] = [];
   truckerList: Trucker[] = [];
 
   constructor(public ord: OrderService, public tru: TruckerService, public cit: CityService) { }
 
   ngOnInit(): void {
-    this.ord.getOrders().subscribe((response: Order[]) => {
+    this.ord.getOrders().subscribe((response: OrderResponse[]) => {
       this.orderList = response;
     });
     this.tru.getTrucker().subscribe((response: Trucker[]) => {
@@ -28,8 +29,11 @@ export class DashboardDispatcherComponent implements OnInit {
     });
   }
 
-  getTruckerName(id:undefined|number) {
-    return this.truckerList.find(trucker => trucker.id === id)?.firstName;
+  getTruckerName(trucker: Trucker | number | undefined | null) {
+    if (trucker) {
+      return (trucker as Trucker).firstName;
+    }
+    return []
   }
 
   getCityName(id: undefined | number) {
@@ -39,9 +43,11 @@ export class DashboardDispatcherComponent implements OnInit {
     }
     return {}
   }
-  
-  assignTrucker(truckerId: number, order: Order) {
+
+  assignTrucker(truckerId: number, order: OrderResponse) {
     order.trucker = truckerId;
+    order.customer = (order.customer as User).id;
+    //order.customer = order.customer.id;
     this.ord.updateOrder(order).subscribe();
   }
 
