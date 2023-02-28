@@ -26,7 +26,7 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest request,
                        HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException {
-        log.error("Some error occurred while authorize: " + accessDeniedException);
+        log.error("Some error occurred while authorize, access denied: " + accessDeniedException);
         
         final var message = ErrorMessage.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())

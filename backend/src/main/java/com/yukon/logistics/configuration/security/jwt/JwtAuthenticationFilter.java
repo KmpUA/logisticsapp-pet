@@ -1,5 +1,6 @@
 package com.yukon.logistics.configuration.security.jwt;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,23 +12,23 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
 /**
  * Filter that handles all HTTP requests to application.
- * It's check if the request have a JWT token
+ * It's check if the request have an access token
+ * TODO for now we have a state while saving the user in the context. We should refactor it to save the token instead.
  */
-@Component
 @RequiredArgsConstructor
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     
     JwtService jwtService;
-    JwtUserServiceImpl jwtUserService;
+    UserDetailsService jwtUserService;
     
     @Override
     protected void doFilterInternal(
@@ -36,22 +37,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull final FilterChain filterChain
     ) throws ServletException, IOException {
         
-        final var token = jwtService.getJwtFromRequest(request);
+        final var token = jwtService.getAccessTokenFromRequest(request);
         
         if (token != null) {
-            final var userDetails = jwtUserService.
-                    loadUserByUsername(jwtService.extractUsername(token));
-            
-            if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                final var authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
+            try {
+                final var userDetails = jwtUserService.
+                        loadUserByUsername(jwtService.extractSubject(token));
                 
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                if (jwtService.validateAccessToken(token, userDetails.getUsername()) &&
+                        SecurityContextHolder.getContext().getAuthentication() == null) {
+                    final var authenticationToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
+                    
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                }
+            } catch (TokenExpiredException exception) {
+                log.warn("Token has expired {}", token);
+                response.sendError(426);
             }
+            
+            
         }
         filterChain.doFilter(request, response);
     }
+    
 }

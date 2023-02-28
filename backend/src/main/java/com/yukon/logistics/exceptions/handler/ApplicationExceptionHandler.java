@@ -1,6 +1,7 @@
 package com.yukon.logistics.exceptions.handler;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.yukon.logistics.common.ApplicationConstants;
 import com.yukon.logistics.model.dto.ErrorMessage;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,26 +41,6 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .date(new Date())
                 .description(ApplicationConstants.ErrorMassage.UNAUTHORIZED_ERROR_MESSAGE)
-                .url(request.getRequestURL().toString())
-                .build();
-        
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
-    }
-    
-    /**
-     * Handle AuthenticationExceptions.
-     */
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorMessage> handleAuthenticationException(
-            @NonNull final HttpServletRequest request,
-            @NonNull final IllegalArgumentException exception) {
-        
-        log.error("Exception was thrown due authentication:", exception);
-        
-        final var message = ErrorMessage.builder()
-                .status(HttpStatus.UNAUTHORIZED.value())
-                .date(new Date())
-                .description(ApplicationConstants.ErrorMassage.BAD_REQUEST)
                 .url(request.getRequestURL().toString())
                 .build();
         
