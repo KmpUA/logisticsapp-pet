@@ -1,22 +1,26 @@
 package com.yukon.logistics.configuration.security.authentication;
 
-import com.yukon.logistics.model.dto.UserResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.yukon.logistics.model.dto.AuthenticatedUser;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.ResponseCookie;
 
-@Getter
-@Setter
+@EqualsAndHashCode
+@ToString
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AuthenticationResponse {
     
-    String token;
-    UserResponse userResponse;
+    @JsonIgnore
+    ResponseCookie cookieAccessToken;
+    
+    @JsonIgnore
+    ResponseCookie cookieRefreshToken;
+    AuthenticatedUser authenticatedUser;
 }

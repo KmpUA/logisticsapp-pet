@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,8 +14,7 @@ export class LoginComponent {
   onSubmit() {
     this.authService.login(this.email, this.password).subscribe(
       response => {
-        this.authService.saveToken(response.token);
-        this.authService.saveUser(response.userResponse);
+        this.authService.saveUser(response);
         if (this.authService.user.role === "TRUCKER") {
           this._router.navigateByUrl('/dashboard-trucker')
         }
@@ -33,7 +30,7 @@ export class LoginComponent {
 
         }
       })
-    
-    
+
+
   }
 }

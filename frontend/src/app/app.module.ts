@@ -25,7 +25,7 @@ import { MatListModule } from '@angular/material/list';
 
 import { UserManagementComponent } from './user-management/user-management.component';
 import { DialogAddUserDialog } from './user-management/user-management.component';
-import { AuthInterceptorProvider } from './interceptor/auth.interceptor';
+import { HttpInterceptorProvider } from './interceptor/HttpRequest.interceptor';
 import { OrderCardComponent } from './dashboard/order-card/order-card.component';
 import { TruckerDashboardComponent } from './dashboard/trucker-dashboard/trucker-dashboard.component';
 import { AdminDashboardComponent } from './dashboard/admin-dashboard/admin-dashboard.component';
@@ -79,7 +79,7 @@ import { UserProfileComponent } from './dashboard/user-profile/user-profile.comp
     MatDividerModule,
     MatListModule,
   ],
-  providers: [AuthInterceptorProvider],
+  providers: [HttpInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

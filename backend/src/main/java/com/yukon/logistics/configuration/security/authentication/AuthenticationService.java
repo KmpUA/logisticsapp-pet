@@ -1,38 +1,40 @@
 package com.yukon.logistics.configuration.security.authentication;
 
-import com.yukon.logistics.configuration.security.jwt.JwtService;
-import com.yukon.logistics.exceptions.UserNotFoundException;
-import com.yukon.logistics.model.mapper.UserMapper;
-import com.yukon.logistics.persistence.repository.UserRepository;
-import lombok.AccessLevel;
+import jakarta.validation.Valid;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AuthenticationService {
+public interface AuthenticationService {
     
-    UserRepository userRepository;
-    AuthenticationManager authenticationManager;
-    JwtService jwtService;
-    UserMapper userMapper;
+    /**
+     * Authenticate user.
+     * It checks username and password in the db, if it's valid
+     * then create access and refresh tokens and put it into cookie,
+     * then return cookies and user info
+     *
+     * @param authenticationRequest it contains user email and password
+     * @return AuthenticationResponse
+     * @see AuthenticationResponse
+     */
+    AuthenticationResponse authenticate(@Valid @NonNull final AuthenticationRequest authenticationRequest);
     
-    public AuthenticationResponse authenticate(@NonNull final AuthenticationRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                request.getEmail(), request.getPassword()));
-        
-        final var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new UserNotFoundException("Failed to"
-                        + " authenticate the user. User is not found"));
-        
-        final var token = jwtService.createToken(user.getEmail(), user.getRole());
-        
-        return AuthenticationResponse.builder()
-                .token(token).userResponse(userMapper.toResponse(user)).build();
-    }
+    /**
+     * Refresh user authentication.
+     * It checks if the refresh token in the cookies is valid
+     * then create access and refresh tokens and put it into cookie,
+     * then return cookies and user info
+     *
+     * @param refreshToken it contains refresh token
+     * @return AuthenticationResponse
+     * @see AuthenticationResponse
+     */
+    AuthenticationResponse tokenRefresh(@NonNull final String refreshToken);
+    
+    /**
+     * Used to log out user.
+     * It's clear security context authentication,
+     * remove access and refresh tokens from cookies
+     *
+     * @return AuthenticationResponse that contains cookie that will remove in headers
+     */
+    AuthenticationResponse logout();
 }
