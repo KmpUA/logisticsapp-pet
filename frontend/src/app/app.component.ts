@@ -19,18 +19,30 @@ export class AppComponent {
 
   ngOnInit(): void {
 
-    this.eventBusSub = this.eventBusService.on('logout', () => {
+    this.eventBusSub = this.eventBusService.on('signOut', () => {
       this.signOut();
       this._router.navigateByUrl('/login');
     });
 
-    this.eventBusSub = this.eventBusService.on('refresh', () => {
-      this.refresh();
+    this.eventBusSub = this.eventBusService.on('dashboard', () => {
+      if (this.authService.user.role === "TRUCKER") {
+        this._router.navigateByUrl('/dashboard-trucker')
+      }
+      if (this.authService.user.role === "CUSTOMER") {
+        this._router.navigateByUrl('/')
+
+      }
+      if (this.authService.user.role === "DISPATCHER") {
+        this._router.navigateByUrl('/dispatcher')
+      }
+      if (this.authService.user.role === "ADMIN") {
+        this._router.navigateByUrl('/dashboard-admin')
+      }
     })
   }
 
   signOut() {
-    this.authService.logout().subscribe({
+    this.authService.signOut().subscribe({
       next: res => {
         console.log(res);
         this._router.navigateByUrl('/login');
@@ -42,19 +54,6 @@ export class AppComponent {
         } else {
           this._router.navigateByUrl('/login');
         }
-      }
-    });
-  }
-
-  refresh() {
-    this.authService.refreshToken().subscribe({
-      next: res => {
-        console.log(res);
-        this.goToDashboard();
-      },
-      error: err => {
-        console.log(err);
-        this._router.navigateByUrl('/login');
       }
     });
   }

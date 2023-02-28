@@ -39,9 +39,9 @@ export class AuthService {
     return this.http.post(AUTH_API + 'refresh', null, httpOptions);
   }
 
-  logout(): Observable<any> {
+  signOut(): Observable<any> {
     localStorage.removeItem(USER_KEY);
-    
+
     return this.http.post(AUTH_API + 'logout', null, httpOptions);
   }
 
