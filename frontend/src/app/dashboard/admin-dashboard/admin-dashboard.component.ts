@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Order } from 'src/app/models/order';
+import { OrderResponse } from 'src/app/models/order-response';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { OrderService } from 'src/app/services/order.service';
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent {
-  public orderList: Order[] = [];
+  public orderList: OrderResponse[] = [];
   constructor(private orderService: OrderService) { }
 
   ngOnInit() {
