@@ -14,7 +14,7 @@ export class RoleGuard implements CanActivate {
     const roles: string[] = route.data.expetedRoles;
     const role: string = this.authService.user.role!;
     console.log(role, roles)
-    if (!roles)
+    if (!roles || !role)
       return false;
     const roleMatches = roles.findIndex((_role) => role == _role);
     console.log(roleMatches)

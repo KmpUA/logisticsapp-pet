@@ -11,7 +11,7 @@ import { RoleGuard } from './guards/role.guard';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'customer',
     component: DashboardComponent,
     canActivate: [RoleGuard],
     data: { expetedRoles: ['CUSTOMER'] }

@@ -11,7 +11,7 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'frontend';
-  constructor(public authService: AuthService, public _router: Router, public dialog:MatDialog) { }
+  constructor(public authService: AuthService, public _router: Router, public dialog: MatDialog) { }
   signOut() {
     this.authService.logout();
   }
@@ -20,7 +20,7 @@ export class AppComponent {
       this._router.navigateByUrl('/dashboard-trucker')
     }
     if (this.authService.user.role === "CUSTOMER") {
-      this._router.navigateByUrl('/')
+      this._router.navigateByUrl('/customer')
 
     }
     if (this.authService.user.role === "DISPATCHER") {
