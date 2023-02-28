@@ -30,7 +30,6 @@ export class DashboardComponent implements OnInit {
     this.cit.getCities().subscribe((response: Cities[]) => {
       this.cityList = response;
       console.log(this.cityList)
-      localStorage.setItem("cities", JSON.stringify(this.cityList))
     });
     console.log('user',this.customer)
     
@@ -44,7 +43,6 @@ export class DashboardComponent implements OnInit {
     this.tru.getTrucker().subscribe((response: Trucker[]) => {
       this.truckerList = response;
       console.log(response)
-      localStorage.setItem("truckers", JSON.stringify(this.truckerList))
     });
 
   }
@@ -57,9 +55,15 @@ export class DashboardComponent implements OnInit {
     });
 
   }
+
+  getCity(id: number) {
+     return this.cityList.find(i => i.id === id)
+
+  }
+
   getCityName(id: undefined | number) {
     if (id) {
-      return this.cit.getCity(id)?.cityName;
+      return this.getCity(id)?.cityName;
 
     }
     return {}
@@ -100,12 +104,15 @@ export class DialogContentExampleDialog {
     endDeliver: new FormControl('')
   });
 
-  constructor(private ord: OrderService, private tru: TruckerService, private user: AuthService) { }
+  constructor(private ord: OrderService, private tru: TruckerService, private user: AuthService,public cit: CityService) { }
 
   cityList: Cities[] = [];
 
   ngOnInit(): void {
-    this.cityList = JSON.parse(localStorage.getItem("cities") || '{}');
+    this.cit.getCities().subscribe((response: Cities[]) => {
+      this.cityList = response;
+      console.log(this.cityList)
+    })
 
   }
   saveOrder(orderForm: FormGroup) {

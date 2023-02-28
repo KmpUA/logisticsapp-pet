@@ -24,8 +24,6 @@ export class DashboardDispatcherComponent implements OnInit {
     this.cit.getCities().subscribe((response: Cities[]) => {
       this.cityList = response;
       console.log(this.cityList)
-      localStorage.setItem("cities", JSON.stringify(this.cityList))
-
   })
       
 
@@ -46,10 +44,14 @@ export class DashboardDispatcherComponent implements OnInit {
     return []
   }
 
+  getCity(id: number) {
+    console.log(this.cityList);
+    return this.cityList.find(i => i.id === id)
+  }
+
   getCityName(id: undefined | number) {
     if (id) {
-      return this.cit.getCity(id)?.cityName;
-
+      return this.getCity(id)?.cityName;
     }
     return {}
   }
