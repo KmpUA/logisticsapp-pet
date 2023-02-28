@@ -21,6 +21,7 @@ export class AppComponent {
 
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.signOut();
+      this._router.navigateByUrl('/login');
     });
 
     this.eventBusSub = this.eventBusService.on('refresh', () => {
@@ -32,11 +33,15 @@ export class AppComponent {
     this.authService.logout().subscribe({
       next: res => {
         console.log(res);
-
-        window.location.reload();
+        this._router.navigateByUrl('/login');
       },
       error: err => {
         console.log(err);
+        if(this.authService.isLoggedIn()) {
+          this.goToDashboard();
+        } else {
+          this._router.navigateByUrl('/login');
+        }
       }
     });
   }
@@ -45,11 +50,11 @@ export class AppComponent {
     this.authService.refreshToken().subscribe({
       next: res => {
         console.log(res);
-
-        window.location.reload();
+        this.goToDashboard();
       },
       error: err => {
         console.log(err);
+        this._router.navigateByUrl('/login');
       }
     });
   }
