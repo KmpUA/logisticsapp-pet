@@ -25,8 +25,7 @@ export class AuthService {
   }
 
   constructor(
-    private http: HttpClient,
-    private _router: Router
+    private http: HttpClient
   ) { }
 
   login(email: string, password: string): Observable<any> {
@@ -42,7 +41,7 @@ export class AuthService {
 
   logout(): Observable<any> {
     localStorage.removeItem(USER_KEY);
-    //this._router.navigateByUrl('/login'); it should be moved to using this function to route user to login page
+    
     return this.http.post(AUTH_API + 'logout', null, httpOptions);
   }
 
