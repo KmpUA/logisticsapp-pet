@@ -1,0 +1,92 @@
+.create-order {
+    position: relative;
+    text-align: end;
+    padding-right: 80px;
+    padding-bottom: 2px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    box-shadow: 0px 0px 10px gray;
+    width: 50%;
+    /* margin: 20px; */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+.container-item {
+    /* margin-left: auto;
+        margin-right: auto; */
+    margin-left: 25px;
+    margin-right: 25px;
+    background-color: #fff;
+    margin-top: 20px;
+    width: 550px;
+}
+
+.created {
+    font-size: 18px;
+    /* padding-left: 15px; */
+    /* padding-top: 10px; */
+    color: rgb(80, 237, 80);
+}
+
+mat-list-item {
+    display: inline;
+}
+
+/* .description {
+    font-size: 18px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 25px;
+    padding-bottom: 18px;
+} */
+
+.btn-delete {
+    float: right;
+    margin-top: -20px;
+    margin-right: -40px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.dash {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.clock,
+.calendar,
+.zoom_out_map,
+.public {
+    position: relative;
+    top: 6px;
+    font-size: 22px;
+}
+
+.fitness_center {
+    position: relative;
+    top: 7px;
+    font-size: 22px;
+}
+
+.container-block {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.actions {
+    padding-top: 10px;
+    display: flex;
+    gap: 10px;
+}

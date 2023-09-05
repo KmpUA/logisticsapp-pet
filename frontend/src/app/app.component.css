@@ -1,0 +1,18 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+
+.user-name {
+    vertical-align: middle;
+    padding-top: 8px;
+}
+.cursor{
+    cursor: pointer;
+    user-select: none;
+}
+
+.right-buttons{
+    display: flex;
+
+}

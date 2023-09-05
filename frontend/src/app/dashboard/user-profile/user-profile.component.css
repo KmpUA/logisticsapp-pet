@@ -1,0 +1,36 @@
+.container{
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 600px;
+    box-shadow: 0px 0px 10px gray;
+    padding-top: 25px;
+    text-align: center;
+}
+.info {
+    margin-left: 25px;
+    margin-right: 25px;
+    height: 250px;
+}
+.photo {
+    width: 250px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 2em;
+}
+.photo1 {
+    width: 250px;
+    height: 250px;
+    border-radius: 100%;
+}
+.user-info{
+    padding-top: 3vw;
+}
+.phone,.email,.status,.role {
+    font-size: 1.3em;
+    padding-top: 20px;
+}
+.name,.lastname{
+    font-size: 2em;
+}

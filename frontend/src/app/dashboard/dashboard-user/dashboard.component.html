@@ -1,0 +1,43 @@
+<div class="main">
+
+    <div class="create-order">
+        <button style="font-size: large;" class="btn" mat-button (click)="openDialog()">Create order</button>
+    </div>
+
+    <div class="container" *ngFor="let item of orderList">
+
+        <p class="created"><mat-icon class="clock" aria-hidden="false" aria-label="Example home icon"
+                fontIcon="schedule"></mat-icon>{{item.created | date:'medium'}}
+        </p>
+        <div style="font-size: 25px;" class="trucker">
+            <mat-icon class="local_shipping" aria-hidden="false" aria-label="Example home icon"
+                fontIcon="local_shipping"></mat-icon>{{getTruckerName(item.trucker)}}
+        </div>
+        <div class="flex-container">
+            <mat-list>
+                <mat-list-item>
+                    <mat-icon class="calendar" aria-hidden="false" aria-label="Example home icon"
+                        fontIcon="calendar_month"></mat-icon>{{item.startDeliver | date:'shortDate'}}
+                    <span class="dash">&ndash;</span>{{item.endDeliver | date:'shortDate'}}</mat-list-item>
+                <mat-list-item>
+                    <mat-icon class="fitness_center" aria-hidden="false" aria-label="Example home icon"
+                        fontIcon="fitness_center"></mat-icon>{{item.cargoWeight}}<span> kg</span></mat-list-item>
+
+            </mat-list>
+        </div>
+
+        <p class="description">
+            {{item.cargoDescription}}
+        </p>
+
+        <mat-list>
+            <mat-list-item><mat-icon class="public" aria-hidden="false" aria-label="Example home icon"
+                    fontIcon="public"></mat-icon>{{getCityName(item.cityFrom)}}<span
+                    class="dash">&mdash;</span>{{getCityName(item.cityTo)}}</mat-list-item>
+        </mat-list>
+
+        <div class="btn-delete"><button class="btn" mat-flat-button color="warn" mat-button
+                (click)="deleteOrder(item.id!)">Delete</button></div>
+    </div>
+
+</div>
